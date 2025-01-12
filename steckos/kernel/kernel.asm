@@ -26,8 +26,9 @@
 
 .include "kernel.inc"
 
-.export char_out, char_in, out_vector, in_vector
-.import init_uart, uart_tx, uart_rx
+.export char_out, char_in, set_input, set_output
+.export out_vector, in_vector
+.import init_uart, uart_tx, uart_rx, primm, wozmon
 
 OUTPUT_DEVICE_UART = 1
 INPUT_DEVICE_UART = 1
@@ -38,7 +39,6 @@ in_vector:     .res 2
 
 
 .code
-
 
 do_reset:
 
@@ -52,30 +52,13 @@ do_reset:
     jsr set_input
     lda #OUTPUT_DEVICE_UART
     jsr set_output
-    
-
-    
 
 
     
+    jsr primm 
+    .byte CODE_LF, CODE_LF, "Steckschwein!!", CODE_LF, 0
 
-    ldx #0
-:
-    lda banner,x
-    beq :+
-    
-    jsr char_out
-    inx
-    bra :-
-
-:
-
-
-
-    jsr char_in
-    jsr char_out
-
-    bra :-
+    jmp wozmon
 
 
 
@@ -114,38 +97,10 @@ set_input:
     sta in_vector+1
     rts 
 
-hexout:
-    pha
-    pha
-
-    lsr     ; msb first
-    lsr
-    lsr
-    lsr
-    ; https://twitter.com/adumont/status/1381857942467702785
-    sed
-    cmp #$0a
-    adc #$30
-    cld
-    jsr char_out
-
-    pla
-    and #$0f    ;mask lsd for hex print
-
-    sed
-    cmp #$0a
-    adc #$30
-    cld
-_out:
-    jsr char_out
-
-    pla
-    rts
 
 
-.rodata
-banner:
-.byte CODE_LF, CODE_LF, "Steckschwein!!", CODE_LF, 0
+; .rodata
+
 
 output_vectors:
 .word $dead 

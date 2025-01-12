@@ -1,6 +1,6 @@
 # !!! order counts !!! - kernel.o must be the first module which is linked to output file
 OBJS=kernel.o 
-
+OBJS+=io.o
 OBJS+=uart.o
 OBJS+=wozmon.o
 
