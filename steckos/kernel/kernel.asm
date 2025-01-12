@@ -34,7 +34,7 @@ OUTPUT_DEVICE_UART = 1
 INPUT_DEVICE_UART = 1
 
 .zeropage
-out_vector:     .res 2
+out_vector:    .res 2
 in_vector:     .res 2
 
 
@@ -56,7 +56,7 @@ do_reset:
 
     
     jsr primm 
-    .byte CODE_LF, CODE_LF, "Steckschwein!!", CODE_LF, 0
+    .byte CODE_LF, CODE_LF, "Steckschwein!", CODE_LF, 0
 
     jmp wozmon
 
