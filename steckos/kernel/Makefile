@@ -32,9 +32,7 @@ clean:
 	ca65 --target none $(DEFINES) $(DEBUG) $(OPT) -I $(ASM_INCLUDE) $<
 
 version.inc:
-	echo -n ".byte \"2.0ALPHA\"" > version.inc
-
-	#echo -n ".byte \"`git rev-parse --short HEAD`\"" > version.inc
+	echo -n ".byte \"`git rev-parse --short HEAD`\"" > version.inc
 
 kernel.bin: version.inc $(OBJS) 
 	ld65 -C steckschwein_kernel.cfg $(OBJS) -m kernel.map -Ln symbols.txt -o kernel.bin

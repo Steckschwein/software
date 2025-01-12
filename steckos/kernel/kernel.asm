@@ -56,7 +56,14 @@ do_reset:
 
     
     jsr primm 
-    .byte CODE_LF, CODE_LF, "Steckschwein!", CODE_LF, 0
+    .byte CODE_LF, CODE_LF, "Steckschwein v", 0
+
+    jsr primm
+    .include "version.inc"
+    .byte 0
+
+    lda #CODE_LF
+    jsr char_out
 
     jmp wozmon
 
