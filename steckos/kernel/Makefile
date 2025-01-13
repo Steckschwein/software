@@ -2,6 +2,10 @@
 OBJS=kernel.o 
 OBJS+=io.o
 OBJS+=uart.o
+OBJS+=crc16.o
+OBJS+=xmodem_upload.o
+OBJS+=xmodem_upload_prg.o
+
 OBJS+=wozmon.o
 
 OBJS+=jumptable.o
@@ -28,7 +32,7 @@ all: kernel.bin loader.prg
 clean:
 	rm -f *.o *.bin *.map *.txt kernel_jumptable.inc version.inc
 
-%.o: %.asm $(ASM_INCLUDE)/*.inc version.inc
+%.o: %.s $(ASM_INCLUDE)/*.inc version.inc
 	ca65 --target none $(DEFINES) $(DEBUG) $(OPT) -I $(ASM_INCLUDE) $<
 
 version.inc:
