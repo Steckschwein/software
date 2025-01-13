@@ -2,15 +2,16 @@
 ; .include "keyboard.inc"
 .include "xmodem.inc"
 ; .include "common.inc"
+.import uart_tx, uart_rx_nowait, primm, char_out, startaddr, crc16_table_hi, crc16_table_lo
 
 .export xmodem_upload_callback
 .export ymodem_upload_callback
+.export xmodem_rcvbuffer=BUFFER_2
+.export xmodem_startaddress=startaddr
 
-; .autoimport
 crc16_hi = crc16_table_hi
 crc16_lo = crc16_table_lo
 
-.import uart_tx, uart_rx_nowait, primm, char_out, startaddr, crc16_table_hi, crc16_table_lo
 
 ; XMODEM/CRC Receiver for the 65C02
 ;
@@ -67,8 +68,6 @@ crc16_lo = crc16_table_lo
 ;
 ;
 
-.export xmodem_rcvbuffer=BUFFER_2
-.export xmodem_startaddress=startaddr
 
 .zeropage
 crc:          .res 2  ; CRC lo byte  (two byte variable)
@@ -142,8 +141,6 @@ X_ESC = $1b  ; ESC to exit
 .endproc
 
 __x_y_modem_upload:
-          lda #'X'
-          jsr char_out
           sta block_rx_cb+0
           stx block_rx_cb+1
           sty blkno     ; set start block #

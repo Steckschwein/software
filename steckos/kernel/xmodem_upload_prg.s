@@ -10,8 +10,7 @@
 
 .import uart_tx
 .import uart_rx_nowait
-.import primm
-.import hexout, hexout
+.import primm, hexout
 .import xmodem_rcvbuffer
 
 .zeropage
