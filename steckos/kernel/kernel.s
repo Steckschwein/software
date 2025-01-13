@@ -27,8 +27,9 @@
 .include "kernel.inc"
 
 .export char_out, char_in, set_input, set_output
-.export out_vector, in_vector
-.import init_uart, uart_tx, uart_rx, primm, wozmon
+.export out_vector, in_vector, startaddr
+.export upload
+.import init_uart, uart_tx, uart_rx, primm, hexout, wozmon, xmodem_upload
 
 OUTPUT_DEVICE_UART = 1
 INPUT_DEVICE_UART = 1
@@ -36,6 +37,7 @@ INPUT_DEVICE_UART = 1
 .zeropage
 out_vector:    .res 2
 in_vector:     .res 2
+startaddr:     .res 2
 
 
 .code
@@ -56,17 +58,29 @@ do_reset:
 
     
     jsr primm 
-    .byte CODE_LF, CODE_LF, "Steckschwein v", 0
-
-    jsr primm
+    .byte CODE_LF, CODE_LF, "Steckschwein "
     .include "version.inc"
+    .byte CODE_LF
     .byte 0
 
     lda #CODE_LF
     jsr char_out
 
-    jmp wozmon
+upload:
+    jsr xmodem_upload
+    bcs @error 
 
+    ; init stack pointer
+    ldx #$ff
+    txs
+
+    jmp (startaddr)
+
+@error:
+    jsr primm
+    .byte "Upload error!", CODE_LF, 0
+
+    jmp wozmon
 
 
 char_out:
@@ -88,8 +102,7 @@ set_output:
     tax
     lda output_vectors,x
     sta out_vector
-    inx
-    lda output_vectors,x
+    lda output_vectors+1,x
     sta out_vector+1
     rts 
 
@@ -99,16 +112,13 @@ set_input:
     tax
     lda input_vectors,x
     sta in_vector
-    ; inx
     lda input_vectors+1,x
     sta in_vector+1
     rts 
 
 
 
-; .rodata
-
-
+.rodata
 output_vectors:
 .word $dead 
 .word uart_tx
