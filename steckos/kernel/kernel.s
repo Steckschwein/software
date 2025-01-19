@@ -32,10 +32,7 @@
 
 .exportzp xmodem_startaddress=startaddr
 
-OUTPUT_DEVICE_NULL  = 0
-INPUT_DEVICE_NULL   = 0
-OUTPUT_DEVICE_UART  = 1
-INPUT_DEVICE_UART   = 1
+
 
 .zeropage
 out_vector:    .res 2
@@ -50,6 +47,13 @@ do_reset:
     ; init stack pointer
     ldx #$ff
     txs
+
+    lda #31 ; enable RAM at slot3
+    sta slot3_ctrl
+
+    lda #2 ; enable RAM at slot2
+    sta slot2_ctrl
+
 
     jsr init_uart
 
