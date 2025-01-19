@@ -1,0 +1,26 @@
+# use glob syntax.
+syntax: glob
+
+*.bin
+**.dis
+*.dbg
+*/*.prg
+*.chp
+*.fus
+*.orig
+**.o
+*.bak
+*.res
+*.lbl
+*~
+*.d
+dist/*
+*.log
+*.xml
+*.map
+steckos/kernel/kernel_jumptable.inc
+steckos/kernel/symbols.txt
+steckos/*/version.inc
+steckos.img
+asmunit/asmunit.a
+asmunit/test.asmunit.o.dbg
