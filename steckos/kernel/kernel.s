@@ -80,7 +80,10 @@ do_reset:
     jsr set_output
 
 
+    lda #'A'
+    jsr char_out
     jmp wozmon
+
 
 @run:
     ldx #$ff
