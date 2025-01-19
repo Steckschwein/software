@@ -2,6 +2,11 @@
 OBJS=kernel.o 
 OBJS+=io.o
 OBJS+=uart.o
+OBJS+=crc16_static.o
+OBJS+=xmodem_upload.o
+OBJS+=xmodem_upload_prg.o
+
+
 OBJS+=wozmon.o
 OBJS+=jumptable.o
 
@@ -12,7 +17,7 @@ LDFLAGS=-C steckschwein_kernel.cfg
 all: kernel.bin loader.prg
 
 clean:
-	rm -f *.o *.bin *.map *.txt kernel_jumptable.inc version.inc
+	rm -f *.o *.bin *.map *.txt *.prg kernel_jumptable.inc version.inc
 
 %.o: %.s $(ASM_INCLUDE)/*.inc version.inc
 	ca65 --target none --cpu 65c02 $(DEFINES) $(DEBUG) $(OPT) -I $(ASM_INCLUDE) $<
