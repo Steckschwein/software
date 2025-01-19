@@ -73,9 +73,11 @@ retryh:       .res 1 ;
 protocol:     .res 1 ; 2nd counter
 block_rx_cb:  .res 2 ; callback
 
-.bss
-.align 256
-xmodem_rcvbuffer: .res 132 
+; .bss
+; .align 256
+; xmodem_rcvbuffer: .res 132 
+
+xmodem_rcvbuffer = BUFFER_0
 ;
 ;
 ;
