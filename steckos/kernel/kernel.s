@@ -86,6 +86,11 @@ do_reset:
     ldx #$ff
     txs 
 
+    lda #INPUT_DEVICE_UART
+    jsr set_input
+    lda #OUTPUT_DEVICE_UART
+    jsr set_output
+
     jmp (startaddr)
 
 
