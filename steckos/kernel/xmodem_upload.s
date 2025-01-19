@@ -74,7 +74,8 @@ protocol:     .res 1 ; 2nd counter
 block_rx_cb:  .res 2 ; callback
 
 .bss
-xmodem_rcvbuffer:      .res 132
+.align 256
+xmodem_rcvbuffer: .res 132 
 ;
 ;
 ;
@@ -146,9 +147,9 @@ __x_y_modem_upload:
           pha
           clc
           adc #'X'      ; mode (0/1) + 'X'
-          jsr char_out
-          jsr primm
-          .byte "MODEM upload...", 0
+          ; jsr char_out
+          ; jsr primm
+          ; .byte "MODEM upload...", 0
           ; jsr crc16_init
           pla
 
