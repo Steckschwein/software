@@ -2,29 +2,11 @@
 OBJS=kernel.o 
 OBJS+=io.o
 OBJS+=uart.o
-OBJS+=crc16.o
-OBJS+=xmodem_upload.o
-OBJS+=xmodem_upload_prg.o
-
 OBJS+=wozmon.o
-
 OBJS+=jumptable.o
-
-#OBJS+=textui.o
-#OBJS+=ansi.o
-#OBJS+=charset_6x8.o
 
 ASM_INCLUDE=../asminc
 LDFLAGS=-C steckschwein_kernel.cfg
-
-# enable debug
-#DEBUG += -DDEBUG_KERNEL
-# debug rtc updates by kernel
-#DEBUG += -DDEBUG_RTC
-#DEBUG += -DV9958
-#DEBUG += -DDEBUG_EXECV
-#DEBUG += -DDEBUG_SPI
-#DEBUG += -DDEBUG_AUTOMOUNT
 
 .PHONY: all clean test
 all: kernel.bin loader.prg
@@ -33,7 +15,7 @@ clean:
 	rm -f *.o *.bin *.map *.txt kernel_jumptable.inc version.inc
 
 %.o: %.s $(ASM_INCLUDE)/*.inc version.inc
-	ca65 --target none $(DEFINES) $(DEBUG) $(OPT) -I $(ASM_INCLUDE) $<
+	ca65 --target none --cpu 65c02 $(DEFINES) $(DEBUG) $(OPT) -I $(ASM_INCLUDE) $<
 
 version.inc:
 	echo -n ".byte \"`git rev-parse --short HEAD`\"" > version.inc

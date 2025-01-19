@@ -7,5 +7,3 @@ krn_chrout:       jmp (in_vector)
 krn_primm:        jmp primm
 krn_set_output:   jmp set_output
 krn_set_input:    jmp set_input
-krn_upload:       jmp upload
-
