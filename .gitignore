@@ -4,7 +4,7 @@ syntax: glob
 *.bin
 **.dis
 *.dbg
-*/*.prg
+*.prg
 *.chp
 *.fus
 *.orig
