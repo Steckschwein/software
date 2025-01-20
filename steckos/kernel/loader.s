@@ -38,11 +38,6 @@ appstart $1000
    lda #31 ; enable RAM at slot3
    sta slot3_ctrl
 
-   lda #2 ; enable RAM at slot2
-   sta slot2_ctrl
-
-
-
    sei ; no irq if we upload from kernel to avoid clash
    ; copy kernel code to kernel_start
    lda #>payload
