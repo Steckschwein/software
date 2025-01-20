@@ -27,7 +27,7 @@
 .include "kernel.inc"
 
 .import init_uart, uart_tx, uart_rx, primm, hexout, wozmon, xmodem_upload
-.export char_out, char_in, set_input, set_output
+.export char_out, char_in, set_input, set_output, upload
 .export out_vector, in_vector, startaddr
 
 .exportzp xmodem_startaddress=startaddr
@@ -70,6 +70,8 @@ do_reset:
     .byte CODE_LF, CODE_LF
     .byte 0
 
+    jmp wozmon
+upload:
     lda #OUTPUT_DEVICE_NULL
     jsr set_output
     lda #INPUT_DEVICE_NULL
@@ -83,10 +85,6 @@ do_reset:
     lda #OUTPUT_DEVICE_UART
     jsr set_output
 
-
-    lda #'A'
-    jsr char_out
-    jmp wozmon
 
 
 @run:
