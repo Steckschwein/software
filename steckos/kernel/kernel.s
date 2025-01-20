@@ -48,9 +48,6 @@ do_reset:
     ldx #$ff
     txs
 
-    lda #31 ; enable RAM at slot3
-    sta slot3_ctrl
-
     lda #2 ; enable RAM at slot2
     sta slot2_ctrl
 
@@ -84,6 +81,12 @@ upload:
     jsr set_input
     lda #OUTPUT_DEVICE_UART
     jsr set_output
+
+    jsr primm 
+    .byte "Upload error", CODE_LF, 0
+
+    jmp do_reset
+
 
 
 
