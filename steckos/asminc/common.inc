@@ -398,13 +398,6 @@
 :
 .endmacro
 
-.macro assertA_eq value
-  php
-  cmp #value
-  bne :+
-  stp
-: plp
-.endmacro
 
 .macro crlf
   lda #CODE_LF		;\n already does the carriage return
