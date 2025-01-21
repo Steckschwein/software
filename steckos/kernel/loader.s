@@ -33,7 +33,8 @@
 p_src:    .res 2
 p_tgt:    .res 2
 
-appstart $1000
+.code 
+   appstart $1000
    
    lda #31 ; enable RAM at slot3
    sta slot3_ctrl
