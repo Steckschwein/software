@@ -7,7 +7,8 @@
 
 .export wozmon
 
-.include "kernel.inc"
+.include "system.inc"
+.include "common.inc"
 
 
 

@@ -21,7 +21,7 @@
 ; SOFTWARE.
 
 .include "common.inc"
-.include "kernel.inc"
+.include "system.inc"
 .include "appstart.inc"
 
 .import 	__KERNEL_START__

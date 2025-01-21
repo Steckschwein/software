@@ -20,7 +20,7 @@
 ; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ; SOFTWARE.
 
-.include "kernel.inc"
+.include "system.inc"
 .export  init_uart, uart_tx, uart_rx, uart_rx_nowait
 .include "uart.inc"
 .code

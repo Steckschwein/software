@@ -1,4 +1,4 @@
-.include "kernel.inc"
+.include "system.inc"
 
 .import char_out
 .export hexout, primm
