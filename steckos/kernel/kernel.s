@@ -24,7 +24,10 @@
 .endif
 
 
-.include "kernel.inc"
+.include "system.inc"
+.include "zeropage.inc"
+; .include "debug.inc"
+.include "common.inc"
 
 .import init_uart, uart_tx, uart_rx, primm, hexout, wozmon, xmodem_upload
 .export char_out, char_in, set_input, set_output, upload
