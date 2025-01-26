@@ -42,6 +42,10 @@ out_vector:    .res 2
 in_vector:     .res 2
 startaddr:     .res 2
 
+.bss
+save_stat: .res   .sizeof(save_status)
+atmp: .res 1
+
 
 .code
 
@@ -70,6 +74,8 @@ do_reset:
     .byte CODE_LF, CODE_LF
     .byte 0
 
+    jsr register_status
+    crlf
     jmp wozmon
 upload:
     lda #OUTPUT_DEVICE_NULL
@@ -141,6 +147,69 @@ set_input:
     sta in_vector+1
     rts 
 
+register_status:
+    sta save_stat + save_status::ACC
+    stx save_stat + save_status::XREG
+    sty save_stat + save_status::YREG
+
+    tsx
+    stx save_stat + save_status::SP
+
+    pla
+    sta save_stat + save_status::STATUS
+    pla
+    sta save_stat + save_status::PC
+    pla
+    sta save_stat + save_status::PC+1
+
+
+    ldx #3
+:
+    lda slot0_ctrl,x
+    sta save_stat + save_status::SLOT0,x
+    dex
+    bpl :-
+
+    jsr primm
+    .byte CODE_LF, "PC   S0 S1 S2 S3 AC XR YR SP NV-BDIZC", CODE_LF,0
+
+    lda save_stat + save_status::PC+1
+    jsr hexout
+    lda save_stat + save_status::PC
+    jsr hexout
+
+    lda #' '
+    jsr char_out
+
+    ldx #save_status::SLOT0
+:
+    lda save_stat,x
+    jsr hexout
+
+    lda #' '
+    jsr char_out
+    inx
+    cpx #save_status::STATUS
+    bne :-
+
+
+    lda save_stat + save_status::STATUS
+    sta atmp
+
+    ldx #0
+@next:
+    asl atmp
+    bcs @set
+    lda #'0'
+    bra @skip
+@set:
+    lda #'1'
+@skip:
+    jsr char_out
+    inx
+    cpx #8
+    bne @next
+    rts
 
 
 .rodata
