@@ -74,9 +74,8 @@ do_reset:
     .byte CODE_LF, CODE_LF
     .byte 0
 
-    jsr register_status
-    crlf
-    jmp wozmon
+    jmp register_status
+
 upload:
     lda #OUTPUT_DEVICE_NULL
     jsr set_output
@@ -209,7 +208,10 @@ register_status:
     inx
     cpx #8
     bne @next
-    rts
+
+    crlf
+
+    jmp wozmon
 
 
 .rodata
