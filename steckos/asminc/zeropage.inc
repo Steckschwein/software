@@ -72,7 +72,5 @@ location_flags             = $f1
 
 .global video_mode
 
-VIDEO_MODE_PAL      = 1<<7
-VIDEO_MODE_80_COLS  = 1<<6
 
 .endif
