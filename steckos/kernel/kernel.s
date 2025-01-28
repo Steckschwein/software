@@ -25,25 +25,31 @@
 
 
 .include "system.inc"
-.include "zeropage.inc"
+; .include "zeropage.inc"
 ; .include "debug.inc"
 .include "common.inc"
 
+.include "vdp.inc"
+
 .import init_uart, uart_tx, uart_rx, primm, hexout, wozmon, xmodem_upload
+.import init_vdp, vdp_bgcolor
 .export char_out, char_in, set_input, set_output, upload
 .export out_vector, in_vector, startaddr
+.export video_mode
 
 .exportzp xmodem_startaddress=startaddr
-
+.exportzp vdp_ptr
 
 
 .zeropage
 out_vector:    .res 2
 in_vector:     .res 2
 startaddr:     .res 2
+vdp_ptr:       .res 2
 
 .bss
 save_stat: .res   .sizeof(save_status)
+video_mode: .res 1
 atmp: .res 1
 
 
@@ -67,6 +73,7 @@ do_reset:
     jsr set_output
 
 
+    jsr init_vdp
     
     jsr primm 
     .byte CODE_LF, CODE_LF, "Steckschwein "
