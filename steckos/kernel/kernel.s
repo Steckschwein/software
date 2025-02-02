@@ -32,10 +32,10 @@
 .include "vdp.inc"
 
 .import init_uart, uart_tx, uart_rx, primm, hexout, wozmon, xmodem_upload
-.import init_vdp, vdp_bgcolor
+.import init_vdp, vdp_bgcolor, textui_chrout, textui_init
 .export char_out, char_in, set_input, set_output, upload
 .export out_vector, in_vector, startaddr
-.export video_mode
+.export video_mode, crs_x, crs_y
 
 .exportzp xmodem_startaddress=startaddr
 .exportzp vdp_ptr
@@ -51,6 +51,9 @@ vdp_ptr:       .res 2
 save_stat: .res   .sizeof(save_status)
 video_mode: .res 1
 atmp: .res 1
+crs_x: .res 1
+crs_y: .res 1
+
 
 
 .code
@@ -74,12 +77,19 @@ do_reset:
 
 
     jsr init_vdp
+
+    jsr textui_init
     
+    lda #'A'
+    jsr textui_chrout
+
     jsr primm 
     .byte CODE_LF, CODE_LF, "Steckschwein "
     .include "version.inc"
     .byte CODE_LF, CODE_LF
     .byte 0
+
+
 
     jmp register_status
 

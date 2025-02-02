@@ -1,12 +1,9 @@
 .include "vdp.inc"
 
 
-VIDEO_MODE_PAL      = 1<<7
-VIDEO_MODE_80_COLS  = 1<<6
-VIDEO_COLOR=Gray<<4|Cyan  ; gray text, black backdrop/border
-ROWS=23
-COLS=80
-.export init_vdp, vdp_bgcolor
+
+.export init_vdp, vdp_bgcolor, vdp_fill, vdp_text_on
+.export vdp_nopslide_2m, vdp_nopslide_8m, vdp_nopslide_end
 
 .import primm
 .import char_out

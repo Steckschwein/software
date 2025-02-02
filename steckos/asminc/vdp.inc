@@ -404,4 +404,10 @@ vdp_nopslide_end:
   bpl @l    ; wait until blank - irq flag set?
 .endmacro
 
+
+VIDEO_MODE_PAL      = 1<<7
+VIDEO_MODE_80_COLS  = 1<<6
+VIDEO_COLOR=Gray<<4|Cyan  ; gray text, black backdrop/border
+ROWS=24
+COLS=80
 .endif ;_VDP_INC_
