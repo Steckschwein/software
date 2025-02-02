@@ -32,7 +32,7 @@
 .include "vdp.inc"
 
 .import init_uart, uart_tx, uart_rx, primm, hexout, wozmon, xmodem_upload
-.import init_vdp, vdp_bgcolor, textui_chrout, textui_init, textui_crsxy
+.import init_vdp, vdp_bgcolor
 .export char_out, char_in, set_input, set_output, upload
 .export out_vector, in_vector, startaddr
 .export video_mode, crs_x, crs_y
@@ -77,15 +77,6 @@ do_reset:
 
 
     jsr init_vdp
-
-    jsr textui_init
-
-    ldx #0
-    ldy #0
-    jsr textui_crsxy
-    
-    lda #'A'
-    jsr textui_chrout
 
     jsr primm 
     .byte CODE_LF, CODE_LF, "Steckschwein "
