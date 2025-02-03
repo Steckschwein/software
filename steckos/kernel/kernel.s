@@ -75,14 +75,29 @@ do_reset:
     lda #OUTPUT_DEVICE_UART
     jsr set_output
 
-
     jsr init_vdp
+    
+    vdp_vram_w ADDRESS_TEXT_SCREEN
+
+
+    ldx #0
+:
+    lda message,x
+    beq :+
+    vdp_wait_l 4
+    sta a_vram
+    inx
+    bra :-
+:
+
 
     jsr primm 
+message:
     .byte CODE_LF, CODE_LF, "Steckschwein "
     .include "version.inc"
     .byte CODE_LF, CODE_LF
     .byte 0
+
 
 
 
