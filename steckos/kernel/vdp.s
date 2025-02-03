@@ -8,7 +8,6 @@
 .import primm
 .import char_out
 .import charset_6x8
-.import video_mode
 .importzp vdp_ptr
 
 ; .zeropage

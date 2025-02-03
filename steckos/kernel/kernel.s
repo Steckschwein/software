@@ -35,7 +35,7 @@
 .import init_vdp, vdp_bgcolor
 .export char_out, char_in, set_input, set_output, upload
 .export out_vector, in_vector, startaddr
-.export video_mode, crs_x, crs_y
+.export crs_x, crs_y
 
 .exportzp xmodem_startaddress=startaddr
 .exportzp vdp_ptr
@@ -49,7 +49,6 @@ vdp_ptr:       .res 2
 
 .bss
 save_stat: .res   .sizeof(save_status)
-video_mode: .res 1
 atmp: .res 1
 crs_x: .res 1
 crs_y: .res 1
