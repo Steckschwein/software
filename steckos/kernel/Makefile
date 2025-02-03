@@ -47,5 +47,6 @@ test.bin: test.o
 test:
 	(cd test; make all)
 
-emu: loader.prg
-	steckschwein-emu -rom ../bios/bios.bin -sdcard ../../steckos.img -upload ../shell/shell.prg # loader.prg
+emu: kernel.bin
+	cat kernel.bin kernel.bin > rom.bin
+	steckschwein-emu -rom rom.bin 
