@@ -20,21 +20,8 @@
 m_vdp_nopslide
 
 init_vdp:
-    lda #VIDEO_MODE_80_COLS
-    tsb video_mode
-
     lda #VIDEO_COLOR
     jsr vdp_text_on
-
-    lda vdp_text_init_bytes+1 ; disable vdp irq
-    and #<~(v_reg1_int)
-    ldy #v_reg1
-    jsr vdp_set_reg
-
-    vdp_vram_w ADDRESS_GFX_SPRITE
-    vdp_wait_l
-    lda #SPRITE_OFF          ;sprites off, at least y=$d0 will disable the sprite subsystem
-    sta a_vram
 
     jsr vdp_text_blank
 
@@ -43,6 +30,7 @@ init_vdp:
     ldy #>charset_6x8
     ldx #$08                    ;load charset
     ; jmp vdp_memcpy
+    ; fall through to vdp_memcpy
 
 ;@name: vdp_memcpy
 ;@desc: copy data from host memory denoted by pointer (A/Y) to vdp VRAM (page wise). the VRAM address must be setup beforehand e.g. with macro vdp_vram_w <address>
@@ -125,7 +113,6 @@ vdp_set_reg:
 ;@desc: text mode - 40x24/80x24 character mode, 2 colors
 ;@in: A - color settings (#R07)
 vdp_text_on:
-
     php
     sei
 
@@ -135,19 +122,6 @@ vdp_text_on:
     ldy #>vdp_text_init_bytes
     ldx #(vdp_text_init_bytes_end-vdp_text_init_bytes-1)
     jsr vdp_init_reg
-
-    bit video_mode
-    bvc @_mode_40
-@_mode_80:
-    lda #v_reg0_m4 ; text mode 2, 80 cols ; R#00
-    ldy #v_reg0
-    jsr vdp_set_reg
-    lda #>(ADDRESS_TEXT_SCREEN>>2) | $03  ; name table - value * $1000 (v9958)    R#02
-    ldy #v_reg2
-    jsr vdp_set_reg
-@_mode_40:
-    lda #VIDEO_MODE_PAL
-    tsb video_mode
 
     pla
     jsr vdp_bgcolor
@@ -161,45 +135,47 @@ vdp_text_on:
 ;@in: X - length of init table, corresponds to video register to start R#+X - e.g. X=10 start with R#10
 ;@in: A/Y - pointer to vdp init table
 vdp_init_reg:
-      php
-      sei
+    php
+    sei
 
-      sta vdp_ptr
-      sty vdp_ptr+1
-      txa       ; x length of init table
-      tay
-      ora #$80  ; bit 7 = 1 => register write
-      tax
-@l:   vdp_wait_s 7
-      lda (vdp_ptr),y ; 5c
-      sta a_vreg
-      vdp_wait_s
-      stx a_vreg
-      dex        ;2c
-      dey        ;2c
-      bpl @l     ;3c
+    sta vdp_ptr
+    sty vdp_ptr+1
+    txa       ; x length of init table
+    tay
+    ora #$80  ; bit 7 = 1 => register write
+    tax
+@l:   
+    vdp_wait_s 7
+    lda (vdp_ptr),y ; 5c
+    sta a_vreg
+    vdp_wait_s
+    stx a_vreg
+    dex        ;2c
+    dey        ;2c
+    bpl @l     ;3c
 
-      vdp_sreg 0, v_reg23  ; reset vertical scroll
-      vdp_sreg v_reg25_wait | v_reg25_cmd, v_reg25  ; enable V9958 /WAIT pin, enable CMD on lower screen modes
+    vdp_sreg 0, v_reg23  ; reset vertical scroll
+    vdp_sreg v_reg25_wait | v_reg25_cmd, v_reg25  ; enable V9958 /WAIT pin, enable CMD on lower screen modes
 
-      plp
-      rts
+    plp
+    rts
 
 .rodata
 vdp_text_init_bytes:
-    .byte 0 ; R#0
-    .byte v_reg1_16k|v_reg1_display_on|v_reg1_int|v_reg1_spr_size|v_reg1_m1  ; #R01
-    .byte >(ADDRESS_TEXT_SCREEN>>2) ; name table - value * $1000 (v9958)    #R02
-    .byte >(ADDRESS_TEXT_COLOR<<2) | $07  ; color table - value * $1000 (v9958)
-    .byte >(ADDRESS_TEXT_PATTERN>>3) ; pattern table (charset) - value * $800    --> offset in VRAM
+    .byte v_reg0_m4 ; R#0
+    .byte v_reg1_16k|v_reg1_display_on|v_reg1_spr_size|v_reg1_m1 ; #R01
+    ; .byte >(ADDRESS_TEXT_SCREEN>>2) ; name table - value * $1000 (v9958)    #R02
+    .byte >(ADDRESS_TEXT_SCREEN>>2) | $03                       ; name table - value * $1000 (v9958)    R#02
+    .byte >(ADDRESS_TEXT_COLOR<<2) | $07                        ; color table - value * $1000 (v9958)
+    .byte >(ADDRESS_TEXT_PATTERN>>3)                            ; pattern table (charset) - value * $800    --> offset in VRAM
     .byte 0  ; not used
     .byte 0  ; not used
-    .byte Medium_Green<<4|Black ; #R07
-    .byte v_reg8_VR  | v_reg8_SPD ; VR - 64k VRAM TODO FIXME aware of max vram (bios) - #R08
-    .byte v_reg9_nt   ; #R9, set bit to 1 for PAL
-    .byte <.HIWORD(ADDRESS_TEXT_COLOR<<2)  ;#R10
+    .byte Medium_Green<<4|Black                                 ; #R07
+    .byte v_reg8_VR  | v_reg8_SPD                               ; VR - 64k VRAM TODO FIXME aware of max vram (bios) - #R08
+    .byte v_reg9_nt                                             ; #R9, set bit to 1 for PAL
+    .byte <.HIWORD(ADDRESS_TEXT_COLOR<<2)                       ;#R10
     .byte 0
-    .byte Black<<4|Medium_Green ; blink color to inverse text  #R12
-    .byte $f0 ; "on time" to max value, per default, means no off time and therefore no blink at all  #R13
+    .byte Black<<4|Medium_Green                                 ; blink color to inverse text  #R12
+    .byte $f0                                                   ; "on time" to max value, per default, means no off time and therefore no blink at all  #R13
     .byte <.HIWORD(ADDRESS_TEXT_SCREEN<<2)
 vdp_text_init_bytes_end:
