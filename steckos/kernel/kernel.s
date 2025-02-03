@@ -120,7 +120,7 @@ upload:
     jsr primm 
     .byte "Upload error", CODE_LF, 0
 
-    bra do_reset
+    jmp do_reset
 
 
 
