@@ -30,9 +30,11 @@
 .include "common.inc"
 
 .include "vdp.inc"
+SCREEN_DIRTY = $80
 
 .import init_uart, uart_tx, uart_rx, primm, hexout, wozmon, xmodem_upload
-.import init_vdp, vdp_bgcolor
+.import init_vdp, vdp_bgcolor, vdp_memcpy
+.import textui_init, textui_chrout, textui_update_screen
 .export char_out, char_in, set_input, set_output, upload
 .export out_vector, in_vector, startaddr
 .export crs_x, crs_y
@@ -46,14 +48,18 @@ out_vector:    .res 2
 in_vector:     .res 2
 startaddr:     .res 2
 vdp_ptr:       .res 2
+console_ptr:   .res 2
 
 .bss
 save_stat: .res   .sizeof(save_status)
 atmp: .res 1
 crs_x: .res 1
 crs_y: .res 1
+screen_status: .res 1
 
-
+screen_buffer = $0400
+screen_buffer_size = 80*24
+screen_buffer_end = screen_buffer + screen_buffer_size
 
 .code
 
@@ -74,22 +80,49 @@ do_reset:
     lda #OUTPUT_DEVICE_UART
     jsr set_output
 
+    php 
+    sei 
     jsr init_vdp
-    
+    plp
+
+    clc
+
+
+
+;     ldx #0
+; :
+;     lda message,x
+;     beq :+
+;     vdp_wait_l 4
+;     sta a_vram
+;     inx
+;     bra :-
+; :
+
     vdp_vram_w ADDRESS_TEXT_SCREEN
 
 
+
+    lda #'A'
     ldx #0
 :
-    lda message,x
-    beq :+
-    vdp_wait_l 4
-    sta a_vram
-    inx
-    bra :-
+    sta screen_buffer,x
+    inx 
+    bne :-
+
+    lda #'B'
+    ldx #0
 :
+    sta screen_buffer + $100,x
+    inx 
+    bne :-
 
+    SetVector screen_buffer, console_ptr
 
+    lda screen_status
+    ora #SCREEN_DIRTY
+    sta screen_status
+    
     jsr primm 
 message:
     .byte CODE_LF, CODE_LF, "Steckschwein "
@@ -143,6 +176,29 @@ char_in:
     jmp (in_vector)
 
 do_irq:
+    save 
+
+
+    bit a_vreg
+    bpl :+
+
+    bit screen_status
+    bpl :+
+
+    vdp_vram_w ADDRESS_TEXT_SCREEN
+
+    lda console_ptr
+    ldy console_ptr+1
+    ldx #8
+    jsr vdp_memcpy
+:
+
+    lda screen_status
+    and #!(SCREEN_DIRTY)
+    sta screen_status
+
+
+    restore 
     rti
 
 
