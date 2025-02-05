@@ -83,11 +83,10 @@ do_reset:
     php 
     sei 
     jsr init_vdp
-    vdp_wait_l 10
+    vdp_wait_l 
 
     plp
 
-    clc
 
 
 
@@ -105,32 +104,32 @@ do_reset:
 
 
 
-    ; lda #'X'
-    ; sta a_vram
-    ; lda #'Y'
-    ; sta a_vram
-    ; lda #'Z'
-    ; sta a_vram
+    lda #'X'
+    sta a_vram
+    lda #'Y'
+    sta a_vram
+    lda #'Z'
+    sta a_vram
     
-    lda #'A'
-    ldx #0
-:
-    sta screen_buffer,x
-    inx 
-    bne :-
+;     lda #'A'
+;     ldx #0
+; :
+;     sta screen_buffer,x
+;     inx 
+;     bne :-
 
-    lda #'B'
-    ldx #0
-:
-    sta screen_buffer + $100,x
-    inx 
-    bne :-
+;     lda #'B'
+;     ldx #0
+; :
+;     sta screen_buffer + $100,x
+;     inx 
+;     bne :-
 
-    SetVector screen_buffer, console_ptr
+;     SetVector screen_buffer, console_ptr
 
-    lda screen_status
-    ora #SCREEN_DIRTY
-    sta screen_status
+;     lda screen_status
+;     ora #SCREEN_DIRTY
+;     sta screen_status
     
     jsr primm 
 message:

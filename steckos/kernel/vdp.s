@@ -48,7 +48,7 @@ vdp_memcpy:
     inc vdp_ptr+1  ;5
     dex         ;2
     bne :-
-    vdp_wait_l 10
+    vdp_wait_l 6
     rts
 
 
@@ -79,7 +79,7 @@ vdp_fill:
     bne @1       ;3
     dex
     bne @1
-    vdp_wait_l 10
+    vdp_wait_l 6
     rts
 
 ;@name: vdp_fills
@@ -91,7 +91,7 @@ vdp_fills:
     dex        ;2
     sta a_vram    ;4
     bne  @0      ;3
-    vdp_wait_l 10
+    vdp_wait_l 6
     rts
 
 ;@name: vdp_bgcolor
@@ -125,8 +125,12 @@ vdp_text_on:
     ldx #(vdp_text_init_bytes_end-vdp_text_init_bytes-1)
     jsr vdp_init_reg
 
+    vdp_wait_l
+
     pla
     jsr vdp_bgcolor
+    vdp_wait_l
+
 
     plp
     rts
@@ -154,6 +158,8 @@ vdp_init_reg:
     stx a_vreg
     dex        ;2c
     dey        ;2c
+    vdp_wait_l 
+
     bpl @l     ;3c
 
     vdp_sreg 0, v_reg23  ; reset vertical scroll
