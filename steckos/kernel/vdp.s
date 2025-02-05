@@ -125,11 +125,9 @@ vdp_text_on:
     ldx #(vdp_text_init_bytes_end-vdp_text_init_bytes-1)
     jsr vdp_init_reg
 
-    vdp_wait_l
 
     pla
     jsr vdp_bgcolor
-    vdp_wait_l
 
 
     plp
@@ -172,7 +170,6 @@ vdp_init_reg:
 vdp_text_init_bytes:
     .byte v_reg0_m4 ; R#0
     .byte v_reg1_16k|v_reg1_display_on|v_reg1_spr_size|v_reg1_m1|v_reg1_int ; #R01
-    ; .byte >(ADDRESS_TEXT_SCREEN>>2) ; name table - value * $1000 (v9958)    #R02
     .byte >(ADDRESS_TEXT_SCREEN>>2) | $03                       ; name table - value * $1000 (v9958)    R#02
     .byte >(ADDRESS_TEXT_COLOR<<2) | $07                        ; color table - value * $1000 (v9958)
     .byte >(ADDRESS_TEXT_PATTERN>>3)                            ; pattern table (charset) - value * $800    --> offset in VRAM

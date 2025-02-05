@@ -79,46 +79,70 @@ do_reset:
     jsr set_input
     lda #OUTPUT_DEVICE_UART
     jsr set_output
+
+
+    jsr clear_screenbuf
    
-    ; php 
-    sei 
+    ; sei 
     jsr init_vdp
     vdp_wait_l 
 
-    ; plp
 
 
-    vdp_vram_w ADDRESS_TEXT_SCREEN
+    ; vdp_vram_w ADDRESS_TEXT_SCREEN
+    ; vdp_wait_l 
 
 
 
-    lda #'X'
-    sta a_vram
-    lda #'Y'
-    sta a_vram
-    lda #'Z'
-    sta a_vram
+    ; lda #'X'
+    ; sta a_vram
+    ; vdp_wait_l 
+
+    ; lda #'Y'
+    ; sta a_vram
+    ; vdp_wait_l 
+
+    ; lda #'Z'
+    ; sta a_vram
+    ; vdp_wait_l 
     
-;     lda #'A'
-;     ldx #0
-; :
-;     sta screen_buffer,x
-;     inx 
-;     bne :-
-
-;     lda #'B'
-;     ldx #0
-; :
-;     sta screen_buffer + $100,x
-;     inx 
-;     bne :-
-
-;     SetVector screen_buffer, console_ptr
-
-;     lda screen_status
-;     ora #SCREEN_DIRTY
-;     sta screen_status
+    SetVector screen_buffer, console_ptr
     
+    lda #' '
+    ldx #0
+:
+    sta screen_buffer,x
+    inx 
+    inc a 
+    cmp #'z'+1
+
+
+    
+    bne :-
+
+
+    lda screen_status
+    ora #SCREEN_DIRTY
+    sta screen_status
+
+    cli
+    
+    ldx #0
+:
+    lda message,x 
+    beq @end 
+
+    sta screen_buffer + $a0,x 
+
+    lda screen_status
+    ora #SCREEN_DIRTY
+    sta screen_status
+
+    inx
+    bra :-
+@end:
+
+
     jsr primm 
 message:
     .byte CODE_LF, CODE_LF, "Steckschwein "
@@ -174,15 +198,13 @@ char_in:
 do_irq:
     save 
 
-
     bit a_vreg
     bpl :+
 
-    ; bit screen_status
-    ; bpl :+
+    bit screen_status
+    bpl :+
 
     vdp_vram_w ADDRESS_TEXT_SCREEN
-    vdp_wait_l 10 ;3 + 5 + 2 + 1 opcode fetch =10 cl for inner loop, +10 cl outer loop
     
 
     lda console_ptr
@@ -190,14 +212,11 @@ do_irq:
     ldx #8
     jsr vdp_memcpy
     
-    vdp_wait_l 10 ;3 + 5 + 2 + 1 opcode fetch =10 cl for inner loop, +10 cl outer loop
-
 :
 
     lda screen_status
     and #!(SCREEN_DIRTY)
     sta screen_status
-
 
     restore 
     rti
@@ -296,6 +315,23 @@ register_status:
 
     jsr upload
     jmp wozmon
+
+clear_screenbuf:
+    lda #' '
+    ldx #0
+:
+    sta screen_buffer,x
+    sta screen_buffer + $100,x
+    sta screen_buffer + $200,x
+    sta screen_buffer + $300,x
+    sta screen_buffer + $400,x
+    sta screen_buffer + $500,x
+    sta screen_buffer + $600,x
+    sta screen_buffer + $700,x
+    
+    inx 
+    bne :-
+    rts
 
 
 .rodata
