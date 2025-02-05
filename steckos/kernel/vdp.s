@@ -48,6 +48,7 @@ vdp_memcpy:
     inc vdp_ptr+1  ;5
     dex         ;2
     bne :-
+    vdp_wait_l 10
     rts
 
 
@@ -78,6 +79,7 @@ vdp_fill:
     bne @1       ;3
     dex
     bne @1
+    vdp_wait_l 10
     rts
 
 ;@name: vdp_fills
@@ -89,6 +91,7 @@ vdp_fills:
     dex        ;2
     sta a_vram    ;4
     bne  @0      ;3
+    vdp_wait_l 10
     rts
 
 ;@name: vdp_bgcolor

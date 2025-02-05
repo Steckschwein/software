@@ -79,30 +79,39 @@ do_reset:
     jsr set_input
     lda #OUTPUT_DEVICE_UART
     jsr set_output
-
+   
     php 
     sei 
     jsr init_vdp
+    vdp_wait_l 10
+
     plp
 
     clc
 
 
 
-;     ldx #0
-; :
-;     lda message,x
-;     beq :+
-;     vdp_wait_l 4
-;     sta a_vram
-;     inx
-;     bra :-
-; :
+    ldx #0
+:
+    lda message,x
+    beq :+
+    vdp_wait_l 4
+    sta a_vram
+    inx
+    bra :-
+:
 
     vdp_vram_w ADDRESS_TEXT_SCREEN
 
 
 
+    ; lda #'X'
+    ; sta a_vram
+    ; lda #'Y'
+    ; sta a_vram
+    ; lda #'Z'
+    ; sta a_vram
+    
     lda #'A'
     ldx #0
 :
@@ -182,15 +191,20 @@ do_irq:
     bit a_vreg
     bpl :+
 
-    bit screen_status
-    bpl :+
+    ; bit screen_status
+    ; bpl :+
 
     vdp_vram_w ADDRESS_TEXT_SCREEN
+    vdp_wait_l 10 ;3 + 5 + 2 + 1 opcode fetch =10 cl for inner loop, +10 cl outer loop
+    
 
     lda console_ptr
     ldy console_ptr+1
     ldx #8
     jsr vdp_memcpy
+    
+    vdp_wait_l 10 ;3 + 5 + 2 + 1 opcode fetch =10 cl for inner loop, +10 cl outer loop
+
 :
 
     lda screen_status
@@ -293,6 +307,7 @@ register_status:
 
     crlf
 
+    jsr upload
     jmp wozmon
 
 

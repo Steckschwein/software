@@ -289,11 +289,6 @@ vdp_nopslide_end:
   rts
 .endmacro
 
-.macro vnops
-  .warning "# DEPRECATED - macro 'vnops' is deprectaed, please use vdp_wait_s/vdp_wait_l instead"
-  vdp_wait_l
-.endmacro
-
 
 .macro vdp_wait_s _wasted_cycles
     .local _wasted_cycles
