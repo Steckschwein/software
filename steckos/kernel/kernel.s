@@ -88,18 +88,6 @@ do_reset:
     plp
 
 
-
-
-    ldx #0
-:
-    lda message,x
-    beq :+
-    vdp_wait_l 4
-    sta a_vram
-    inx
-    bra :-
-:
-
     vdp_vram_w ADDRESS_TEXT_SCREEN
 
 
