@@ -80,12 +80,12 @@ do_reset:
     lda #OUTPUT_DEVICE_UART
     jsr set_output
    
-    php 
+    ; php 
     sei 
     jsr init_vdp
     vdp_wait_l 
 
-    plp
+    ; plp
 
 
     vdp_vram_w ADDRESS_TEXT_SCREEN
