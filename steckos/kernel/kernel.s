@@ -108,7 +108,7 @@ do_reset:
     
     SetVector screen_buffer, console_ptr
     
-    lda #' '
+    lda #'0'
     ldx #0
 :
     sta screen_buffer,x
