@@ -57,7 +57,7 @@ crs_x: .res 1
 crs_y: .res 1
 screen_status: .res 1
 
-screen_buffer = $0400
+screen_buffer = $8000
 screen_buffer_size = 80*24
 screen_buffer_end = screen_buffer + screen_buffer_size
 
@@ -80,9 +80,16 @@ do_reset:
     lda #OUTPUT_DEVICE_UART
     jsr set_output
 
-
+    lda slot2_ctrl
+    pha
+    lda #30
+    sta slot2_ctrl 
+    
     jsr clear_screenbuf
    
+    pla 
+    sta slot2_ctrl
+
     ; sei 
     jsr init_vdp
     vdp_wait_l 
@@ -107,7 +114,12 @@ do_reset:
     ; vdp_wait_l 
     
     SetVector screen_buffer, console_ptr
-    
+
+    ; lda slot2_ctrl
+    ; pha
+    ; lda #30
+    ; sta slot2_ctrl 
+
     lda #'0'
     ldx #0
 :
@@ -120,27 +132,30 @@ do_reset:
     
     bne :-
 
+    ; pla 
+    ; sta slot2_ctrl
+
 
     lda screen_status
     ora #SCREEN_DIRTY
     sta screen_status
 
-    cli
+    ; cli
     
-    ldx #0
-:
-    lda message,x 
-    beq @end 
+;     ldx #0
+; :
+;     lda message,x 
+;     beq @end 
 
-    sta screen_buffer + $a0,x 
+;     sta screen_buffer + $a0,x 
 
-    lda screen_status
-    ora #SCREEN_DIRTY
-    sta screen_status
+;     lda screen_status
+;     ora #SCREEN_DIRTY
+;     sta screen_status
 
-    inx
-    bra :-
-@end:
+;     inx
+;     bra :-
+; @end:
 
 
     jsr primm 
@@ -151,9 +166,9 @@ message:
     .byte 0
 
 
+    jmp upload
 
-
-    jmp register_status
+    ; jmp register_status
 
 upload:
     lda #OUTPUT_DEVICE_NULL
@@ -206,6 +221,11 @@ do_irq:
 
     vdp_vram_w ADDRESS_TEXT_SCREEN
     
+    lda slot2_ctrl
+    pha 
+
+    lda #30
+    sta slot2_ctrl 
 
     lda console_ptr
     ldy console_ptr+1
@@ -213,6 +233,9 @@ do_irq:
     jsr vdp_memcpy
     
 :
+
+    pla
+    sta slot2_ctrl
 
     lda screen_status
     and #!(SCREEN_DIRTY)
@@ -313,7 +336,7 @@ register_status:
 
     crlf
 
-    jsr upload
+
     jmp wozmon
 
 clear_screenbuf:
@@ -325,9 +348,9 @@ clear_screenbuf:
     sta screen_buffer + $200,x
     sta screen_buffer + $300,x
     sta screen_buffer + $400,x
-    sta screen_buffer + $500,x
-    sta screen_buffer + $600,x
-    sta screen_buffer + $700,x
+    ; sta screen_buffer + $500,x
+    ; sta screen_buffer + $600,x
+    ; sta screen_buffer + $700,x
     
     inx 
     bne :-
