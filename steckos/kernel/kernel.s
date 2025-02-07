@@ -339,9 +339,9 @@ clear_screenbuf:
     sta screen_buffer + $200,x
     sta screen_buffer + $300,x
     sta screen_buffer + $400,x
-    ; sta screen_buffer + $500,x
-    ; sta screen_buffer + $600,x
-    ; sta screen_buffer + $700,x
+    sta screen_buffer + $500,x
+    sta screen_buffer + $600,x
+    sta screen_buffer + $700,x
     
     inx 
     bne :-
