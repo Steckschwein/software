@@ -57,6 +57,7 @@ crs_x: .res 1
 crs_y: .res 1
 screen_status: .res 1
 
+SCREEN_BUFFER_PAGE = 30
 screen_buffer = $8000
 screen_buffer_size = 80*24
 screen_buffer_end = screen_buffer + screen_buffer_size
@@ -82,7 +83,7 @@ do_reset:
 
     lda slot2_ctrl
     pha
-    lda #30
+    lda #SCREEN_BUFFER_PAGE
     sta slot2_ctrl 
     
     jsr clear_screenbuf
@@ -90,35 +91,16 @@ do_reset:
     pla 
     sta slot2_ctrl
 
-    ; sei 
+    sei 
     jsr init_vdp
     vdp_wait_l 
-
-
-
-    ; vdp_vram_w ADDRESS_TEXT_SCREEN
-    ; vdp_wait_l 
-
-
-
-    ; lda #'X'
-    ; sta a_vram
-    ; vdp_wait_l 
-
-    ; lda #'Y'
-    ; sta a_vram
-    ; vdp_wait_l 
-
-    ; lda #'Z'
-    ; sta a_vram
-    ; vdp_wait_l 
     
     SetVector screen_buffer, console_ptr
 
-    ; lda slot2_ctrl
-    ; pha
-    ; lda #30
-    ; sta slot2_ctrl 
+    lda slot2_ctrl
+    pha
+    lda #SCREEN_BUFFER_PAGE
+    sta slot2_ctrl 
 
     lda #'0'
     ldx #0
@@ -132,30 +114,30 @@ do_reset:
     
     bne :-
 
-    ; pla 
-    ; sta slot2_ctrl
+    pla 
+    sta slot2_ctrl
 
 
     lda screen_status
     ora #SCREEN_DIRTY
     sta screen_status
 
-    ; cli
+    cli
     
-;     ldx #0
-; :
-;     lda message,x 
-;     beq @end 
+    ldx #0
+:
+    lda message,x 
+    beq @end 
 
-;     sta screen_buffer + $a0,x 
+    sta screen_buffer + $a0,x 
 
-;     lda screen_status
-;     ora #SCREEN_DIRTY
-;     sta screen_status
+    lda screen_status
+    ora #SCREEN_DIRTY
+    sta screen_status
 
-;     inx
-;     bra :-
-; @end:
+    inx
+    bra :-
+@end:
 
 
     jsr primm 
@@ -216,15 +198,15 @@ do_irq:
     bit a_vreg
     bpl :+
 
-    bit screen_status
+    bit screen_status ; screen dirty bit set?
     bpl :+
-
+    ; yes, write to vdp
     vdp_vram_w ADDRESS_TEXT_SCREEN
     
     lda slot2_ctrl
     pha 
 
-    lda #30
+    lda #SCREEN_BUFFER_PAGE
     sta slot2_ctrl 
 
     lda console_ptr
