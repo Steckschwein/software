@@ -18,7 +18,7 @@ ASM_INCLUDE=../asminc
 LDFLAGS=-C steckschwein_kernel.cfg
 
 .PHONY: all clean test
-all: kernel.bin loader.prg
+all: kernel.bin kernel_jumptable loader.prg 
 
 clean:
 	rm -f *.o *.bin *.map *.txt *.prg kernel_jumptable.inc version.inc
@@ -31,8 +31,10 @@ version.inc:
 
 kernel.bin: version.inc $(OBJS) 
 	ld65 -C steckschwein_kernel.cfg $(OBJS) -m kernel.map -Ln symbols.txt -o kernel.bin
+#s=0 && for l in $$(cat kernel.map |grep fat32 -A 1|grep CODE |cut -d '=' -f3|cut -d ' ' -f1);do s=$$(($$s + 0x$$l));done && echo "fat32 size: $$s bytes"
+
+kernel_jumptable: kernel.bin
 	grep krn symbols.txt | egrep -v "(krn_tm|krn_ptr)" | sed "s/al 00//" | awk -F' ' '{print $$2" = $$"$$1}'| sed -e "s/^\.//g" > kernel_jumptable.inc
-	s=0 && for l in $$(cat kernel.map |grep fat32 -A 1|grep CODE |cut -d '=' -f3|cut -d ' ' -f1);do s=$$(($$s + 0x$$l));done && echo "fat32 size: $$s bytes"
 
 loader.prg: kernel.bin loader.o
 	ld65 -C steckschwein_prg.cfg -m loader.map loader.o -o loader.prg
@@ -41,12 +43,14 @@ loader.prg: kernel.bin loader.o
 transfer: loader.prg
 	../../xmodem.sh loader.prg
 
+rom.bin: kernel.bin
+	cat kernel.bin kernel.bin > rom.bin
+
 test.bin: test.o
 	cl65 --target none --config kernel.cfg test.asm -o test.bin
 
 test:
 	(cd test; make all)
 
-emu: kernel.bin
-	cat kernel.bin kernel.bin > rom.bin
+emu: kernel.bin rom.bin
 	steckschwein-emu -rom rom.bin 
