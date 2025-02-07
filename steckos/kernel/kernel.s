@@ -91,11 +91,13 @@ do_reset:
     pla 
     sta slot2_ctrl
 
-    sei 
+    lda a_vreg
     jsr init_vdp
     vdp_wait_l 
     
     SetVector screen_buffer, console_ptr
+
+    cli
 
     lda slot2_ctrl
     pha
@@ -109,8 +111,6 @@ do_reset:
     inx 
     inc a 
     cmp #'z'+1
-
-
     
     bne :-
 
@@ -122,13 +122,11 @@ do_reset:
     ora #SCREEN_DIRTY
     sta screen_status
 
-    cli
 
     lda slot2_ctrl
     pha
     lda #SCREEN_BUFFER_PAGE
     sta slot2_ctrl 
-
 
     ldx #0
 :
@@ -137,10 +135,6 @@ do_reset:
 
     sta screen_buffer + $a0,x 
 
-    lda screen_status
-    ora #SCREEN_DIRTY
-    sta screen_status
-
     inx
     bra :-
 
@@ -148,6 +142,9 @@ do_reset:
     pla 
     sta slot2_ctrl
 
+    lda screen_status
+    ora #SCREEN_DIRTY
+    sta screen_status
 
     jsr primm 
 message:
@@ -205,10 +202,11 @@ do_irq:
     save 
 
     bit a_vreg
-    bpl :+
+    bpl @exit_isr
 
     bit screen_status ; screen dirty bit set?
-    bpl :+
+    bpl @exit_isr
+
     ; yes, write to vdp
     vdp_vram_w ADDRESS_TEXT_SCREEN
     
@@ -223,7 +221,6 @@ do_irq:
     ldx #8
     jsr vdp_memcpy
     
-:
 
     pla
     sta slot2_ctrl
@@ -232,6 +229,7 @@ do_irq:
     and #!(SCREEN_DIRTY)
     sta screen_status
 
+@exit_isr:
     restore 
     rti
 
