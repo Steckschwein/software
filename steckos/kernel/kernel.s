@@ -123,7 +123,13 @@ do_reset:
     sta screen_status
 
     cli
-    
+
+    lda slot2_ctrl
+    pha
+    lda #SCREEN_BUFFER_PAGE
+    sta slot2_ctrl 
+
+
     ldx #0
 :
     lda message,x 
@@ -137,7 +143,10 @@ do_reset:
 
     inx
     bra :-
+
 @end:
+    pla 
+    sta slot2_ctrl
 
 
     jsr primm 
