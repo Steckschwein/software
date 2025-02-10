@@ -76,76 +76,79 @@ do_reset:
 
     jsr init_uart
 
+    lda #'X'
+    jsr uart_tx
+
     lda #INPUT_DEVICE_UART
     jsr set_input
     lda #OUTPUT_DEVICE_UART
     jsr set_output
 
-    jsr console_init
+    ; jsr console_init
 
 
 
-    lda a_vreg
-    jsr init_vdp
-    vdp_wait_l 
+    ; lda a_vreg
+    ; jsr init_vdp
+    ; vdp_wait_l 
     
-    SetVector screen_buffer, console_ptr
+;     SetVector screen_buffer, console_ptr
 
-    cli
+;     cli
 
-    lda slot2_ctrl
-    pha
-    lda #SCREEN_BUFFER_PAGE
-    sta slot2_ctrl 
+;     lda slot2_ctrl
+;     pha
+;     lda #SCREEN_BUFFER_PAGE
+;     sta slot2_ctrl 
 
-    lda #'0'
-    ldx #0
-:
-    sta screen_buffer,x
-    inx 
-    inc a 
-    cmp #'z'+1
+;     lda #'0'
+;     ldx #0
+; :
+;     sta screen_buffer,x
+;     inx 
+;     inc a 
+;     cmp #'z'+1
     
-    bne :-
+;     bne :-
 
-    pla 
-    sta slot2_ctrl
-
-
-    lda screen_status
-    ora #SCREEN_DIRTY
-    sta screen_status
+;     pla 
+;     sta slot2_ctrl
 
 
-    lda slot2_ctrl
-    pha
-    lda #SCREEN_BUFFER_PAGE
-    sta slot2_ctrl 
+;     lda screen_status
+;     ora #SCREEN_DIRTY
+;     sta screen_status
 
-    ldx #0
-:
-    lda message,x 
-    beq @end 
 
-    sta screen_buffer + $a0,x 
+;     lda slot2_ctrl
+;     pha
+;     lda #SCREEN_BUFFER_PAGE
+;     sta slot2_ctrl 
 
-    inx
-    bra :-
+;     ldx #0
+; :
+;     lda message,x 
+;     beq @end 
 
-@end:
-    pla 
-    sta slot2_ctrl
+;     sta screen_buffer + $a0,x 
 
-    lda screen_status
-    ora #SCREEN_DIRTY
-    sta screen_status
+;     inx
+;     bra :-
 
-    jsr primm 
-message:
-    .byte CODE_LF, CODE_LF, "Steckschwein "
-    .include "version.inc"
-    .byte CODE_LF, CODE_LF
-    .byte 0
+; @end:
+;     pla 
+;     sta slot2_ctrl
+
+;     lda screen_status
+;     ora #SCREEN_DIRTY
+;     sta screen_status
+
+;     jsr primm 
+; message:
+;     .byte CODE_LF, CODE_LF, "Steckschwein "
+;     .include "version.inc"
+;     .byte CODE_LF, CODE_LF
+;     .byte 0
 
 
     jmp upload
