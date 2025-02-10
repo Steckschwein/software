@@ -6,11 +6,8 @@ OBJS+=crc16_static.o
 OBJS+=xmodem_upload.o
 OBJS+=xmodem_upload_prg.o
 OBJS+=vdp.o
+OBJS+=console.o
 OBJS+=charset_6x8.o
-
-
-
-
 OBJS+=wozmon.o
 OBJS+=jumptable.o
 
@@ -53,4 +50,4 @@ test:
 	(cd test; make all)
 
 emu: kernel.bin rom.bin
-	steckschwein-emu -rom rom.bin 
+	../../../emulator/steckschwein-emu -rom rom.bin -log_writes rom 

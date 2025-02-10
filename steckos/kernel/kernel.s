@@ -25,22 +25,25 @@
 
 
 .include "system.inc"
+.include "console.inc"
 ; .include "zeropage.inc"
 ; .include "debug.inc"
 .include "common.inc"
 
 .include "vdp.inc"
-SCREEN_DIRTY = $80
+
 
 .import init_uart, uart_tx, uart_rx, primm, hexout, wozmon, xmodem_upload
 .import init_vdp, vdp_bgcolor, vdp_memcpy
-.import textui_init, textui_chrout, textui_update_screen
+.import console_init, console_update_screen
+
 .export char_out, char_in, set_input, set_output, upload
 .export out_vector, in_vector, startaddr
 .export crs_x, crs_y
+.export screen_status
 
 .exportzp xmodem_startaddress=startaddr
-.exportzp vdp_ptr
+.exportzp vdp_ptr, console_ptr
 
 
 .zeropage
@@ -57,10 +60,7 @@ crs_x: .res 1
 crs_y: .res 1
 screen_status: .res 1
 
-SCREEN_BUFFER_PAGE = 30
-screen_buffer = $8000
-screen_buffer_size = 80*24
-screen_buffer_end = screen_buffer + screen_buffer_size
+
 
 .code
 
@@ -81,15 +81,9 @@ do_reset:
     lda #OUTPUT_DEVICE_UART
     jsr set_output
 
-    lda slot2_ctrl
-    pha
-    lda #SCREEN_BUFFER_PAGE
-    sta slot2_ctrl 
-    
-    jsr clear_screenbuf
-   
-    pla 
-    sta slot2_ctrl
+    jsr console_init
+
+
 
     lda a_vreg
     jsr init_vdp
@@ -201,35 +195,20 @@ char_in:
 do_irq:
     save 
 
+    lda #Cyan<<4|Cyan
+    jsr vdp_bgcolor
+
     bit a_vreg
     bpl @exit_isr
 
     bit screen_status ; screen dirty bit set?
     bpl @exit_isr
 
-    ; yes, write to vdp
-    vdp_vram_w ADDRESS_TEXT_SCREEN
-    
-    lda slot2_ctrl
-    pha 
-
-    lda #SCREEN_BUFFER_PAGE
-    sta slot2_ctrl 
-
-    lda console_ptr
-    ldy console_ptr+1
-    ldx #8
-    jsr vdp_memcpy
-    
-
-    pla
-    sta slot2_ctrl
-
-    lda screen_status
-    and #!(SCREEN_DIRTY)
-    sta screen_status
+    jsr console_update_screen
 
 @exit_isr:
+    lda #VIDEO_COLOR 
+    jsr vdp_bgcolor
     restore 
     rti
 
@@ -328,22 +307,7 @@ register_status:
 
     jmp wozmon
 
-clear_screenbuf:
-    lda #' '
-    ldx #0
-:
-    sta screen_buffer,x
-    sta screen_buffer + $100,x
-    sta screen_buffer + $200,x
-    sta screen_buffer + $300,x
-    sta screen_buffer + $400,x
-    sta screen_buffer + $500,x
-    sta screen_buffer + $600,x
-    sta screen_buffer + $700,x
-    
-    inx 
-    bne :-
-    rts
+
 
 
 .rodata
