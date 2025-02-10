@@ -3,8 +3,10 @@
 
 .export console_init, console_update_screen
 
-.import screen_status, console_ptr
+.import screen_status
 .import vdp_memcpy
+
+.importzp console_ptr
 
 console_init:
     lda slot2_ctrl
