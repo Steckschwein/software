@@ -30,6 +30,8 @@
 ; init UART
 ;----------------------------------------------------------------------------------------------
 init_uart:
+    lda #lcr_DLAB       ; enable divisor latch access bit in order to write divisor
+    sta uart1+uart_lcr
 
 		; 115200 baud
 		lda #1
