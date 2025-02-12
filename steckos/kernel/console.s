@@ -1,14 +1,23 @@
 .include "vdp.inc"
 .include "console.inc"
+.include "common.inc"
 
-.export console_init, console_update_screen
+.export console_init, console_update_screen, console_putchar
 
 .import screen_status
 .import vdp_memcpy
 
-.importzp console_ptr
+.zeropage
+console_ptr:   .res 2
+cursor_ptr:    .res 2
 
+
+.code
 console_init:
+
+    SetVector screen_buffer, console_ptr
+    copypointer console_ptr, cursor_ptr
+
     lda slot2_ctrl
     pha
     lda #SCREEN_BUFFER_PAGE
@@ -61,4 +70,27 @@ console_clear_screenbuf:
     
     inx 
     bne :-
+    rts
+
+console_putchar:
+    tax
+  
+    lda slot2_ctrl
+    pha
+    lda #SCREEN_BUFFER_PAGE
+    sta slot2_ctrl 
+    
+    txa
+    sta (cursor_ptr)
+
+
+    pla 
+    sta slot2_ctrl  
+    
+    inc16 cursor_ptr
+
+    lda screen_status
+    ora #SCREEN_DIRTY
+    sta screen_status
+
     rts

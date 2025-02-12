@@ -35,7 +35,7 @@
 
 .import init_uart, uart_tx, uart_rx, primm, hexout, wozmon, xmodem_upload
 .import init_vdp, vdp_bgcolor, vdp_memcpy
-.import console_init, console_update_screen
+.import console_init, console_update_screen, console_putchar
 
 .export char_out, char_in, set_input, set_output, upload
 .export out_vector, in_vector, startaddr
@@ -43,15 +43,12 @@
 .export screen_status
 
 .exportzp xmodem_startaddress=startaddr
-.exportzp vdp_ptr, console_ptr
 
 
 .zeropage
 out_vector:    .res 2
 in_vector:     .res 2
 startaddr:     .res 2
-vdp_ptr:       .res 2
-console_ptr:   .res 2
 
 .bss
 save_stat: .res   .sizeof(save_status)
@@ -79,7 +76,7 @@ do_reset:
 
     lda #INPUT_DEVICE_UART
     jsr set_input
-    lda #OUTPUT_DEVICE_UART
+    lda #OUTPUT_DEVICE_CONSOLE
     jsr set_output
 
     jsr console_init
@@ -90,19 +87,20 @@ do_reset:
     jsr init_vdp
     vdp_wait_l 
     
-    SetVector screen_buffer, console_ptr
+
 
     cli
 
-    lda slot2_ctrl
-    pha
-    lda #SCREEN_BUFFER_PAGE
-    sta slot2_ctrl 
 
     lda #'0'
     ldx #0
 :
-    sta screen_buffer,x
+    pha
+    phx 
+    jsr char_out
+    plx
+    pla
+
     inx 
     inc a 
     cmp #'z'+1
@@ -113,36 +111,7 @@ do_reset:
     sta slot2_ctrl
 
 
-    lda screen_status
-    ora #SCREEN_DIRTY
-    sta screen_status
-
-
-    lda slot2_ctrl
-    pha
-    lda #SCREEN_BUFFER_PAGE
-    sta slot2_ctrl 
-
-    ldx #0
-:
-    lda message,x 
-    beq @end 
-
-    sta screen_buffer + $a0,x 
-
-    inx
-    bra :-
-
-@end:
-    pla 
-    sta slot2_ctrl
-
-    lda screen_status
-    ora #SCREEN_DIRTY
-    sta screen_status
-
     jsr primm 
-message:
     .byte CODE_LF, CODE_LF, "Steckschwein "
     .include "version.inc"
     .byte CODE_LF, CODE_LF
@@ -164,7 +133,8 @@ upload:
 
     lda #INPUT_DEVICE_UART
     jsr set_input
-    lda #OUTPUT_DEVICE_UART
+
+    lda #OUTPUT_DEVICE_CONSOLE
     jsr set_output
 
     jsr primm 
@@ -315,7 +285,7 @@ register_status:
 output_vectors:
 .word io_null
 .word uart_tx
-.word $dead 
+.word console_putchar
 .word $dead 
 input_vectors:
 .word io_null
