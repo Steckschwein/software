@@ -5,14 +5,12 @@
 .export init_vdp, vdp_bgcolor, vdp_fill, vdp_text_on, vdp_memcpy
 .export vdp_nopslide_2m, vdp_nopslide_8m, vdp_nopslide_end
 
-.import primm
-.import char_out
+; .import primm
+; .import char_out
 .import charset_6x8
-.importzp vdp_ptr
 
-; .zeropage
-; tmp1: .res 1
-; tmp2: .res 1
+.zeropage
+vdp_ptr:       .res 2
 
 .code
 
