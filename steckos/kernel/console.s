@@ -73,19 +73,18 @@ console_clear_screenbuf:
     rts
 
 console_putchar:
-    pha 
-  
-    lda slot2_ctrl
-    pha
-    lda #SCREEN_BUFFER_PAGE
-    sta slot2_ctrl 
+      
+    ldx slot2_ctrl
+    phx
+
+    ldx #SCREEN_BUFFER_PAGE
+    stx slot2_ctrl 
     
-    pla
     sta (cursor_ptr)
 
 
-    pla 
-    sta slot2_ctrl  
+    plx 
+    stx slot2_ctrl  
     
     inc16 cursor_ptr
 
