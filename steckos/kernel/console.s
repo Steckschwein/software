@@ -73,14 +73,14 @@ console_clear_screenbuf:
     rts
 
 console_putchar:
-    tax
+    pha 
   
     lda slot2_ctrl
     pha
     lda #SCREEN_BUFFER_PAGE
     sta slot2_ctrl 
     
-    txa
+    pla
     sta (cursor_ptr)
 
 
