@@ -91,9 +91,70 @@ console_clear_screenbuf:
 
     rts
 
+console_get_pointer_from_cursor:
+    save 
+    copypointer console_ptr, cursor_ptr
+
+    ldy crs_y
+    beq @add_x
+:
+    clc 
+    lda #COLS 
+    adc cursor_ptr
+    sta cursor_ptr
+
+    lda #0
+    adc cursor_ptr+1
+    sta cursor_ptr+1
+
+    dey 
+    bne :-
+@add_x:
+    clc 
+    lda crs_x
+    adc cursor_ptr
+    sta cursor_ptr
+
+    lda #0
+    adc cursor_ptr+1
+    sta cursor_ptr+1 
+
+    restore
+    rts
+
+console_advance_cursor:
+    lda crs_x
+    inc a
+    sta crs_x 
+    cmp #COLS 
+    bne :+
+    inc crs_y
+    stz crs_x
+:
+    rts
+
 console_putchar:
+
+    ; handle line feed character
+    ; just increase cursor y position
+    cmp #CODE_LF
+    bne :+
+    inc crs_y
+    rts
+:
+
+    ; handle carriage return character
+    ; just reset cursor x position
+    cmp #CODE_CR 
+    bne :+
+    stz crs_x
+    rts
+: 
+
     pha 
     phx
+
+    jsr console_get_pointer_from_cursor
 
     ldx slot2_ctrl
     phx
@@ -101,36 +162,20 @@ console_putchar:
     ldx #SCREEN_BUFFER_PAGE
     stx slot2_ctrl 
 
-
-
     
     sta (cursor_ptr)
 
     plx 
     stx slot2_ctrl  
-    
-    inc16 cursor_ptr
+
+    jsr console_advance_cursor
 
     lda screen_status
     ora #SCREEN_DIRTY
     sta screen_status
 
-    ply
-    plx 
+    plx
+    pla 
     rts
-
-.rodata
-mul_table:
-    .word 0*COLS
-    .word 1*COLS
-    .word 2*COLS
-    .word 3*COLS
-    .word 4*COLS
-    .word 5*COLS
-    .word 6*COLS
-    .word 7*COLS
-    .word 8*COLS
-    .word 9*COLS
-    .word 10*COLS
-        
+      
     

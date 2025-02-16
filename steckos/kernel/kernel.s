@@ -88,30 +88,28 @@ do_reset:
     cli
 
 
+    jsr primm 
+    .byte CODE_LF, CODE_CR, "Steckschwein "
+    .include "version.inc"
+    .byte CODE_LF, CODE_CR
+    .byte CODE_LF, CODE_CR
+
+    .byte 0
+
+    ldy #10
+@loop:
     lda #'0'
     ldx #0
 :
-    pha
-    phx 
     jsr char_out
-    plx
-    pla
 
     inx 
     inc a 
     cmp #'z'+1
     
     bne :-
-
-    pla 
-    sta slot2_ctrl
-
-
-    jsr primm 
-    .byte CODE_LF, CODE_LF, "Steckschwein "
-    .include "version.inc"
-    .byte CODE_LF, CODE_LF
-    .byte 0
+    dey 
+    bne @loop
 
 
     jmp upload
