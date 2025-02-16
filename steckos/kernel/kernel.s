@@ -39,7 +39,7 @@
 
 .export char_out, char_in, set_input, set_output, upload
 .export out_vector, in_vector, startaddr
-
+.import crs_x, crs_y
 .exportzp xmodem_startaddress=startaddr
 
 
@@ -85,9 +85,7 @@ do_reset:
     
     jsr console_init
 
-
     cli
-
 
 
     lda #'0'

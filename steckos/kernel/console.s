@@ -3,6 +3,7 @@
 .include "common.inc"
 
 .export console_init, console_update_screen, console_putchar
+.export crs_x, crs_y
 .import vdp_memcpy
 
 .zeropage
@@ -93,12 +94,15 @@ console_clear_screenbuf:
 console_putchar:
     pha 
     phx
-      
+
     ldx slot2_ctrl
     phx
 
     ldx #SCREEN_BUFFER_PAGE
     stx slot2_ctrl 
+
+
+
     
     sta (cursor_ptr)
 
@@ -111,6 +115,22 @@ console_putchar:
     ora #SCREEN_DIRTY
     sta screen_status
 
+    ply
     plx 
-    pla
     rts
+
+.rodata
+mul_table:
+    .word 0*COLS
+    .word 1*COLS
+    .word 2*COLS
+    .word 3*COLS
+    .word 4*COLS
+    .word 5*COLS
+    .word 6*COLS
+    .word 7*COLS
+    .word 8*COLS
+    .word 9*COLS
+    .word 10*COLS
+        
+    
