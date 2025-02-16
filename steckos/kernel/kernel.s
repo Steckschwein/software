@@ -39,8 +39,6 @@
 
 .export char_out, char_in, set_input, set_output, upload
 .export out_vector, in_vector, startaddr
-.export crs_x, crs_y
-.export screen_status
 
 .exportzp xmodem_startaddress=startaddr
 
@@ -53,9 +51,8 @@ startaddr:     .res 2
 .bss
 save_stat: .res   .sizeof(save_status)
 atmp: .res 1
-crs_x: .res 1
-crs_y: .res 1
-screen_status: .res 1
+
+
 
 
 
@@ -79,7 +76,6 @@ do_reset:
     lda #OUTPUT_DEVICE_CONSOLE
     jsr set_output
 
-    jsr console_init
 
 
 
@@ -87,9 +83,11 @@ do_reset:
     jsr init_vdp
     vdp_wait_l 
     
+    jsr console_init
 
 
     cli
+
 
 
     lda #'0'
@@ -170,9 +168,6 @@ do_irq:
     jsr vdp_bgcolor
 
     bit a_vreg
-    bpl @exit_isr
-
-    bit screen_status ; screen dirty bit set?
     bpl @exit_isr
 
     jsr console_update_screen

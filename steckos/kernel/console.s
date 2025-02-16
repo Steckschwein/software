@@ -3,20 +3,25 @@
 .include "common.inc"
 
 .export console_init, console_update_screen, console_putchar
-
-.import screen_status
 .import vdp_memcpy
 
 .zeropage
 console_ptr:   .res 2
 cursor_ptr:    .res 2
 
+.bss 
+crs_x: .res 1
+crs_y: .res 1
+screen_status: .res 1
 
 .code
 console_init:
 
     SetVector screen_buffer, console_ptr
     copypointer console_ptr, cursor_ptr
+
+    stz crs_x
+    stz crs_y
 
     lda slot2_ctrl
     pha
@@ -28,9 +33,18 @@ console_init:
     pla 
     sta slot2_ctrl
 
+    copypointer console_ptr, cursor_ptr
+
+    lda screen_status
+    ora #SCREEN_DIRTY
+    sta screen_status
+
     rts
 
 console_update_screen:
+    bit screen_status ; screen dirty bit set?
+    bpl @exit
+
     ; yes, write to vdp
     vdp_vram_w ADDRESS_TEXT_SCREEN
     
@@ -48,31 +62,37 @@ console_update_screen:
     pla
     sta slot2_ctrl
 
+    ; clear dirty bit
     lda screen_status
     and #!(SCREEN_DIRTY)
     sta screen_status
 
+@exit:
     rts 
 
 
 console_clear_screenbuf:
+ 
     lda #' '
-    ldx #0
+    ldx #8
+@loop:
+    ldy #0
 :
-    sta screen_buffer,x
-    sta screen_buffer + $100,x
-    sta screen_buffer + $200,x
-    sta screen_buffer + $300,x
-    sta screen_buffer + $400,x
-    sta screen_buffer + $500,x
-    sta screen_buffer + $600,x
-    sta screen_buffer + $700,x
-    
-    inx 
+
+    sta (cursor_ptr),y
+    iny 
     bne :-
+
+    inc cursor_ptr+1
+
+    dex 
+    bne @loop
+
     rts
 
 console_putchar:
+    pha 
+    phx
       
     ldx slot2_ctrl
     phx
@@ -81,7 +101,6 @@ console_putchar:
     stx slot2_ctrl 
     
     sta (cursor_ptr)
-
 
     plx 
     stx slot2_ctrl  
@@ -92,4 +111,6 @@ console_putchar:
     ora #SCREEN_DIRTY
     sta screen_status
 
+    plx 
+    pla
     rts
