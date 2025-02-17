@@ -2,6 +2,8 @@
 .include "console.inc"
 .include "common.inc"
 
+CURSOR_CHAR = $DB
+
 .export console_init, console_update_screen, console_putchar
 .export crs_x, crs_y
 .import vdp_memcpy
@@ -131,6 +133,15 @@ console_advance_cursor:
     inc crs_y
     stz crs_x
 :
+
+    ; cursor on 
+    vdp_vram_w ADDRESS_TEXT_COLOR 
+    vdp_wait_l 10
+    lda #%10000000
+    sta a_vram
+
+
+
     rts
 
 console_putchar:

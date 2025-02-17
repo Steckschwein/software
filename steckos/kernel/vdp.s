@@ -60,7 +60,7 @@ vdp_text_blank:
     ldx #72 ; 26.5*80 = 2120 => 2120 - 2048 = 72 bytes left to clear
     jsr vdp_fills
     vdp_vram_w ADDRESS_TEXT_COLOR
-    lda #Transparent<<4|Transparent
+    lda #0
     ldx #2
     ; jmp vdp_fill
 
@@ -173,12 +173,13 @@ vdp_text_init_bytes:
     .byte >(ADDRESS_TEXT_PATTERN>>3)                            ; pattern table (charset) - value * $800    --> offset in VRAM
     .byte 0  ; not used
     .byte 0  ; not used
-    .byte Medium_Green<<4|Black                                 ; #R07
+    .byte Gray<<4|Black                                         ; blink color to inverse text / off phase #R07 
     .byte v_reg8_VR  | v_reg8_SPD                               ; VR - 64k VRAM TODO FIXME aware of max vram (bios) - #R08
     .byte v_reg9_nt                                             ; #R9, set bit to 1 for PAL
     .byte <.HIWORD(ADDRESS_TEXT_COLOR<<2)                       ;#R10
     .byte 0
-    .byte Black<<4|Medium_Green                                 ; blink color to inverse text  #R12
-    .byte $f0                                                   ; "on time" to max value, per default, means no off time and therefore no blink at all  #R13
+    .byte Black<<4|Gray                                         ; blink color to inverse text / on phase #R12
+    .byte %00100010                                             ; blink frequency high nibble -> time to show color from #R07   #R13
+                                                                ;                  low nibble -> time to show color from #R12 
     .byte <.HIWORD(ADDRESS_TEXT_SCREEN<<2)
 vdp_text_init_bytes_end:

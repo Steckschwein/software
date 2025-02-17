@@ -89,7 +89,7 @@ do_reset:
 
 
     jsr primm 
-    .byte CODE_LF, CODE_CR, "Steckschwein "
+    .byte "Steckschwein "
     .include "version.inc"
     .byte CODE_LF, CODE_CR
     .byte CODE_LF, CODE_CR
