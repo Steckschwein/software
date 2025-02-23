@@ -35,7 +35,7 @@
 
 .import init_uart, uart_tx, uart_rx, primm, hexout, wozmon, xmodem_upload
 .import init_vdp, vdp_bgcolor, vdp_memcpy
-.import console_init, console_update_screen, console_putchar
+.import console_init, console_update_screen, console_putchar, console_put_cursor
 
 .export char_out, char_in, set_input, set_output, upload
 .export out_vector, in_vector, startaddr
@@ -49,8 +49,8 @@ in_vector:     .res 2
 startaddr:     .res 2
 
 .bss
-save_stat: .res   .sizeof(save_status)
-atmp: .res 1
+save_stat:          .res .sizeof(save_status)
+atmp:               .res 1
 
 
 
@@ -82,6 +82,7 @@ do_reset:
     lda a_vreg
     jsr init_vdp
     vdp_wait_l 
+
     
     jsr console_init
 
@@ -91,10 +92,12 @@ do_reset:
     jsr primm 
     .byte "Steckschwein "
     .include "version.inc"
-    .byte CODE_LF, CODE_CR
-    .byte CODE_LF, CODE_CR
-
+    .byte CODE_LF
+    .byte CODE_LF
     .byte 0
+
+   
+
 
     ldy #10
 @loop:

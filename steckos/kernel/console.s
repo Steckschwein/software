@@ -2,20 +2,24 @@
 .include "console.inc"
 .include "common.inc"
 
-CURSOR_CHAR = $DB
-
-.export console_init, console_update_screen, console_putchar
+.export console_init, console_update_screen, console_putchar, console_put_cursor
 .export crs_x, crs_y
 .import vdp_memcpy
 
 .zeropage
 console_ptr:   .res 2
 cursor_ptr:    .res 2
+tmp_ptr:       .res 2
 
 .bss 
-crs_x: .res 1
-crs_y: .res 1
-screen_status: .res 1
+crs_x:          .res 1
+crs_y:          .res 1
+crs_x_old:      .res 1
+crs_y_old:      .res 1
+
+vdp_addr:       .res 2
+vdp_cursor_val: .res 1
+screen_status:  .res 1
 
 .code
 console_init:
@@ -42,7 +46,8 @@ console_init:
     ora #SCREEN_DIRTY
     sta screen_status
 
-    rts
+    jmp console_put_cursor
+    ; rts
 
 console_update_screen:
     bit screen_status ; screen dirty bit set?
@@ -125,7 +130,10 @@ console_get_pointer_from_cursor:
     rts
 
 console_advance_cursor:
+    lda crs_y
+    sta crs_y_old
     lda crs_x
+    sta crs_x_old
     inc a
     sta crs_x 
     cmp #COLS 
@@ -134,14 +142,111 @@ console_advance_cursor:
     stz crs_x
 :
 
-    ; cursor on 
-    vdp_vram_w ADDRESS_TEXT_COLOR 
+console_put_cursor:
+    pha 
+    phx 
+
+    lda crs_y_old
+    asl
+    tax
+    lda multab+1,x 
+    sta vdp_addr+1
+    lda multab,x 
+    sta vdp_addr
+
+    ; add x position
+    lda crs_x_old 
+    clc 
+    adc vdp_addr
+    sta vdp_addr
+    lda #0
+    adc vdp_addr+1
+    sta vdp_addr+1
+
+    ; divide by 8 to get the byte offset
+    lsr vdp_addr+1
+    ror vdp_addr
+    lsr vdp_addr+1
+    ror vdp_addr
+    lsr vdp_addr+1
+    ror vdp_addr
+
+
+    clc
+    lda #<ADDRESS_TEXT_COLOR
+    adc vdp_addr
+    sta vdp_addr 
+    lda #>ADDRESS_TEXT_COLOR
+    adc vdp_addr+1
+    sta vdp_addr+1
+
+    lda vdp_addr
+    sta a_vreg
+    vdp_wait_s
+    lda vdp_addr+1
+    ora #WRITE_ADDRESS
+    and #%01111111
+    sta a_vreg 
+
     vdp_wait_l 10
-    lda #%10000000
+    stz a_vram
+
+
+
+    lda crs_y
+    asl
+    tax
+    lda multab+1,x 
+    sta vdp_addr+1
+    lda multab,x 
+    sta vdp_addr
+
+    ; add x position
+    lda crs_x
+    clc 
+    adc vdp_addr
+    sta vdp_addr
+    lda #0
+    adc vdp_addr+1
+    sta vdp_addr+1
+
+    ; get bit offset 
+    lda vdp_addr
+    and #%00000111
+    tax 
+    lda bitval,x
+    sta vdp_cursor_val
+
+    ; divide by 8 to get the byte offset
+    lsr vdp_addr+1
+    ror vdp_addr
+    lsr vdp_addr+1
+    ror vdp_addr
+    lsr vdp_addr+1
+    ror vdp_addr
+
+    clc
+    lda #<ADDRESS_TEXT_COLOR
+    adc vdp_addr
+    sta vdp_addr 
+    lda #>ADDRESS_TEXT_COLOR
+    adc vdp_addr+1
+    sta vdp_addr+1
+
+    lda vdp_addr
+    sta a_vreg
+    vdp_wait_s
+    lda vdp_addr+1
+    ora #WRITE_ADDRESS
+    and #%01111111
+    sta a_vreg 
+
+    vdp_wait_l 10
+    lda vdp_cursor_val
     sta a_vram
 
-
-
+    plx 
+    pla
     rts
 
 console_putchar:
@@ -151,6 +256,8 @@ console_putchar:
     cmp #CODE_LF
     bne :+
     inc crs_y
+    stz crs_x
+    ; jsr console_put_cursor
     rts
 :
 
@@ -159,6 +266,7 @@ console_putchar:
     cmp #CODE_CR 
     bne :+
     stz crs_x
+    ; jsr console_put_cursor
     rts
 : 
 
@@ -166,7 +274,7 @@ console_putchar:
     phx
 
     jsr console_get_pointer_from_cursor
-
+    
     ldx slot2_ctrl
     phx
 
@@ -188,5 +296,44 @@ console_putchar:
     plx
     pla 
     rts
-      
+
+.rodata 
+multab:
+    .word 0*80
+    .word 1*80
+    .word 2*80
+    .word 3*80
+    .word 4*80
+    .word 5*80
+    .word 6*80
+    .word 7*80
+    .word 8*80
+    .word 9*80
+    .word 10*80
+    .word 11*80
+    .word 12*80
+    .word 13*80
+    .word 14*80
+    .word 15*80
+    .word 16*80
+    .word 17*80
+    .word 18*80
+    .word 19*80
+    .word 20*80
+    .word 21*80
+    .word 22*80
+    .word 23*80
+    .word 24*80
+    .word 25*80
+    .word 26*80
+bitval:
+    .byte %10000000
+    .byte %01000000
+    .byte %00100000
+    .byte %00010000
+    .byte %00001000
+    .byte %00000100
+    .byte %00000010
+    .byte %00000001
+
     
