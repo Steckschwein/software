@@ -9,15 +9,15 @@
 .zeropage
 console_ptr:   .res 2
 cursor_ptr:    .res 2
-tmp_ptr:       .res 2
 
 .bss 
 crs_x:          .res 1
 crs_y:          .res 1
-crs_x_old:      .res 1
-crs_y_old:      .res 1
+
 
 vdp_addr:       .res 2
+vdp_addr_old:   .res 2
+
 vdp_cursor_val: .res 1
 screen_status:  .res 1
 
@@ -29,6 +29,9 @@ console_init:
 
     stz crs_x
     stz crs_y
+    stz vdp_addr_old
+    stz vdp_addr_old+1
+    
 
     lda slot2_ctrl
     pha
@@ -131,9 +134,7 @@ console_get_pointer_from_cursor:
 
 console_advance_cursor:
     lda crs_y
-    sta crs_y_old
     lda crs_x
-    sta crs_x_old
     inc a
     sta crs_x 
     cmp #COLS 
@@ -146,46 +147,11 @@ console_put_cursor:
     pha 
     phx 
 
-    lda crs_y_old
-    asl
-    tax
-    lda multab+1,x 
-    sta vdp_addr+1
-    lda multab,x 
-    sta vdp_addr
 
-    ; add x position
-    lda crs_x_old 
-    clc 
-    adc vdp_addr
-    sta vdp_addr
-    lda #0
-    adc vdp_addr+1
-    sta vdp_addr+1
-
-    ; divide by 8 to get the byte offset
-    lsr vdp_addr+1
-    ror vdp_addr
-    lsr vdp_addr+1
-    ror vdp_addr
-    lsr vdp_addr+1
-    ror vdp_addr
-
-
-    clc
-    lda #<ADDRESS_TEXT_COLOR
-    adc vdp_addr
-    sta vdp_addr 
-    lda #>ADDRESS_TEXT_COLOR
-    adc vdp_addr+1
-    sta vdp_addr+1
-
-    lda vdp_addr
+    lda vdp_addr_old
     sta a_vreg
     vdp_wait_s
-    lda vdp_addr+1
-    ora #WRITE_ADDRESS
-    and #%01111111
+    lda vdp_addr_old+1
     sta a_vreg 
 
     vdp_wait_l 10
@@ -234,11 +200,13 @@ console_put_cursor:
     sta vdp_addr+1
 
     lda vdp_addr
+    sta vdp_addr_old
     sta a_vreg
     vdp_wait_s
     lda vdp_addr+1
     ora #WRITE_ADDRESS
     and #%01111111
+    sta vdp_addr_old+1
     sta a_vreg 
 
     vdp_wait_l 10
@@ -257,7 +225,6 @@ console_putchar:
     bne :+
     inc crs_y
     stz crs_x
-    ; jsr console_put_cursor
     rts
 :
 
@@ -266,7 +233,6 @@ console_putchar:
     cmp #CODE_CR 
     bne :+
     stz crs_x
-    ; jsr console_put_cursor
     rts
 : 
 

@@ -99,6 +99,7 @@ do_reset:
    
 
 
+    sei 
     ldy #10
 @loop:
     lda #'0'
@@ -113,7 +114,7 @@ do_reset:
     bne :-
     dey 
     bne @loop
-
+    cli
 
     jmp upload
 
