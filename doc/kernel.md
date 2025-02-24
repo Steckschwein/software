@@ -1,6 +1,6 @@
 # kernel
 
-[console](#console) | [io](#io) | [jumptable](#jumptable) | [uart](#uart) | [vdp](#vdp) | [xmodem_upload](#xmodem_upload) | 
+[console](#console) | [io](#io) | [jumptable](#jumptable) | [kernel](#kernel) | [uart](#uart) | [vdp](#vdp) | [xmodem_upload](#xmodem_upload) | 
 ***
 
 
@@ -177,6 +177,9 @@ In
 
 
 
+In
+: A - device id to be set
+
 
 
 ***
@@ -194,11 +197,74 @@ In
 
 ***
 
-### <a name="krn_upload" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//jumptable.s#L31">krn_upload</a>
+### <a name="krn_upload" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//jumptable.s#L32">krn_upload</a>
 
 > start XMODEM upload
 
 
+
+
+
+***
+
+
+## kernel
+[do_irq](#do_irq) | [do_nmi](#do_nmi) | [io_null](#io_null) | [set_input](#set_input) | [set_output](#set_output) | 
+
+***
+
+
+### <a name="do_irq" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//kernel.s#L167">do_irq</a>
+
+> system irq handler
+
+
+
+
+
+***
+
+### <a name="do_nmi" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//kernel.s#L186">do_nmi</a>
+
+> system nmi handler
+
+
+
+
+
+***
+
+### <a name="io_null" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//kernel.s#L191">io_null</a>
+
+> dummy routine to suppress output
+
+
+
+
+
+***
+
+### <a name="set_input" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//kernel.s#L208">set_input</a>
+
+> set current output device to one of: INPUT_DEVICE_NULL, INPUT_DEVICE_UART, INPUT_DEVICE_CONSOLE
+
+
+
+In
+: A - device id to be set
+
+
+
+***
+
+### <a name="set_output" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//kernel.s#L196">set_output</a>
+
+> set current output device to one of: OUTPUT_DEVICE_NULL, OUTPUT_DEVICE_UART, OUTPUT_DEVICE_CONSOLE
+
+
+
+In
+: A - device id to be set
 
 
 

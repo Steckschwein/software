@@ -26,6 +26,7 @@ krn_set_output:   jmp set_output
 
 ;@name: krn_set_input
 ;@desc: set current output device to one of: INPUT_DEVICE_NULL, INPUT_DEVICE_UART, INPUT_DEVICE_CONSOLE 
+;@in: A - device id to be set
 krn_set_input:    jmp set_input
 
 ;@name: krn_upload

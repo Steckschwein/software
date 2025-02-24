@@ -19,6 +19,9 @@
 ; LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 ; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ; SOFTWARE.
+
+;@module: kernel
+
 .ifdef DEBUG_KERNEL ; debug switch for this module
   debug_enabled=1
 .endif
@@ -99,7 +102,7 @@ do_reset:
    
 
 
-    sei 
+    ; sei 
     ldy #10
 @loop:
     lda #'0'
@@ -114,7 +117,7 @@ do_reset:
     bne :-
     dey 
     bne @loop
-    cli
+    ; cli
 
     jmp upload
 
@@ -161,6 +164,8 @@ char_out:
 char_in:
     jmp (in_vector)
 
+; @name: do_irq
+; @desc: system irq handler
 do_irq:
     save 
 
@@ -178,14 +183,19 @@ do_irq:
     restore 
     rti
 
-
+; @name: do_nmi
+; @desc: system nmi handler
 do_nmi:
     rti
 
+; @name: io_null
+; @desc: dummy routine to suppress output
 io_null:
     rts
 
-; device in a
+;@name: set_output
+;@desc: set current output device to one of: OUTPUT_DEVICE_NULL, OUTPUT_DEVICE_UART, OUTPUT_DEVICE_CONSOLE 
+;@in: A - device id to be set
 set_output:
     asl
     tax
@@ -195,7 +205,9 @@ set_output:
     sta out_vector+1
     rts 
 
-; device in a
+;@name: set_input
+;@desc: set current output device to one of: INPUT_DEVICE_NULL, INPUT_DEVICE_UART, INPUT_DEVICE_CONSOLE 
+;@in: A - device id to be set
 set_input:
     asl 
     tax
