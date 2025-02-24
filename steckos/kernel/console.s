@@ -79,7 +79,8 @@ console_update_screen:
     sta screen_status
 
 @exit:
-    rts 
+    jmp console_put_cursor
+    ; rts 
 
 
 console_clear_screenbuf:
@@ -142,11 +143,9 @@ console_advance_cursor:
     inc crs_y
     stz crs_x
 :
+    rts
 
 console_put_cursor:
-    pha 
-    phx 
-
 
     lda vdp_addr_old
     sta a_vreg
@@ -154,7 +153,7 @@ console_put_cursor:
     lda vdp_addr_old+1
     sta a_vreg 
 
-    vdp_wait_l 10
+    vdp_wait_l 6
     stz a_vram
 
 
@@ -209,12 +208,10 @@ console_put_cursor:
     sta vdp_addr_old+1
     sta a_vreg 
 
-    vdp_wait_l 10
+    vdp_wait_l 6
     lda vdp_cursor_val
     sta a_vram
 
-    plx 
-    pla
     rts
 
 console_putchar:
