@@ -62,25 +62,3 @@ primm4:
    pha
    rts               ; proceed at code following the NUL
 
-;    pla                  ; Get the low part of "return" address (data start address)
-;    sta     DPL
-;    pla
-;    sta     DPH             ; Get the high part of "return" address (data start address)
-;    ; Note: actually we're pointing one short
-; PSINB:
-;    ldy     #1
-;    lda     (DPL),y         ; Get the next string character
-;    inc     DPL             ; update the pointer
-;    bne     PSICHO          ; if not, we're pointing to next character
-;    inc     DPH             ; account for page crossing
-; PSICHO:
-;    ora     #0              ; Set flags according to contents of Accumulator
-;    beq     PSIX1           ; don't print the final NULL
-;    jsr     char_out         ; write it out
-;    bra     PSINB           ; back around
-; PSIX1:
-;    inc     DPL             ;
-;    bne     PSIX2           ;
-;    inc     DPH             ; account for page crossing
-; PSIX2:
-;    jmp     (DPL)           ; return to byte following final NULL
