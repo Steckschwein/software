@@ -1,10 +1,3 @@
----
-title: "kernel"
-categories:
-  - software
----
-
-
 # kernel
 
 [console](#console) | [io](#io) | [jumptable](#jumptable) | [uart](#uart) | [vdp](#vdp) | [xmodem_upload](#xmodem_upload) | 
