@@ -49,8 +49,7 @@ console_init:
     ora #SCREEN_DIRTY
     sta screen_status
 
-    jmp console_put_cursor
-    ; rts
+    rts
 
 console_update_screen:
     bit screen_status ; screen dirty bit set?
