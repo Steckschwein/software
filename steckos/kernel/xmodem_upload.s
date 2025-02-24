@@ -9,6 +9,7 @@
 
 .autoimport
 
+; @module: xmodem_upload
 ; XMODEM/CRC Receiver for the 65C02
 ;
 ; By Daryl Rictor & Ross Archer  Aug 2002
@@ -123,7 +124,7 @@ X_ESC = $1b  ; ESC to exit
 ; v0.5  added CRC tables vs. generation at run time
 ; v 1.0 recode for use with SBC2
 ; v 1.1 added block 1 masking (block 257 would be corrupted)
-
+;@name: xmodem_upload_callback
 ;@in A/X pointer to block receive callback - the receive callback is called with A - block number, X - offset to data in received block
 ;@out: C=0 on success, C=1 on any i/o or protocoll related error
 .proc xmodem_upload_callback

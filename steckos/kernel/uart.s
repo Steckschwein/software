@@ -20,14 +20,21 @@
 ; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ; SOFTWARE.
 
+
+; @module: uart
 .include "system.inc"
 .export  init_uart, uart_tx, uart_rx, uart_rx_nowait
 .include "uart.inc"
+
+
 .code
 
 
 ;----------------------------------------------------------------------------------------------
-; init UART
+;@name: init_uart
+;@desc: init UART to 115200 baud, 8N1
+;@in: - 
+;@out: -
 ;----------------------------------------------------------------------------------------------
 init_uart:
     lda #lcr_DLAB       ; enable divisor latch access bit in order to write divisor
@@ -54,7 +61,10 @@ init_uart:
 ;----------------------------------------------------------------------------------------------
 
 ;----------------------------------------------------------------------------------------------
-; send byte in A
+; @name: uart_tx
+; @desc: send byte in A
+; @in: A - byte to be sent
+; @out:
 ;----------------------------------------------------------------------------------------------
 uart_tx:
 		pha
@@ -72,7 +82,10 @@ uart_tx:
 ;----------------------------------------------------------------------------------------------
 
 ;----------------------------------------------------------------------------------------------
-; receive byte, wait until received, store in A
+; @name: uart_rx
+; @desc: receive byte, wait until received, store in A
+; @in: - 
+; @out: A - received byte
 ;----------------------------------------------------------------------------------------------
 uart_rx:
 		lda #lsr_DR
@@ -84,7 +97,10 @@ uart_rx:
 ;----------------------------------------------------------------------------------------------
 
 ;----------------------------------------------------------------------------------------------
-; receive byte, no wait, set carry and store in A when received
+; @name: uart_rx
+; @desc: receive byte, no wait, set carry and store in A when received
+; @in: - 
+; @out: A - received byte
 ;----------------------------------------------------------------------------------------------
 uart_rx_nowait:
 		lda #lsr_DR

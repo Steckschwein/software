@@ -1,3 +1,4 @@
+; @module: io
 .include "system.inc"
 
 .import char_out
@@ -8,6 +9,9 @@ DPL: .res 1
 DPH: .res 1
 
 .code
+; @name: hexout
+; @desc: print value in A as 2 hex digits
+; @in: A - value to print
 hexout:
     pha
     pha
@@ -35,27 +39,48 @@ _out:
 
     pla
     rts
-
+; @name: primm
+; @desc: print string inlined after call to primm terminated by null byte - see http://6502.org/source/io/primm.htm
 primm:
-   pla                  ; Get the low part of "return" address (data start address)
-   sta     DPL
-   pla
-   sta     DPH             ; Get the high part of "return" address (data start address)
-   ; Note: actually we're pointing one short
-PSINB:
-   ldy     #1
-   lda     (DPL),y         ; Get the next string character
-   inc     DPL             ; update the pointer
-   bne     PSICHO          ; if not, we're pointing to next character
-   inc     DPH             ; account for page crossing
-PSICHO:
-   ora     #0              ; Set flags according to contents of Accumulator
-   beq     PSIX1           ; don't print the final NULL
-   jsr     char_out         ; write it out
-   bra     PSINB           ; back around
-PSIX1:
-   inc     DPL             ;
-   bne     PSIX2           ;
-   inc     DPH             ; account for page crossing
-PSIX2:
-   jmp     (DPL)           ; return to byte following final NULL
+   pla               ; get low part of (string address-1)
+   sta   DPL
+   pla               ; get high part of (string address-1)
+   sta   DPH
+   bra   primm3
+primm2:
+   jsr   char_out        ; output a string char
+primm3:
+   inc   DPL         ; advance the string pointer
+   bne   primm4
+   inc   DPH
+primm4:
+   lda   (DPL)       ; get string char
+   bne   primm2      ; output and continue if not NUL
+   lda   DPH
+   pha
+   lda   DPL
+   pha
+   rts               ; proceed at code following the NUL
+
+;    pla                  ; Get the low part of "return" address (data start address)
+;    sta     DPL
+;    pla
+;    sta     DPH             ; Get the high part of "return" address (data start address)
+;    ; Note: actually we're pointing one short
+; PSINB:
+;    ldy     #1
+;    lda     (DPL),y         ; Get the next string character
+;    inc     DPL             ; update the pointer
+;    bne     PSICHO          ; if not, we're pointing to next character
+;    inc     DPH             ; account for page crossing
+; PSICHO:
+;    ora     #0              ; Set flags according to contents of Accumulator
+;    beq     PSIX1           ; don't print the final NULL
+;    jsr     char_out         ; write it out
+;    bra     PSINB           ; back around
+; PSIX1:
+;    inc     DPL             ;
+;    bne     PSIX2           ;
+;    inc     DPH             ; account for page crossing
+; PSIX2:
+;    jmp     (DPL)           ; return to byte following final NULL

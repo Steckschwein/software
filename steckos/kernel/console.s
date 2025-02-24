@@ -2,6 +2,8 @@
 .include "console.inc"
 .include "common.inc"
 
+; @module: console
+
 .export console_init, console_update_screen, console_putchar, console_put_cursor
 .export crs_x, crs_y
 .import vdp_memcpy
@@ -22,6 +24,8 @@ vdp_cursor_val: .res 1
 screen_status:  .res 1
 
 .code
+;@name: console_init
+;@desc: init console
 console_init:
 
     SetVector screen_buffer, console_ptr
@@ -51,6 +55,8 @@ console_init:
 
     rts
 
+;@name: console_update_screen
+;@desc: update vdp text screen memory with contents from console buffer
 console_update_screen:
     bit screen_status ; screen dirty bit set?
     bpl @exit
@@ -81,9 +87,10 @@ console_update_screen:
     jmp console_put_cursor
     ; rts 
 
-
+;@name: console_clear_screenbuf
+;@desc: clear screenbuffer area pointed to by cursor_ptr
+;@in: cursor_ptr - address of buffer 
 console_clear_screenbuf:
- 
     lda #' '
     ldx #8
 @loop:
@@ -101,6 +108,10 @@ console_clear_screenbuf:
 
     rts
 
+;@name: console_get_pointer_from_cursor
+;@desc: calculate screen buffer address for cursor position in crs_x/crs_y
+;@in: crs_x - cursor x position
+;@in: crs_y - cursor y position
 console_get_pointer_from_cursor:
     save 
     copypointer console_ptr, cursor_ptr
@@ -132,6 +143,12 @@ console_get_pointer_from_cursor:
     restore
     rts
 
+;@name: console_advance_cursor
+;@desc: increase cursor x position. wrap around when x = 80.
+;@in: crs_x - cursor x position
+;@in: crs_y - cursor y position
+;@out: crs_x - cursor x position
+;@out: crs_y - cursor y position
 console_advance_cursor:
     lda crs_y
     lda crs_x
@@ -144,8 +161,11 @@ console_advance_cursor:
 :
     rts
 
+;@name: console_put_cursor
+;@desc: place cursor at position pointed to by crs_x/crs_y
+;@in: crs_x - cursor x position
+;@in: crs_y - cursor y position
 console_put_cursor:
-
     lda vdp_addr_old
     sta a_vreg
     vdp_wait_s
@@ -154,8 +174,6 @@ console_put_cursor:
 
     vdp_wait_l 6
     stz a_vram
-
-
 
     lda crs_y
     asl
@@ -213,8 +231,12 @@ console_put_cursor:
 
     rts
 
+;@name: console_putchar
+;@desc: print character in A at current cursor position. handle CR/LF.
+;@in: A - character to print
+;@in: crs_x - cursor x position
+;@in: crs_y - cursor y position
 console_putchar:
-
     ; handle line feed character
     ; just increase cursor y position
     cmp #CODE_LF

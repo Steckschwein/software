@@ -1,3 +1,4 @@
+; @module: vdp
 .include "vdp.inc"
 
 
