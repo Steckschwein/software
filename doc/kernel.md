@@ -214,7 +214,7 @@ In
 ***
 
 
-### <a name="do_irq" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//kernel.s#L176">do_irq</a>
+### <a name="do_irq" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//kernel.s#L182">do_irq</a>
 
 > system irq handler
 
@@ -224,7 +224,7 @@ In
 
 ***
 
-### <a name="do_nmi" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//kernel.s#L198">do_nmi</a>
+### <a name="do_nmi" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//kernel.s#L211">do_nmi</a>
 
 > system nmi handler
 
@@ -234,7 +234,7 @@ In
 
 ***
 
-### <a name="io_null" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//kernel.s#L203">io_null</a>
+### <a name="io_null" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//kernel.s#L216">io_null</a>
 
 > dummy routine to suppress output
 
@@ -244,7 +244,7 @@ In
 
 ***
 
-### <a name="set_input" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//kernel.s#L220">set_input</a>
+### <a name="set_input" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//kernel.s#L233">set_input</a>
 
 > set current output device to one of: INPUT_DEVICE_NULL, INPUT_DEVICE_UART, INPUT_DEVICE_CONSOLE
 
@@ -257,7 +257,7 @@ In
 
 ***
 
-### <a name="set_output" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//kernel.s#L208">set_output</a>
+### <a name="set_output" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//kernel.s#L221">set_output</a>
 
 > set current output device to one of: OUTPUT_DEVICE_NULL, OUTPUT_DEVICE_UART, OUTPUT_DEVICE_CONSOLE
 
