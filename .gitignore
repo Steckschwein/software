@@ -24,3 +24,4 @@ steckos/*/version.inc
 steckos.img
 asmunit/asmunit.a
 asmunit/test.asmunit.o.dbg
+__pycache__
