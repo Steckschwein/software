@@ -284,12 +284,20 @@ console_putchar:
 console_handle_control_char:
     cmp #CODE_CURSOR_DOWN
     bne :+
-    inc crs_y
+    ldx crs_y
+    inx
+    cpx #ROWS 
+    beq @exit
+    stx crs_y
     bra @exit
 :   
     cmp #CODE_CURSOR_UP
     bne :+
-    dec crs_y
+    ldx crs_y
+    cpx #0
+    beq @exit
+    dex 
+    stx crs_y
     bra @exit
 :
     cmp #CODE_CURSOR_LEFT
