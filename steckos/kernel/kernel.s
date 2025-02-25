@@ -76,7 +76,7 @@ do_reset:
     jsr init_uart
 
 
-    lda #INPUT_DEVICE_UART
+    lda #INPUT_DEVICE_CONSOLE
     jsr set_input
     lda #OUTPUT_DEVICE_CONSOLE
     jsr set_output
@@ -130,7 +130,7 @@ do_reset:
     jsr char_out
 
 :
-    jsr getkey 
+    jsr char_in 
     bcc :-
     jsr char_out
     bra :-
@@ -318,12 +318,12 @@ output_vectors:
 .word io_null
 .word uart_tx
 .word console_putchar
-.word $dead 
+.word $dead
 input_vectors:
 .word io_null
 .word uart_rx
-.word $0202 
-.word $0303 
+.word getkey
+.word $dead 
 
 
 
