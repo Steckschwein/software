@@ -129,14 +129,14 @@ do_reset:
     lda #CODE_LF
     jsr char_out
 
-:
-    jsr char_in 
-    bcc :-
-    jsr char_out
-    bra :-
-    jmp upload
+; :
+;     jsr char_in 
+;     bcc :-
+;     jsr char_out
+;     bra :-
+    ; jmp upload
 
-    ; jmp register_status
+    jmp register_status
 
 upload:
     lda #OUTPUT_DEVICE_NULL
@@ -184,8 +184,8 @@ char_in:
 do_irq:
     save 
 
-    lda #Cyan<<4|Cyan
-    jsr vdp_bgcolor
+    ; lda #Cyan<<4|Cyan
+    ; jsr vdp_bgcolor
 
     bit a_vreg
     bpl @exit_isr
@@ -196,21 +196,18 @@ do_irq:
     jsr fetchkey
     bcc @exit_isr
 
-    ;cmp #KEY_CTRL_C     ; was it ctrl c?
-
     jsr console_handle_control_char
 
-
-
 @exit_isr:
-    lda #VIDEO_COLOR 
-    jsr vdp_bgcolor
+    ; lda #VIDEO_COLOR 
+    ; jsr vdp_bgcolor
     restore 
     rti
 
 ; @name: do_nmi
 ; @desc: system nmi handler
 do_nmi:
+    jmp register_status
     rti
 
 ; @name: io_null
