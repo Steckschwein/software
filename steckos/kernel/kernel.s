@@ -35,10 +35,11 @@
 
 .include "vdp.inc"
 
-
+.import init_via
 .import init_uart, uart_tx, uart_rx, primm, hexout, wozmon, xmodem_upload
 .import init_vdp, vdp_bgcolor, vdp_memcpy
 .import console_init, console_update_screen, console_putchar, console_put_cursor
+.import keyboard_init, fetchkey, getkey
 
 .export char_out, char_in, set_input, set_output, upload
 .export out_vector, in_vector, startaddr
@@ -70,6 +71,7 @@ do_reset:
     lda #2 ; enable RAM at slot2
     sta slot2_ctrl
 
+    jsr init_via
 
     jsr init_uart
 
@@ -88,6 +90,8 @@ do_reset:
 
     
     jsr console_init
+
+    jsr keyboard_init
 
     cli
 
@@ -119,6 +123,11 @@ do_reset:
     bne @loop
     ; cli
 
+:
+    jsr getkey 
+    bcc :-
+    jsr char_out
+    bra :-
     jmp upload
 
     ; jmp register_status
@@ -178,6 +187,9 @@ do_irq:
     jsr console_update_screen
 
 @exit_isr:
+
+    jsr fetchkey
+
     lda #VIDEO_COLOR 
     jsr vdp_bgcolor
     restore 

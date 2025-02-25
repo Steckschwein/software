@@ -1,6 +1,7 @@
 # !!! order counts !!! - kernel.o must be the first module which is linked to output file
 OBJS=kernel.o 
 OBJS+=io.o
+OBJS+=via.o
 OBJS+=uart.o
 OBJS+=crc16_static.o
 OBJS+=xmodem_upload.o
@@ -8,6 +9,7 @@ OBJS+=xmodem_upload_prg.o
 OBJS+=vdp.o
 OBJS+=console.o
 OBJS+=spi.o
+OBJS+=keyboard.o
 OBJS+=charset_6x8.o
 OBJS+=wozmon.o
 OBJS+=jumptable.o
