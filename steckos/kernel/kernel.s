@@ -38,7 +38,7 @@
 .import init_via
 .import init_uart, uart_tx, uart_rx, primm, hexout, wozmon, xmodem_upload
 .import init_vdp, vdp_bgcolor, vdp_memcpy
-.import console_init, console_update_screen, console_putchar, console_put_cursor
+.import console_init, console_update_screen, console_putchar, console_put_cursor, console_handle_control_char
 .import keyboard_init, fetchkey, getkey
 
 .export char_out, char_in, set_input, set_output, upload
@@ -91,7 +91,6 @@ do_reset:
     
     jsr console_init
 
-    jsr keyboard_init
 
     cli
 
@@ -103,11 +102,17 @@ do_reset:
     .byte CODE_LF
     .byte 0
 
+    jsr keyboard_init
    
+
+    lda #CODE_LF
+    jsr char_out
+    lda #CODE_LF
+    jsr char_out
+
 
 
     ; sei 
-    ldy #10
 @loop:
     lda #'0'
     ldx #0
@@ -119,9 +124,10 @@ do_reset:
     cmp #'z'+1
     
     bne :-
-    dey 
-    bne @loop
     ; cli
+
+    lda #CODE_LF
+    jsr char_out
 
 :
     jsr getkey 
@@ -186,10 +192,17 @@ do_irq:
 
     jsr console_update_screen
 
-@exit_isr:
 
     jsr fetchkey
+    bcc @exit_isr
 
+    ;cmp #KEY_CTRL_C     ; was it ctrl c?
+
+    jsr console_handle_control_char
+
+
+
+@exit_isr:
     lda #VIDEO_COLOR 
     jsr vdp_bgcolor
     restore 

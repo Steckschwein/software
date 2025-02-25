@@ -4,9 +4,9 @@
 
 ; @module: console
 
-.export console_init, console_update_screen, console_putchar, console_put_cursor
+.export console_init, console_update_screen, console_putchar, console_put_cursor, console_handle_control_char
 .export crs_x, crs_y
-.import vdp_memcpy
+.import vdp_memcpy, key
 
 .zeropage
 console_ptr:   .res 2
@@ -279,6 +279,34 @@ console_putchar:
 
     plx
     pla 
+    rts
+
+console_handle_control_char:
+    cmp #CODE_CURSOR_DOWN
+    bne :+
+    inc crs_y
+    bra @exit
+:   
+    cmp #CODE_CURSOR_UP
+    bne :+
+    dec crs_y
+    bra @exit
+:
+    cmp #CODE_CURSOR_LEFT
+    bne :+
+    dec crs_x
+    bra @exit
+:
+    cmp #CODE_CURSOR_RIGHT
+    bne :+
+    jsr console_advance_cursor
+    bra @exit
+:
+    rts
+@exit:
+    lda #0
+    stz key
+    clc
     rts
 
 .rodata 

@@ -64,6 +64,14 @@ SLOT_ROM = 1<<7 ; bit 7 denotes whether ROM (1) or RAM (0) chip is selected
 CODE_LF  = $0a ; line feed
 CODE_CR  = $0d ; carriage return
 
+CODE_CURSOR_RIGHT   = $10
+CODE_CURSOR_LEFT    = $11
+CODE_CURSOR_UP      = $1e
+CODE_CURSOR_DOWN    = $1f
+
+
+
+
 ; address constants of RAM addresses which can be used as buffers or kind of
 ; !!! ATTENTION: if used together with fat read/write be aware that this buffers are used and may override your data
 BUFFER_0 = $0400

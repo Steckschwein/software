@@ -14,7 +14,7 @@
 
 .import primm, hexout, char_out
 
-.export keyboard_init, getkey, fetchkey
+.export keyboard_init, getkey, fetchkey, key
 
 
 ;@module: keyboard
