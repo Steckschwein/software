@@ -30,6 +30,9 @@
 		  ;.global			___directerrno, ___mappederrno
 
 ; Error codes, must match the values in the C headers
+
+.ifndef __ERRNO_INC
+	__ERRNO_INC=1
 .enum
 			EOK							  ; No error
 			ENOENT						; No such file or directory
@@ -58,3 +61,5 @@
 
 			EMAX	 = EUNKNOWN		    ; Highest error code
 .endenum
+
+.endif
