@@ -284,6 +284,19 @@ console_putchar:
 console_handle_control_char:
     cmp #CODE_CURSOR_DOWN
     bne :+
+    
+    ; clc
+    ; lda console_ptr
+    ; adc #COLS
+    ; sta console_ptr 
+    ; lda console_ptr+1
+    ; adc #0 
+    ; sta console_ptr+1
+
+    ; lda screen_status
+    ; ora #SCREEN_DIRTY
+    ; sta screen_status    
+
     ldx crs_y
     inx
     cpx #ROWS 
