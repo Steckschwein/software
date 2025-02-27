@@ -110,32 +110,6 @@ do_reset:
     lda #CODE_LF
     jsr char_out
 
-
-
-    ; sei 
-@loop:
-    lda #'0'
-    ldx #0
-:
-    jsr char_out
-
-    inx 
-    inc a 
-    cmp #'z'+1
-    
-    bne :-
-    ; cli
-
-    lda #CODE_LF
-    jsr char_out
-
-; :
-;     jsr char_in 
-;     bcc :-
-;     jsr char_out
-;     bra :-
-    ; jmp upload
-
     jmp register_status
 
 upload:
