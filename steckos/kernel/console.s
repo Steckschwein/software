@@ -11,6 +11,9 @@
 .zeropage
 console_ptr:   .res 2
 cursor_ptr:    .res 2
+scroll_src_ptr: .res 2
+scroll_trg_ptr: .res 2
+
 
 .bss 
 crs_x:          .res 1
@@ -285,23 +288,15 @@ console_handle_control_char:
     cmp #CODE_CURSOR_DOWN
     bne :+
     
-    ; clc
-    ; lda console_ptr
-    ; adc #COLS
-    ; sta console_ptr 
-    ; lda console_ptr+1
-    ; adc #0 
-    ; sta console_ptr+1
 
-    ; lda screen_status
-    ; ora #SCREEN_DIRTY
-    ; sta screen_status    
 
-    ldx crs_y
-    inx
-    cpx #ROWS 
-    beq @exit
-    stx crs_y
+
+    ; ldx crs_y
+    ; inx
+    ; cpx #ROWS 
+    ; beq @exit
+    ; stx crs_y
+    jsr console_scroll
     bra @exit
 :   
     cmp #CODE_CURSOR_UP
@@ -328,6 +323,70 @@ console_handle_control_char:
     lda #0
     stz key
     clc
+    rts
+
+console_scroll:
+
+    copypointer console_ptr, scroll_src_ptr
+    copypointer console_ptr, scroll_trg_ptr
+    
+    clc
+    lda scroll_src_ptr
+    adc #COLS
+    sta scroll_src_ptr 
+
+    lda scroll_src_ptr+1
+    adc #0 
+    sta scroll_src_ptr+1
+
+    ldx slot2_ctrl
+    phx
+
+    ldx #SCREEN_BUFFER_PAGE
+    stx slot2_ctrl 
+
+    ldx #0
+@scroll_row:
+    ldy #0
+@loop:
+    lda (scroll_src_ptr),y 
+    sta (scroll_trg_ptr),y 
+    lda #' '
+    sta (scroll_src_ptr),y 
+    iny
+    cpy #COLS
+    bne @loop
+
+    clc
+    lda scroll_src_ptr
+    adc #COLS
+    sta scroll_src_ptr 
+
+    lda scroll_src_ptr+1
+    adc #0 
+    sta scroll_src_ptr+1
+
+    clc
+    lda scroll_trg_ptr
+    adc #COLS
+    sta scroll_trg_ptr 
+
+    lda scroll_trg_ptr+1
+    adc #0 
+    sta scroll_trg_ptr+1
+
+    inx
+    cpx #ROWS
+    bne @scroll_row
+
+
+    
+    plx 
+    stx slot2_ctrl  
+    
+    lda screen_status
+    ora #SCREEN_DIRTY
+    sta screen_status    
     rts
 
 .rodata 
