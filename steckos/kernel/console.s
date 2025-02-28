@@ -153,13 +153,12 @@ console_get_pointer_from_cursor:
 ;@out: crs_x - cursor x position
 ;@out: crs_y - cursor y position
 console_advance_cursor:
-    lda crs_y
     lda crs_x
     inc a
     sta crs_x 
     cmp #COLS 
     bne :+
-    inc crs_y
+    jsr console_cursor_down
     stz crs_x
 :
     rts
@@ -234,6 +233,20 @@ console_put_cursor:
 
     rts
 
+console_cursor_down:
+    pha
+    lda crs_y
+    cmp #ROWS-1
+    bne :+
+    
+    jsr console_scroll
+    bra @exit
+:
+    inc crs_y
+@exit:
+    pla
+    rts
+
 ;@name: console_putchar
 ;@desc: print character in A at current cursor position. handle CR/LF.
 ;@in: A - character to print
@@ -244,7 +257,7 @@ console_putchar:
     ; just increase cursor y position
     cmp #CODE_LF
     bne :+
-    inc crs_y
+    jsr console_cursor_down
     stz crs_x
     rts
 :
@@ -287,16 +300,8 @@ console_putchar:
 console_handle_control_char:
     cmp #CODE_CURSOR_DOWN
     bne :+
-    
+    jsr console_cursor_down
 
-
-
-    ; ldx crs_y
-    ; inx
-    ; cpx #ROWS 
-    ; beq @exit
-    ; stx crs_y
-    jsr console_scroll
     bra @exit
 :   
     cmp #CODE_CURSOR_UP
@@ -326,7 +331,7 @@ console_handle_control_char:
     rts
 
 console_scroll:
-
+    save
     copypointer console_ptr, scroll_src_ptr
     copypointer console_ptr, scroll_trg_ptr
     
@@ -387,6 +392,8 @@ console_scroll:
     lda screen_status
     ora #SCREEN_DIRTY
     sta screen_status    
+
+    restore
     rts
 
 .rodata 
