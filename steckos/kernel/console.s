@@ -312,8 +312,16 @@ console_handle_control_char:
     bra @exit
 :
     cmp #CODE_CURSOR_LEFT
-    bne :+
+    bne :++
+
+    lda crs_x
+    beq :+
     dec crs_x
+    bra @exit
+:
+    lda #COLS-1
+    sta crs_x 
+    dec crs_y
     bra @exit
 :
     cmp #CODE_CURSOR_RIGHT
