@@ -336,15 +336,17 @@ console_handle_control_char:
 
 console_scroll:
     save
-    copypointer console_ptr, scroll_src_ptr
+    ; setup pointers
+    ; target pointer start at console_ptr
     copypointer console_ptr, scroll_trg_ptr
     
+    ; source pointer starts at console_ptr plus one line
     clc
-    lda scroll_src_ptr
+    lda console_ptr
     adc #COLS
     sta scroll_src_ptr 
 
-    lda scroll_src_ptr+1
+    lda console_ptr+1
     adc #0 
     sta scroll_src_ptr+1
 
