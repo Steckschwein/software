@@ -404,33 +404,9 @@ console_scroll:
 
 .rodata 
 multab:
-    .word 0*80
-    .word 1*80
-    .word 2*80
-    .word 3*80
-    .word 4*80
-    .word 5*80
-    .word 6*80
-    .word 7*80
-    .word 8*80
-    .word 9*80
-    .word 10*80
-    .word 11*80
-    .word 12*80
-    .word 13*80
-    .word 14*80
-    .word 15*80
-    .word 16*80
-    .word 17*80
-    .word 18*80
-    .word 19*80
-    .word 20*80
-    .word 21*80
-    .word 22*80
-    .word 23*80
-    .word 24*80
-    .word 25*80
-    .word 26*80
+    .repeat 24, i 
+        .word i * COLS 
+    .endrepeat
 bitval:
     .byte %10000000
     .byte %01000000
