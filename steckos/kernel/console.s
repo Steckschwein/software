@@ -23,7 +23,6 @@ crs_y:          .res 1
 vdp_addr:       .res 2
 vdp_addr_old:   .res 2
 
-vdp_cursor_val: .res 1
 screen_status:  .res 1
 
 .code
@@ -194,12 +193,10 @@ console_put_cursor:
     adc vdp_addr+1
     sta vdp_addr+1
 
-    ; get bit offset 
+    ; get bit offset, part 1 
     lda vdp_addr
     and #%00000111
     tax 
-    lda bitval,x
-    sta vdp_cursor_val
 
     ; divide by 8 to get the byte offset
     lsr vdp_addr+1
@@ -228,7 +225,8 @@ console_put_cursor:
     sta a_vreg 
 
     vdp_wait_l 6
-    lda vdp_cursor_val
+    ; get bit offset, part 2
+    lda bitval,x
     sta a_vram
 
     rts
