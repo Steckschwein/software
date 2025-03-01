@@ -145,22 +145,7 @@ console_get_pointer_from_cursor:
     restore
     rts
 
-;@name: console_advance_cursor
-;@desc: increase cursor x position. wrap around when x = 80.
-;@in: crs_x - cursor x position
-;@in: crs_y - cursor y position
-;@out: crs_x - cursor x position
-;@out: crs_y - cursor y position
-console_advance_cursor:
-    lda crs_x
-    inc a
-    sta crs_x 
-    cmp #COLS 
-    bne :+
-    jsr console_cursor_down
-    stz crs_x
-:
-    rts
+
 
 ;@name: console_put_cursor
 ;@desc: place cursor at position pointed to by crs_x/crs_y
@@ -247,6 +232,36 @@ console_cursor_down:
     pla
     rts
 
+;@name: console_cursor_right
+;@desc: increase cursor x position. wrap around when x = 80.
+;@in: crs_x - cursor x position
+;@in: crs_y - cursor y position
+;@out: crs_x - cursor x position
+;@out: crs_y - cursor y position
+console_cursor_right:
+    lda crs_x
+    inc a
+    sta crs_x 
+    cmp #COLS 
+    bne :+
+    jsr console_cursor_down
+    stz crs_x
+:
+    rts
+
+console_cursor_left:
+    lda crs_x
+    beq :+
+    dec crs_x
+    bra @exit
+:
+    lda #COLS-1
+    sta crs_x 
+    dec crs_y
+@exit:
+    rts
+
+
 ;@name: console_putchar
 ;@desc: print character in A at current cursor position. handle CR/LF.
 ;@in: A - character to print
@@ -262,13 +277,15 @@ console_putchar:
     rts
 :
 
-    ; handle carriage return character
-    ; just reset cursor x position
     cmp #CODE_CR 
     bne :+
     stz crs_x
     rts
 : 
+    cmp #KEY_BACKSPACE
+    bne :+
+    jmp console_cursor_left
+:
 
     pha 
     phx
@@ -286,7 +303,7 @@ console_putchar:
     plx 
     stx slot2_ctrl  
 
-    jsr console_advance_cursor
+    jsr console_cursor_right
 
     lda screen_status
     ora #SCREEN_DIRTY
@@ -318,20 +335,14 @@ console_handle_control_char:
     bra @exit
 :
     cmp #CODE_CURSOR_LEFT
-    bne :++
-    lda crs_x
-    beq :+
-    dec crs_x
+    bne :+
+    jsr console_cursor_left
     bra @exit
-:
-    lda #COLS-1
-    sta crs_x 
-    dec crs_y
-    bra @exit
+
 :
     cmp #CODE_CURSOR_RIGHT
     bne :+
-    jsr console_advance_cursor
+    jsr console_cursor_right
     bra @exit
 :
     rts
