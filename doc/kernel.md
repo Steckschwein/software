@@ -5,12 +5,12 @@
 
 
 ## console
-[console_advance_cursor](#console_advance_cursor) | [console_clear_screenbuf](#console_clear_screenbuf) | [console_get_pointer_from_cursor](#console_get_pointer_from_cursor) | [console_init](#console_init) | [console_put_cursor](#console_put_cursor) | [console_putchar](#console_putchar) | [console_update_screen](#console_update_screen) | 
+[console_advance_cursor](#console_advance_cursor) | [console_clear_screenbuf](#console_clear_screenbuf) | [console_cursor_down](#console_cursor_down) | [console_get_pointer_from_cursor](#console_get_pointer_from_cursor) | [console_handle_control_char](#console_handle_control_char) | [console_init](#console_init) | [console_put_cursor](#console_put_cursor) | [console_putchar](#console_putchar) | [console_scroll](#console_scroll) | [console_update_screen](#console_update_screen) | 
 
 ***
 
 
-### <a name="console_advance_cursor" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L146">console_advance_cursor</a>
+### <a name="console_advance_cursor" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L148">console_advance_cursor</a>
 
 > increase cursor x position. wrap around when x = 80.
 
@@ -26,7 +26,7 @@ Out
 
 ***
 
-### <a name="console_clear_screenbuf" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L90">console_clear_screenbuf</a>
+### <a name="console_clear_screenbuf" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L92">console_clear_screenbuf</a>
 
 > clear screenbuffer area pointed to by cursor_ptr
 
@@ -39,7 +39,17 @@ In
 
 ***
 
-### <a name="console_get_pointer_from_cursor" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L111">console_get_pointer_from_cursor</a>
+### <a name="console_cursor_down" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L234">console_cursor_down</a>
+
+> move cursor down by 1 row, scroll screen buffer when reached row 24
+
+
+
+
+
+***
+
+### <a name="console_get_pointer_from_cursor" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L113">console_get_pointer_from_cursor</a>
 
 > calculate screen buffer address for cursor position in crs_x/crs_y
 
@@ -52,7 +62,20 @@ In
 
 ***
 
-### <a name="console_init" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L27">console_init</a>
+### <a name="console_handle_control_char" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L299">console_handle_control_char</a>
+
+> handle control character in A.
+
+
+
+In
+: A - control char<br />crs_x - cursor x position<br />crs_y - cursor y position
+
+
+
+***
+
+### <a name="console_init" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L29">console_init</a>
 
 > init console
 
@@ -62,7 +85,7 @@ In
 
 ***
 
-### <a name="console_put_cursor" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L164">console_put_cursor</a>
+### <a name="console_put_cursor" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L165">console_put_cursor</a>
 
 > place cursor at position pointed to by crs_x/crs_y
 
@@ -75,7 +98,7 @@ In
 
 ***
 
-### <a name="console_putchar" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L234">console_putchar</a>
+### <a name="console_putchar" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L250">console_putchar</a>
 
 > print character in A at current cursor position. handle CR/LF.
 
@@ -88,7 +111,17 @@ In
 
 ***
 
-### <a name="console_update_screen" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L58">console_update_screen</a>
+### <a name="console_scroll" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L344">console_scroll</a>
+
+> scroll screen buffer up 1 row
+
+
+
+
+
+***
+
+### <a name="console_update_screen" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L60">console_update_screen</a>
 
 > update vdp text screen memory with contents from console buffer
 
@@ -214,7 +247,7 @@ In
 ***
 
 
-### <a name="do_irq" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//kernel.s#L182">do_irq</a>
+### <a name="do_irq" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//kernel.s#L134">do_irq</a>
 
 > system irq handler
 
@@ -224,7 +257,7 @@ In
 
 ***
 
-### <a name="do_nmi" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//kernel.s#L211">do_nmi</a>
+### <a name="do_nmi" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//kernel.s#L159">do_nmi</a>
 
 > system nmi handler
 
@@ -234,7 +267,7 @@ In
 
 ***
 
-### <a name="io_null" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//kernel.s#L216">io_null</a>
+### <a name="io_null" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//kernel.s#L165">io_null</a>
 
 > dummy routine to suppress output
 
@@ -244,7 +277,7 @@ In
 
 ***
 
-### <a name="set_input" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//kernel.s#L233">set_input</a>
+### <a name="set_input" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//kernel.s#L182">set_input</a>
 
 > set current output device to one of: INPUT_DEVICE_NULL, INPUT_DEVICE_UART, INPUT_DEVICE_CONSOLE
 
@@ -257,7 +290,7 @@ In
 
 ***
 
-### <a name="set_output" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//kernel.s#L221">set_output</a>
+### <a name="set_output" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//kernel.s#L170">set_output</a>
 
 > set current output device to one of: OUTPUT_DEVICE_NULL, OUTPUT_DEVICE_UART, OUTPUT_DEVICE_CONSOLE
 
@@ -378,7 +411,7 @@ Out
 ***
 
 
-### <a name="init_uart" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//uart.s#L34">init_uart</a>
+### <a name="init_uart" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//uart.s#L11">init_uart</a>
 
 > init UART to 115200 baud, 8N1
 
@@ -394,7 +427,7 @@ Out
 
 ***
 
-### <a name="uart_rx" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//uart.s#L100">uart_rx</a>
+### <a name="uart_rx" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//uart.s#L77">uart_rx</a>
 
 > receive byte, no wait, set carry and store in A when received
 
@@ -410,7 +443,7 @@ Out
 
 ***
 
-### <a name="uart_tx" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//uart.s#L64">uart_tx</a>
+### <a name="uart_tx" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//uart.s#L41">uart_tx</a>
 
 > send byte in A
 

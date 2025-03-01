@@ -74,7 +74,7 @@ console_update_screen:
 
     lda console_ptr
     ldy console_ptr+1
-    ldx #8
+    ldx #SCREEN_BUFFER_SIZE
     jsr vdp_memcpy
     
     pla
@@ -94,7 +94,7 @@ console_update_screen:
 ;@in: cursor_ptr - address of buffer 
 console_clear_screenbuf:
     lda #' '
-    ldx #8
+    ldx #SCREEN_BUFFER_SIZE
 @loop:
     ldy #0
 :
@@ -231,6 +231,8 @@ console_put_cursor:
 
     rts
 
+;@name: console_cursor_down
+;@desc: move cursor down by 1 row, scroll screen buffer when reached row 24
 console_cursor_down:
     pha
     lda crs_y
@@ -279,7 +281,6 @@ console_putchar:
     ldx #SCREEN_BUFFER_PAGE
     stx slot2_ctrl 
 
-    
     sta (cursor_ptr)
 
     plx 
@@ -295,6 +296,11 @@ console_putchar:
     pla 
     rts
 
+;@name: console_handle_control_char
+;@desc: handle control character in A.
+;@in: A - control char
+;@in: crs_x - cursor x position
+;@in: crs_y - cursor y position
 console_handle_control_char:
     cmp #CODE_CURSOR_DOWN
     bne :+
@@ -335,6 +341,8 @@ console_handle_control_char:
     clc
     rts
 
+;@name: console_scroll
+;@desc: scroll screen buffer up 1 row
 console_scroll:
     save
     ; setup pointers
@@ -357,7 +365,7 @@ console_scroll:
     ldx #SCREEN_BUFFER_PAGE
     stx slot2_ctrl 
 
-    ldx #0
+    ldx #SCREEN_BUFFER_SIZE
 @scroll_row:
     ldy #0
 @loop:
@@ -368,8 +376,8 @@ console_scroll:
 
     inc scroll_src_ptr+1
     inc scroll_trg_ptr+1
-    inx
-    cpx #8
+    
+    dex
     bne @scroll_row
 
     
