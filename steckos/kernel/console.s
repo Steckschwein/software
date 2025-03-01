@@ -116,23 +116,21 @@ console_clear_screenbuf:
 ;@in: crs_y - cursor y position
 console_get_pointer_from_cursor:
     save 
-    copypointer console_ptr, cursor_ptr
 
-    ldy crs_y
-    beq @add_x
-:
+    lda crs_y
+    asl
+    tax 
+
     clc 
-    lda #COLS 
-    adc cursor_ptr
+    lda multab,x 
+    adc console_ptr
     sta cursor_ptr
 
-    lda #0
-    adc cursor_ptr+1
+    lda multab+1,x 
+    adc console_ptr+1
     sta cursor_ptr+1
 
-    dey 
-    bne :-
-@add_x:
+    ; add x position
     clc 
     lda crs_x
     adc cursor_ptr
