@@ -103,10 +103,6 @@ NEXTITEM:       LDA IN,Y        ; Get character.
                 BEQ SETSTOR     ; Yes. Set STOR mode.
                 CMP #'R' + $80   ; "R"?
                 BEQ RUN         ; Yes. Run user program.
-                CMP #'X' + $80
-                BNE :+
-                RTS
-:
                 STX L           ; $00-> L.
                 STX H           ; and H.
                 STY YSAV        ; Save Y for comparison.
