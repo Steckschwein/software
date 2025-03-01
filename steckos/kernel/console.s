@@ -133,6 +133,7 @@ console_get_pointer_from_cursor:
     ; add x position
     clc 
     lda crs_x
+    beq @exit
     adc cursor_ptr
     sta cursor_ptr
 
@@ -140,6 +141,7 @@ console_get_pointer_from_cursor:
     adc cursor_ptr+1
     sta cursor_ptr+1 
 
+@exit:
     restore
     rts
 
@@ -311,7 +313,6 @@ console_handle_control_char:
 :
     cmp #CODE_CURSOR_LEFT
     bne :++
-
     lda crs_x
     beq :+
     dec crs_x
