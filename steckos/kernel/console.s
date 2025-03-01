@@ -363,34 +363,14 @@ console_scroll:
 @loop:
     lda (scroll_src_ptr),y 
     sta (scroll_trg_ptr),y 
-    lda #' '
-    sta (scroll_src_ptr),y 
     iny
-    cpy #COLS
     bne @loop
 
-    clc
-    lda scroll_src_ptr
-    adc #COLS
-    sta scroll_src_ptr 
-
-    lda scroll_src_ptr+1
-    adc #0 
-    sta scroll_src_ptr+1
-
-    clc
-    lda scroll_trg_ptr
-    adc #COLS
-    sta scroll_trg_ptr 
-
-    lda scroll_trg_ptr+1
-    adc #0 
-    sta scroll_trg_ptr+1
-
+    inc scroll_src_ptr+1
+    inc scroll_trg_ptr+1
     inx
-    cpx #ROWS
+    cpx #8
     bne @scroll_row
-
 
     
     plx 
