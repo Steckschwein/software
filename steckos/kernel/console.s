@@ -30,14 +30,10 @@ vdp_addr_old:   .res 2
 screen_status:  .res 1
 
 .code
+
 ;@name: console_init
 ;@desc: init console
 console_init:
-
-
-
-    ; copypointer console_ptr, cursor_ptr
-
     stz crs_x
     stz crs_y
     stz vdp_addr_old
@@ -69,10 +65,11 @@ console_init:
 
     copypointer console_ptr, cursor_ptr
 
-
-
     rts
 
+;@name: console_set_screen_buffer
+;@desc: switch to screen buffer number in A
+;@in: A - screen buffer number to switch to
 console_set_screen_buffer:
     asl 
     tax

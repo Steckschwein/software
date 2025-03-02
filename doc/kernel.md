@@ -5,12 +5,35 @@
 
 
 ## console
-[console_advance_cursor](#console_advance_cursor) | [console_clear_screenbuf](#console_clear_screenbuf) | [console_cursor_down](#console_cursor_down) | [console_get_pointer_from_cursor](#console_get_pointer_from_cursor) | [console_handle_control_char](#console_handle_control_char) | [console_init](#console_init) | [console_put_cursor](#console_put_cursor) | [console_putchar](#console_putchar) | [console_scroll](#console_scroll) | [console_update_screen](#console_update_screen) | 
+[console_clear_screenbuf](#console_clear_screenbuf) | [console_cursor_down](#console_cursor_down) | [console_cursor_right](#console_cursor_right) | [console_get_pointer_from_cursor](#console_get_pointer_from_cursor) | [console_handle_control_char](#console_handle_control_char) | [console_init](#console_init) | [console_put_cursor](#console_put_cursor) | [console_putchar](#console_putchar) | [console_scroll](#console_scroll) | [console_set_screen_buffer](#console_set_screen_buffer) | [console_update_screen](#console_update_screen) | 
 
 ***
 
 
-### <a name="console_advance_cursor" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L148">console_advance_cursor</a>
+### <a name="console_clear_screenbuf" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L138">console_clear_screenbuf</a>
+
+> clear screenbuffer area pointed to by cursor_ptr
+
+
+
+In
+: cursor_ptr - address of buffer
+
+
+
+***
+
+### <a name="console_cursor_down" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L265">console_cursor_down</a>
+
+> move cursor down by 1 row, scroll screen buffer when reached row 24
+
+
+
+
+
+***
+
+### <a name="console_cursor_right" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L281">console_cursor_right</a>
 
 > increase cursor x position. wrap around when x = 80.
 
@@ -26,30 +49,7 @@ Out
 
 ***
 
-### <a name="console_clear_screenbuf" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L92">console_clear_screenbuf</a>
-
-> clear screenbuffer area pointed to by cursor_ptr
-
-
-
-In
-: cursor_ptr - address of buffer
-
-
-
-***
-
-### <a name="console_cursor_down" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L234">console_cursor_down</a>
-
-> move cursor down by 1 row, scroll screen buffer when reached row 24
-
-
-
-
-
-***
-
-### <a name="console_get_pointer_from_cursor" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L113">console_get_pointer_from_cursor</a>
+### <a name="console_get_pointer_from_cursor" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L159">console_get_pointer_from_cursor</a>
 
 > calculate screen buffer address for cursor position in crs_x/crs_y
 
@@ -62,7 +62,7 @@ In
 
 ***
 
-### <a name="console_handle_control_char" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L299">console_handle_control_char</a>
+### <a name="console_handle_control_char" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L362">console_handle_control_char</a>
 
 > handle control character in A.
 
@@ -75,7 +75,7 @@ In
 
 ***
 
-### <a name="console_init" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L29">console_init</a>
+### <a name="console_init" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L34">console_init</a>
 
 > init console
 
@@ -85,7 +85,7 @@ In
 
 ***
 
-### <a name="console_put_cursor" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L165">console_put_cursor</a>
+### <a name="console_put_cursor" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L196">console_put_cursor</a>
 
 > place cursor at position pointed to by crs_x/crs_y
 
@@ -98,7 +98,7 @@ In
 
 ***
 
-### <a name="console_putchar" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L250">console_putchar</a>
+### <a name="console_putchar" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L311">console_putchar</a>
 
 > print character in A at current cursor position. handle CR/LF.
 
@@ -111,7 +111,7 @@ In
 
 ***
 
-### <a name="console_scroll" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L344">console_scroll</a>
+### <a name="console_scroll" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L415">console_scroll</a>
 
 > scroll screen buffer up 1 row
 
@@ -121,7 +121,20 @@ In
 
 ***
 
-### <a name="console_update_screen" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L60">console_update_screen</a>
+### <a name="console_set_screen_buffer" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L70">console_set_screen_buffer</a>
+
+> switch to screen buffer number in A
+
+
+
+In
+: A - screen buffer number to switch to
+
+
+
+***
+
+### <a name="console_update_screen" target="_blank" href="https://github.com/Steckschwein/software/tree/master/../steckos/kernel//console.s#L106">console_update_screen</a>
 
 > update vdp text screen memory with contents from console buffer
 
