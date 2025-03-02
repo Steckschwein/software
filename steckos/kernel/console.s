@@ -39,7 +39,7 @@ console_init:
     stz vdp_addr_old
     stz vdp_addr_old+1
 
-    ldx #3
+    ldx #2
 :
     stz crs_x_sav,x
     stz crs_y_sav,x
@@ -55,15 +55,16 @@ console_init:
     lda #1
     jsr console_set_screen_buffer
     jsr console_clear_screenbuf
-
     lda #0
     jsr console_set_screen_buffer
     jsr console_clear_screenbuf
+
 
     pla 
     sta slot2_ctrl
 
     copypointer console_ptr, cursor_ptr
+
 
     rts
 
@@ -404,6 +405,18 @@ console_handle_control_char:
     jsr console_set_screen_buffer
     bra @exit
 :
+;     cmp #KEY_FN3
+;     bne :+
+;     lda #2
+;     jsr console_set_screen_buffer
+;     bra @exit
+; :
+;     cmp #KEY_FN4
+;     bne :+
+;     lda #3
+;     jsr console_set_screen_buffer
+;     bra @exit
+; :
 
     rts
 @exit:
@@ -480,4 +493,5 @@ bitval:
 screen_buffer_list:
     .word screen_buffer0
     .word screen_buffer1
-    
+    .word screen_buffer2
+    .word screen_buffer3
