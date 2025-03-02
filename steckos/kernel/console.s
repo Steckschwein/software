@@ -30,8 +30,9 @@ screen_status:  .res 1
 ;@desc: init console
 console_init:
 
-    SetVector screen_buffer, console_ptr
-    copypointer console_ptr, cursor_ptr
+
+
+    ; copypointer console_ptr, cursor_ptr
 
     stz crs_x
     stz crs_y
@@ -43,11 +44,31 @@ console_init:
     pha
     lda #SCREEN_BUFFER_PAGE
     sta slot2_ctrl 
-    
+
+    lda #1
+    jsr console_set_screen_buffer
     jsr console_clear_screenbuf
-   
+
+    lda #0
+    jsr console_set_screen_buffer
+    jsr console_clear_screenbuf
+
     pla 
     sta slot2_ctrl
+
+    copypointer console_ptr, cursor_ptr
+
+
+
+    rts
+
+console_set_screen_buffer:
+    asl 
+    tax 
+    lda screen_buffer_list,x 
+    sta console_ptr
+    lda screen_buffer_list+1,x 
+    sta console_ptr+1
 
     copypointer console_ptr, cursor_ptr
 
@@ -56,6 +77,7 @@ console_init:
     sta screen_status
 
     rts
+
 
 ;@name: console_update_screen
 ;@desc: update vdp text screen memory with contents from console buffer
@@ -345,6 +367,20 @@ console_handle_control_char:
     jsr console_cursor_right
     bra @exit
 :
+
+    cmp #KEY_FN1
+    bne :+
+    lda #0
+    jsr console_set_screen_buffer
+    bra @exit
+:
+    cmp #KEY_FN2
+    bne :+
+    lda #1
+    jsr console_set_screen_buffer
+    bra @exit
+:
+
     rts
 @exit:
     lda #0
@@ -417,4 +453,7 @@ bitval:
     .byte %00000010
     .byte %00000001
 
+screen_buffer_list:
+    .word screen_buffer0
+    .word screen_buffer1
     
