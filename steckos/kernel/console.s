@@ -18,6 +18,10 @@ scroll_trg_ptr: .res 2
 .bss 
 crs_x:          .res 1
 crs_y:          .res 1
+crs_x_sav:      .res 4
+crs_y_sav:      .res 4
+current_console: .res 1
+
 
 
 vdp_addr:       .res 2
@@ -64,13 +68,29 @@ console_init:
 
 console_set_screen_buffer:
     asl 
-    tax 
+    tax
+
+    ldy current_console
+    lda crs_x
+    sta crs_x_sav,y 
+
+    lda crs_y
+    sta crs_y_sav,y 
+
+    
     lda screen_buffer_list,x 
     sta console_ptr
     lda screen_buffer_list+1,x 
     sta console_ptr+1
 
+    lda crs_x_sav,x 
+    sta crs_x 
+    lda crs_y_sav,x
+    sta crs_y
+
     copypointer console_ptr, cursor_ptr
+
+    stx current_console
 
     lda screen_status
     ora #SCREEN_DIRTY

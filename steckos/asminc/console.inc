@@ -5,7 +5,10 @@ SCREEN_DIRTY = $80
 screen_buffer_size = 80*24
 
 screen_buffer0 = $8000
-screen_buffer1 = screen_buffer0 + screen_buffer_size
+screen_buffer1 = screen_buffer0 + $1000
+screen_buffer2 = screen_buffer1 + $1000
+screen_buffer3 = screen_buffer2 + $1000
+
 
 KEY_LF            = $0a
 KEY_CR            = $0d
