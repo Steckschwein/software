@@ -42,6 +42,13 @@ console_init:
     stz crs_y
     stz vdp_addr_old
     stz vdp_addr_old+1
+
+    ldx #3
+:
+    stz crs_x_sav,x
+    stz crs_y_sav,x
+    dex 
+    bpl :-   
     
 
     lda slot2_ctrl
