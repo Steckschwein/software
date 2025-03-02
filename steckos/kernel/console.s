@@ -106,7 +106,7 @@ console_clear_screenbuf:
     inc cursor_ptr+1
 
     dex 
-    bne @loop
+    bpl @loop
 
     rts
 
