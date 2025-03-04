@@ -46,9 +46,6 @@ transfer: loader.prg
 rom.bin: kernel.bin
 	cat kernel.bin kernel.bin > rom.bin
 
-test.bin: test.o
-	cl65 --target none --config kernel.cfg test.asm -o test.bin
-
 test:
 	(cd test; make all)
 
