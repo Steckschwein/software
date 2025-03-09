@@ -19,15 +19,17 @@
 .import console_init, console_update_screen, console_putchar, console_put_cursor, console_handle_control_char
 .import keyboard_init, fetchkey, getkey
 
-.export char_out, char_in, set_input, set_output, upload
-.export out_vector, in_vector, startaddr
+.export startaddr
+.export input_vectors, output_vectors
+.export upload
+
 .import crs_x, crs_y
+.import out_vector, in_vector
+.import char_in, char_out, set_input, set_output
 .exportzp xmodem_startaddress=startaddr
 
 
 .zeropage
-out_vector:    .res 2
-in_vector:     .res 2
 startaddr:     .res 2
 
 .bss
@@ -88,6 +90,7 @@ do_reset:
     lda #CODE_LF
     jsr char_out
 
+
     jmp register_status
 
 upload:
@@ -125,11 +128,6 @@ upload:
     jmp (startaddr)
 
 
-char_out:
-    jmp (out_vector)
-
-char_in:
-    jmp (in_vector)
 
 ; @name: do_irq
 ; @desc: system irq handler
@@ -140,11 +138,11 @@ do_irq:
     ; jsr vdp_bgcolor
 
     bit a_vreg
-    bpl @exit_isr
+    bpl @handle_keyboard
 
     jsr console_update_screen
 
-
+@handle_keyboard:
     jsr fetchkey
     bcc @exit_isr
 
@@ -162,34 +160,7 @@ do_nmi:
     jmp register_status
     rti
 
-; @name: io_null
-; @desc: dummy routine to suppress output
-io_null:
-    rts
 
-;@name: set_output
-;@desc: set current output device to one of: OUTPUT_DEVICE_NULL, OUTPUT_DEVICE_UART, OUTPUT_DEVICE_CONSOLE 
-;@in: A - device id to be set
-set_output:
-    asl
-    tax
-    lda output_vectors,x
-    sta out_vector
-    lda output_vectors+1,x
-    sta out_vector+1
-    rts 
-
-;@name: set_input
-;@desc: set current output device to one of: INPUT_DEVICE_NULL, INPUT_DEVICE_UART, INPUT_DEVICE_CONSOLE 
-;@in: A - device id to be set
-set_input:
-    asl 
-    tax
-    lda input_vectors,x
-    sta in_vector
-    lda input_vectors+1,x
-    sta in_vector+1
-    rts 
 
 register_status:
     sta save_stat + save_status::ACC
@@ -259,7 +230,10 @@ register_status:
 
     jmp wozmon
 
-
+; @name: io_null
+; @desc: dummy routine to suppress output
+io_null:
+    rts
 
 
 .rodata

@@ -1,14 +1,50 @@
 ; @module: io
 .include "system.inc"
 
-.import char_out
-.export hexout, primm
+.import output_vectors, input_vectors
+.export hexout, primm, char_in, char_out
+.export set_input, set_output, in_vector, out_vector
 
 .zeropage
+out_vector:    .res 2
+in_vector:     .res 2
 DPL: .res 1
 DPH: .res 1
 
 .code
+char_out:
+    jmp (out_vector)
+
+char_in:
+    jmp (in_vector)
+
+
+
+;@name: set_output
+;@desc: set current output device to one of: OUTPUT_DEVICE_NULL, OUTPUT_DEVICE_UART, OUTPUT_DEVICE_CONSOLE 
+;@in: A - device id to be set
+set_output:
+    asl
+    tax
+    lda output_vectors,x
+    sta out_vector
+    lda output_vectors+1,x
+    sta out_vector+1
+    rts 
+
+;@name: set_input
+;@desc: set current output device to one of: INPUT_DEVICE_NULL, INPUT_DEVICE_UART, INPUT_DEVICE_CONSOLE 
+;@in: A - device id to be set
+set_input:
+    asl 
+    tax
+    lda input_vectors,x
+    sta in_vector
+    lda input_vectors+1,x
+    sta in_vector+1
+    rts 
+
+
 ; @name: hexout
 ; @desc: print value in A as 2 hex digits
 ; @in: A - value to print
