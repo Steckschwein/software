@@ -15,7 +15,7 @@
 	test "hexout"
 
   ldx #0
-  ldx #0
+  ldy #0
   lda #$55
   jsr hexout
 	
