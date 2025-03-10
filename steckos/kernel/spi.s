@@ -21,11 +21,11 @@
 ;@name: "spi_deselect"
 ;@desc: "deselect all SPI devices"
 spi_deselect:
-		pha
-		lda #spi_device_deselect
-		sta via1portb
-		pla
-		rts
+    pha
+    lda #spi_device_deselect
+    sta via1portb
+    pla
+    rts
 
 ;----------------------------------------------------------------------------------------------
 ; Receive byte VIA SPI
@@ -37,30 +37,30 @@ spi_deselect:
 ;@clobbers: A,X
 ;@desc: "read byte via SPI"
 spi_r_byte:
-		lda via1portb ; Port laden
-		AND #$fe	  ; Takt ausschalten, MOSI set to '1' - we send $ff byte
-		TAX			  ; aufheben
-		INC
+    lda via1portb ; Port laden
+    AND #$fe	  ; Takt ausschalten, MOSI set to '1' - we send $ff byte
+    TAX			  ; aufheben
+    INC
 
-		STA via1portb ; Takt An 1
-		STX via1portb ; Takt aus
-		STA via1portb ; Takt An 2
-		STX via1portb ; Takt aus
-		STA via1portb ; Takt An 3
-		STX via1portb ; Takt aus
-		STA via1portb ; Takt An 4
-		STX via1portb ; Takt aus
-		STA via1portb ; Takt An 5
-		STX via1portb ; Takt aus
-		STA via1portb ; Takt An 6
-		STX via1portb ; Takt aus
-		STA via1portb ; Takt An 7
-		STX via1portb ; Takt aus
-		STA via1portb ; Takt An 8
-		STX via1portb ; Takt aus
+    STA via1portb ; Takt An 1
+    STX via1portb ; Takt aus
+    STA via1portb ; Takt An 2
+    STX via1portb ; Takt aus
+    STA via1portb ; Takt An 3
+    STX via1portb ; Takt aus
+    STA via1portb ; Takt An 4
+    STX via1portb ; Takt aus
+    STA via1portb ; Takt An 5
+    STX via1portb ; Takt aus
+    STA via1portb ; Takt An 6
+    STX via1portb ; Takt aus
+    STA via1portb ; Takt An 7
+    STX via1portb ; Takt aus
+    STA via1portb ; Takt An 8
+    STX via1portb ; Takt aus
 
-		lda via1sr
-		rts
+    lda via1sr
+    rts
 
 
 ;----------------------------------------------------------------------------------------------
