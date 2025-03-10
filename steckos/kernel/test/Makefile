@@ -12,8 +12,8 @@ all: test.io
 clean:
 	rm -f *.prg *.bin *.o *.dis *.log
 
-%.o: %.asm
-	ca65 $(CA65FLAGS) $(@:.o=.asm)
+%.o: %.s
+	ca65 $(CA65FLAGS) $(@:.o=.s)
 
 test.%.bin: test.%.o $(LIBS) $(<:test.%=%)
 	ld65 $(LDFLAGS) $< ../$(<:test.%=%) $(LIBS) -o $@
