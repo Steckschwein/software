@@ -3,14 +3,14 @@
   .zeropage 
   tmp_ptr: .res 2
   .export tmp_ptr
-  
+.code
+
 	.import asmunit_chrout
   ; .export char_out=asmunit_chrout
 
   ; uut
 	.import hexout, primm
 
-.code
 
 	test "hexout"
 
