@@ -1,10 +1,11 @@
 	.include "asmunit.inc" 	; test api
 	
+	.import asmunit_chrout
+  ; .export char_out=asmunit_chrout
+
+  ; uut
 	.import hexout, primm
 
-	.import asmunit_chrout
-	.export char=asmunit_chrout
-	
 .code
 
 	test "hexout"
@@ -37,3 +38,5 @@
   assertOut "Hello World!"
 
 	brk
+
+.data

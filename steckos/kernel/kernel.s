@@ -24,12 +24,15 @@
 .export upload
 
 .import crs_x, crs_y
-.import out_vector, in_vector
-.import char_in, char_out, set_input, set_output
+.export char_in, char_out
+.export set_input, set_output
+.exportzp in_vector, out_vector
 .exportzp xmodem_startaddress=startaddr
 
 
 .zeropage
+out_vector:    .res 2
+in_vector:     .res 2
 startaddr:     .res 2
 
 .bss
@@ -230,10 +233,40 @@ register_status:
 
     jmp wozmon
 
+char_out:
+    jmp (out_vector)
+
+char_in:
+    jmp (in_vector)
+
 ; @name: io_null
 ; @desc: dummy routine to suppress output
 io_null:
     rts
+
+;@name: set_output
+;@desc: set current output device to one of: OUTPUT_DEVICE_NULL, OUTPUT_DEVICE_UART, OUTPUT_DEVICE_CONSOLE 
+;@in: A - device id to be set
+set_output:
+    asl
+    tax
+    lda output_vectors,x
+    sta out_vector
+    lda output_vectors+1,x
+    sta out_vector+1
+    rts 
+
+;@name: set_input
+;@desc: set current output device to one of: INPUT_DEVICE_NULL, INPUT_DEVICE_UART, INPUT_DEVICE_CONSOLE 
+;@in: A - device id to be set
+set_input:
+    asl 
+    tax
+    lda input_vectors,x
+    sta in_vector
+    lda input_vectors+1,x
+    sta in_vector+1
+    rts 
 
 
 .rodata

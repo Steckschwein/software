@@ -36,9 +36,9 @@ spi_deselect:
 ;@clobbers: A,X
 ;@desc: "read byte via SPI"
 spi_r_byte:
-		lda via1portb	; Port laden
-		AND #$fe		  ; Takt ausschalten, MOSI set to '1' - we send $ff byte
-		TAX				 		; aufheben
+		lda via1portb ; Port laden
+		AND #$fe	  ; Takt ausschalten, MOSI set to '1' - we send $ff byte
+		TAX			  ; aufheben
 		INC
 
 		STA via1portb ; Takt An 1
