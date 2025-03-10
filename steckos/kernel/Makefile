@@ -47,7 +47,7 @@ transfer: loader.prg
 rom.bin: kernel.bin
 	cat kernel.bin kernel.bin > rom.bin
 
-test:
+test: all
 	(cd test; make all)
 
 emu: kernel.bin rom.bin
