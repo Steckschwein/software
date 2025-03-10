@@ -14,11 +14,15 @@
 
 	test "hexout"
 
+  ldx #0
+  ldx #0
   lda #$55
   jsr hexout
 	
   assertOut "55"
   assertA $55
+  assertX 0
+  assertY 0
 
 
   lda #0
