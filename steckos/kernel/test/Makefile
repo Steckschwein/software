@@ -5,9 +5,6 @@ CA65FLAGS=-I ../../../asmunit -I ../../asminc -I ../ $(DEFINES)
 LIBS=../../../asmunit/asmunit.a #../../lib/steckschwein.a
 LDFLAGS=-C ../../../asmunit/asmunit.cfg $(DEFINES)
 
-# testing purpose of kernel api from client point of view
-# LIBS_PRG=../../lib/steckschwein.a
-LDFLAGS_PRG=-C ../../prg.ld65.cfg
 
 .PHONY: all clean
 
