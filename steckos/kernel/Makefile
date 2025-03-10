@@ -1,5 +1,6 @@
 # !!! order counts !!! - kernel.o must be the first module which is linked to output file
-OBJS=kernel.o 
+OBJS=zeropage.o 
+OBJS+=kernel.o 
 OBJS+=io.o
 OBJS+=via.o
 OBJS+=uart.o

@@ -19,21 +19,16 @@
 .import console_init, console_update_screen, console_putchar, console_put_cursor, console_handle_control_char
 .import keyboard_init, fetchkey, getkey
 
-.export startaddr
 .export input_vectors, output_vectors
 .export upload
 
 .import crs_x, crs_y
 .export char_in, char_out
 .export set_input, set_output
-.exportzp in_vector, out_vector
+.importzp in_vector, out_vector, startaddr
 .exportzp xmodem_startaddress=startaddr
 
 
-.zeropage
-out_vector:    .res 2
-in_vector:     .res 2
-startaddr:     .res 2
 
 .bss
 save_stat:          .res .sizeof(save_status)
@@ -79,7 +74,7 @@ do_reset:
 
 
     jsr primm 
-    .byte "Steckschwein "
+    .byte "steckOS 2.0 "
     .include "version.inc"
     .byte CODE_LF
     .byte CODE_LF

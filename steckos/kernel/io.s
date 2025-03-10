@@ -4,9 +4,12 @@
 .import char_out
 .export hexout, primm
 
-.zeropage
-DPL: .res 1
-DPH: .res 1
+.importzp tmp_ptr
+DPL = tmp_ptr
+DPH = tmp_ptr+1
+; .zeropage
+; DPL: .res 1
+; DPH: .res 1
 
 .code
 ; @name: hexout

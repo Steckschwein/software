@@ -1,5 +1,9 @@
 	.include "asmunit.inc" 	; test api
 	
+  .zeropage 
+  tmp_ptr: .res 2
+  .export tmp_ptr
+  
 	.import asmunit_chrout
   ; .export char_out=asmunit_chrout
 

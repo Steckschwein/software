@@ -8,8 +8,9 @@
 .include "spi.inc"
 .include "errno.inc"
 
-.zeropage
-spi_sr: .res 1
+.importzp spi_sr
+; .zeropage
+; spi_sr: .res 1
 
 .export spi_rw_byte
 .export spi_deselect

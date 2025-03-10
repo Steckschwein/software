@@ -11,7 +11,6 @@
 .include "common.inc"
 
 
-
 ; Page 0 Variables
 
 ; XAML            = $24           ;  Last "opened" location Low
@@ -23,16 +22,7 @@
 ; YSAV            = $2A           ;  Used to see if hex value is given
 ; MODE            = $2B           ;  $00=XAM, $7F=STOR, $AE=BLOCK XAM
 
-.zeropage
-
-XAML:     .res 1           ;  Last "opened" location Low
-XAMH:     .res 1           ;  Last "opened" location High
-STL:      .res 1           ;  Store address Low
-STH:      .res 1           ;  Store address High
-L:        .res 1           ;  Hex value parsing Low
-H:        .res 1           ;  Hex value parsing High
-YSAV:     .res 1           ;  Used to see if hex value is given
-MODE:     .res 1           ;  $00=XAM, $7F=STOR, $AE=BLOCK XAM
+.importzp XAML, XAMH, STL, STH, L, H, YSAV, MODE
 
 
 .code

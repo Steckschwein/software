@@ -9,9 +9,9 @@
 ; .import primm
 ; .import char_out
 .import charset_6x8
-
-.zeropage
-vdp_ptr:       .res 2
+.importzp vdp_ptr
+; .zeropage
+; vdp_ptr:       .res 2
 
 .code
 

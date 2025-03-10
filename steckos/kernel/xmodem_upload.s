@@ -64,15 +64,16 @@
 ; zero page variables (adjust these to suit your needs)
 ;
 ;
-.zeropage
-crc:          .res 2  ; CRC lo byte  (two byte variable)
-crch = crc+1  ; CRC hi byte
+; .zeropage
+; crc:          .res 2  ; CRC lo byte  (two byte variable)
+; crch = crc+1  ; CRC hi byte
 
-blkno:        .res 1 ; block number
-retryl:       .res 1 ; 16 bit retry
-retryh:       .res 1 ;
-protocol:     .res 1 ; 2nd counter
-block_rx_cb:  .res 2 ; callback
+; blkno:        .res 1 ; block number
+; retryl:       .res 1 ; 16 bit retry
+; retryh:       .res 1 ;
+; protocol:     .res 1 ; 2nd counter
+; block_rx_cb:  .res 2 ; callback
+.importzp crc, crch, blkno, retryl, retryh, protocol, block_rx_cb
 
 .bss
 xmodem_rcvbuffer: .res 132 
