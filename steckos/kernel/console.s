@@ -7,13 +7,13 @@
 .export console_init, console_update_screen, console_putchar, console_put_cursor, console_handle_control_char
 .export crs_x, crs_y
 .import vdp_memcpy, key
-.importzp console_ptr, cursor_ptr, scroll_src_ptr, scroll_trg_ptr
 
 ; .zeropage
 ; console_ptr:   .res 2
 ; cursor_ptr:    .res 2
 ; scroll_src_ptr: .res 2
 ; scroll_trg_ptr: .res 2
+.importzp console_ptr, cursor_ptr, scroll_src_ptr, scroll_trg_ptr
 
 
 .bss 

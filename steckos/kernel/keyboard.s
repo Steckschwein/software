@@ -1,4 +1,3 @@
-; .include "zeropage.inc"
 .include "spi.inc"
 .include "keyboard.inc"
 .include "system.inc"

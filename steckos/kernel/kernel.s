@@ -7,8 +7,6 @@
 
 .include "system.inc"
 .include "console.inc"
-; .include "zeropage.inc"
-; .include "debug.inc"
 .include "common.inc"
 
 .include "vdp.inc"

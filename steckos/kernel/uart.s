@@ -1,7 +1,7 @@
 ; @module: uart
 .include "system.inc"
-.export  init_uart, uart_tx, uart_rx, uart_rx_nowait
 .include "uart.inc"
+.export  init_uart, uart_tx, uart_rx, uart_rx_nowait
 
 
 .code
