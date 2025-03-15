@@ -17,21 +17,13 @@
 .import lba_addr
 .importzp sd_blkptr
 
-.export sdcard_init, sdcard_detect
+.export sdcard_init
 .export sd_select_card, sd_deselect_card
 .export sd_read_block, sd_write_block, sd_cmd, sd_cmd_lba
 .export sd_busy_wait
 
 .export _sd_fullblock
 
-
-
-;  out:
-;    Z=1 sd card available, Z=0 otherwise A=ENODEV
-sdcard_detect:
-    lda via1portb
-    and #SDCARD_DETECT
-    rts
 
 ;@name: "sdcard_init"
 ;@out: Z,"1 on success, 0 on error"
