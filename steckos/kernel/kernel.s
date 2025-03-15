@@ -14,23 +14,29 @@
 .import init_via
 .import init_uart, uart_tx, uart_rx, primm, hexout, wozmon, xmodem_upload
 .import init_vdp, vdp_bgcolor, vdp_memcpy
+.import sdcard_init, sdcard_read_block
 .import console_init, console_update_screen, console_putchar, console_put_cursor, console_handle_control_char
 .import keyboard_init, fetchkey, getkey
+.import crs_x, crs_y
+.importzp in_vector, out_vector, startaddr
 
 .export input_vectors, output_vectors
 .export upload
-
-.import crs_x, crs_y
+.export lba_addr
 .export char_in, char_out
 .export set_input, set_output
-.importzp in_vector, out_vector, startaddr
 .exportzp xmodem_startaddress=startaddr
+
+
+
 
 
 
 .bss
 save_stat:          .res .sizeof(save_status)
 atmp:               .res 1
+lba_addr:           .res 4
+sd_block_buffer:    .res 512
 
 
 
@@ -80,7 +86,21 @@ do_reset:
 
     jsr keyboard_init
    
+    jsr sdcard_init
+    tax
+    cmp #0
+    bne @sdcard_error
+    jsr primm
+    .byte CODE_LF, "SD card init successful", CODE_LF, 0
+    bra @startup_done
+@sdcard_error:
+    jsr primm
+    .byte CODE_LF, "SD card init failed: ",0
+    txa 
+    jsr hexout
 
+    
+@startup_done:
     lda #CODE_LF
     jsr char_out
     lda #CODE_LF

@@ -11,6 +11,7 @@ OBJS+=vdp.o
 OBJS+=console.o
 OBJS+=spi.o
 OBJS+=keyboard.o
+OBJS+=sdcard.o
 OBJS+=charset_6x8.o
 OBJS+=wozmon.o
 OBJS+=jumptable.o

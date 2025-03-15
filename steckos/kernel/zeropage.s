@@ -39,5 +39,6 @@
 .exportzp crc               = $ef  ; CRC lo byte  (two byte variable)
 .exportzp crch              = $f0  ; CRC hi byte
 
+.exportzp sd_blkptr         = $fc  ; sd card block pointer
 ; temp volatile pointer for general usage
 .exportzp tmp_ptr           = $fe
