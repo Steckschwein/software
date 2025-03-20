@@ -30,6 +30,12 @@
 .exportzp YSAV              = $e7  ;  Used to see if hex value is given
 .exportzp MODE              = $e8  ;  $00=XAM, $7F=STOR, $AE=BLOCK XAM
 
+.exportzp retvec            = $e1
+.exportzp paramptr          = $e3
+.exportzp cmdptr            = $e5 
+.exportzp msg_ptr           = $e7
+.exportzp bufptr            = $e9
+
 ; xmodem upload
 .exportzp blkno             = $e9  ; block number
 .exportzp retryl            = $ea  ; 16 bit retry
@@ -38,6 +44,10 @@
 .exportzp block_rx_cb       = $ed  ; callback
 .exportzp crc               = $ef  ; CRC lo byte  (two byte variable)
 .exportzp crch              = $f0  ; CRC hi byte
+
+.exportzp pathptr           = $f1 
+.exportzp dumpvecs          = $f3
+
 
 .exportzp sd_blkptr         = $fc  ; sd card block pointer
 ; temp volatile pointer for general usage

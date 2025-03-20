@@ -14,6 +14,8 @@ OBJS+=keyboard.o
 OBJS+=sdcard.o
 OBJS+=charset_6x8.o
 OBJS+=wozmon.o
+OBJS+=shell.o
+
 OBJS+=jumptable.o
 
 ASM_INCLUDE=../asminc

@@ -14,11 +14,14 @@
 .import init_via
 .import init_uart, uart_tx, uart_rx, primm, hexout, wozmon, xmodem_upload
 .import init_vdp, vdp_bgcolor, vdp_memcpy
-.import sdcard_init, sdcard_read_block
+.import sdcard_init ;, sd_read_block
 .import console_init, console_update_screen, console_putchar, console_put_cursor, console_handle_control_char
 .import keyboard_init, fetchkey, getkey
 .import crs_x, crs_y
 .importzp in_vector, out_vector, startaddr
+.import shell_init
+.importzp sd_blkptr
+
 
 .export input_vectors, output_vectors
 .export upload
@@ -92,6 +95,7 @@ do_reset:
     bne @sdcard_error
     jsr primm
     .byte CODE_LF, "SD card init successful", CODE_LF, 0
+    
     bra @startup_done
 @sdcard_error:
     jsr primm
@@ -107,7 +111,8 @@ do_reset:
     jsr char_out
 
 
-    jmp register_status
+    jmp shell_init
+    ; jmp register_status
 
 upload:
     lda #OUTPUT_DEVICE_NULL
