@@ -1,7 +1,7 @@
 OBJS=fat32_core.o
 OBJS+=fat32_cwd.o
 OBJS+=fat32_dir.o
-OBJS+=fat32_legacy.o
+# OBJS+=fat32_legacy.o
 OBJS+=fat32_mount.o
 OBJS+=fat32.o
 OBJS+=fat32_seek.o

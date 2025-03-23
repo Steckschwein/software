@@ -14,7 +14,7 @@
 .import init_via
 .import init_uart, uart_tx, uart_rx, primm, hexout, wozmon, xmodem_upload
 .import init_vdp, vdp_bgcolor, vdp_memcpy
-.import sdcard_init ;, sd_read_block
+.import sdcard_init, sd_read_block, sd_write_block
 .import console_init, console_update_screen, console_putchar, console_put_cursor, console_handle_control_char
 .import keyboard_init, fetchkey, getkey
 .import crs_x, crs_y
@@ -22,13 +22,21 @@
 .import shell_init
 .importzp sd_blkptr
 
+.import fat_mount
 
 .export input_vectors, output_vectors
 .export upload
 .export lba_addr
 .export char_in, char_out
 .export set_input, set_output
+.export rtc_systime_update
 .exportzp xmodem_startaddress=startaddr
+
+.export read_block = sd_read_block
+.export write_block = sd_write_block
+.export write_block_buffered = sd_write_block
+
+
 
 
 
@@ -110,9 +118,13 @@ do_reset:
     lda #CODE_LF
     jsr char_out
 
+    SetVector sd_blkptr, $1000
 
-    jmp shell_init
-    ; jmp register_status
+    jsr fat_mount 
+    jsr hexout
+
+    ; jmp shell_init
+    jmp register_status
 
 upload:
     lda #OUTPUT_DEVICE_NULL
@@ -286,7 +298,8 @@ set_input:
     sta in_vector+1
     rts 
 
-
+rtc_systime_update:
+    rts
 .rodata
 output_vectors:
 .word io_null

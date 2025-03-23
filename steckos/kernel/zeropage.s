@@ -47,7 +47,9 @@
 
 .exportzp pathptr           = $f1 
 .exportzp dumpvecs          = $f3
-
+.exportzp dirptr            = $f7
+.exportzp filenameptr       = $f9
+.exportzp volatile_tmp      = $fa
 
 .exportzp sd_blkptr         = $fc  ; sd card block pointer
 ; temp volatile pointer for general usage
