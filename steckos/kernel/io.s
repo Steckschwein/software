@@ -2,7 +2,7 @@
 .include "system.inc"
 
 .import char_out
-.export hexout, primm
+.export hexout, primm, strout
 
 .importzp tmp_ptr
 DPL = tmp_ptr
@@ -42,6 +42,29 @@ _out:
 
     pla
     rts
+
+;@in: A, "lowbyte  of string address"
+;@in:   X, "highbyte of string address"
+;@desc: "Output string on active output device"
+strout:
+    sta tmp_ptr                ;init for output below
+    stx tmp_ptr+1
+    pha                                       ;save a, y to stack
+    phy
+
+    ldy #$00
+@l1:
+    lda (tmp_ptr),y
+    beq @l2
+    jsr char_out
+    iny
+    bne @l1
+
+@l2:    
+    ply                                       ;restore a, y
+    pla
+    rts
+
 
 ; @name: primm
 ; @desc: print string inlined after call to primm terminated by null byte - see http://6502.org/source/io/primm.htm
