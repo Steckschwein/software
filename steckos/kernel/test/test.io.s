@@ -9,7 +9,7 @@
   ; .export char_out=asmunit_chrout
 
   ; uut
-	.import hexout, primm
+	.import hexout, primm, strout
 
 
 	test "hexout"
@@ -37,10 +37,20 @@
   assertOut "FF"
   assertA $ff
 
+  test "strout"
+
+  lda #<text
+  ldx #>text 
+  jsr strout
+
+  assertOut "Hello World!"
+
+
   test "primm"
 
   lda #0
-  jsr primm 
+  jsr primm
+text:
   .asciiz "Hello World!"
 
   assertOut "Hello World!"
