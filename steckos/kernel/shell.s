@@ -21,13 +21,15 @@ prompt  = '>'
 
 ;.autoimport
 .import upload
-.import primm, char_out, char_in, hexout
+.import primm, char_out, char_in, hexout, strout
+.import fat_fread_byte, fat_fopen, fat_rmdir, fat_mkdir, fat_unlink, fat_chdir, fat_readdir, fat_opendir, fat_close, fat_close_all, fat_write_byte, fat_get_root_and_pwd
+.import sd_read_block
 
 .importzp sd_blkptr
 .import lba_addr
 .import crs_x
 
-; .export char_out                = krn_chrout
+; .export char_out                = fat_chrout
 .export dirent
 .export shell_init
 ;---------------------------------------------------------------------------------------------------------
@@ -60,8 +62,8 @@ shell_init:
 
 exit_from_prg:
         cld
-        jsr krn_close_all   ; make sure all fd's are closed
-        jsr krn_textui_init
+        jsr fat_close_all   ; make sure all fd's are closed
+        jsr fat_textui_init
 
         ldx #BUF_SIZE
 :       stz tmpbuf,x
@@ -81,7 +83,7 @@ mainloop:
         lda #<cwdbuf
         ldy #>cwdbuf
         ldx #cwdbuf_size
-        jsr krn_getcwd
+        jsr fat_get_root_and_pwd
         bcs @nocwd
 
         lda #<cwdbuf
@@ -161,7 +163,7 @@ backspace:
         bra line_end
 
 escape:
-        ; jsr krn_getkey
+        ; jsr fat_getkey
         jsr char_in
         jsr printbuf
         bra inputloop
@@ -201,7 +203,7 @@ key_tab:
         ; lda #<dirent
         ; ldy #>dirent
         ; ldx #FD_INDEX_CURRENT_DIR
-        ; jsr krn_readdir
+        ; jsr fat_readdir
 
         ; jsr print_filename
 
@@ -316,7 +318,7 @@ try_exec:
 printbuf:
         ldy #$01
         sty crs_x
-        jsr krn_textui_update_crs_ptr
+        jsr fat_textui_update_crs_ptr
 
         ldy #$00
 @l1:
@@ -361,12 +363,12 @@ mode_toggle:
 ;         lda video_mode
 ;         eor #VIDEO_MODE_80_COLS
 ;         jsr hexout
-;         jsr krn_textui_setmode
+;         jsr fat_textui_setmode
         jmp mainloop
 cmd_cd:
         lda paramptr
         ldx paramptr+1
-        jsr krn_chdir
+        jsr fat_chdir
         bcc @l2
         jmp errmsg
 @l2:
@@ -380,7 +382,7 @@ cmd_rm:
         lda paramptr
         ldx paramptr+1
 
-        jsr krn_unlink
+        jsr fat_unlink
         bcc @exit
         jsr errmsg
 @exit:
@@ -392,7 +394,7 @@ cmd_mkdir:
         lda paramptr
         ldx paramptr+1
 
-        jsr krn_mkdir
+        jsr fat_mkdir
         bcc @exit
         jsr errmsg
 @exit:
@@ -405,7 +407,7 @@ cmd_rmdir:
         lda paramptr
         ldx paramptr+1
 
-        jsr krn_rmdir
+        jsr fat_rmdir
         bcc @exit
         jsr errmsg
 @exit:
@@ -422,7 +424,7 @@ exec:
         ldx cmdptr+1    ; cmdline in a/x
 
         ; try to chdir
-        jsr krn_chdir
+        jsr fat_chdir
         bcs @resolve_path ; branch taken if chdir successful
         jmp mainloop
 
@@ -483,7 +485,7 @@ exec:
 
         lda #<tmpbuf
         ldx #>tmpbuf    ; cmdline in a/x
-        jsr krn_execv   ; return C=1 and A with errorcode
+        jsr execv   ; return C=1 and A with errorcode
         bra @try_path   ; try another path
 
 cmd_go:
@@ -619,7 +621,7 @@ cmd_bd:
         sta dumpend
         copypointer dumpvec, sd_blkptr
 
-        jsr krn_sd_read_block
+        jsr sd_read_block
         bcs @err
         jsr dump_start
         jmp mainloop
@@ -745,17 +747,17 @@ cmd_loadmem:
         lda #<filenamebuf
         ldx #>filenamebuf
         ldy #O_RDONLY
-        jsr krn_fopen     ; X contains fd
+        jsr fat_fopen     ; X contains fd
         bcs @err    ; not found or other error, dont care...
         ldy #0
 :
-        jsr krn_fread_byte
+        jsr fat_fread_byte
         bcs @eof
         sta (dumpend)
         inc16 dumpend
         bne :-
 @eof:
-        jsr krn_close
+        jsr fat_close
 @end:
         jmp mainloop
 @err:
@@ -783,14 +785,14 @@ cmd_savemem:
         lda #<filenamebuf
         ldx #>filenamebuf
         ldy #O_WRONLY
-        jsr krn_fopen
+        jsr fat_fopen
         bcs @err
 
 
         inc16 dumpend
 :
         lda (dumpvec)
-        jsr krn_write_byte
+        jsr fat_write_byte
         bcs @err
 
         inc16 dumpvec
@@ -802,7 +804,7 @@ cmd_savemem:
         cmp dumpend+1
         bne :-
 
-        jsr krn_close
+        jsr fat_close
 
         jmp mainloop
 @err:
@@ -1122,14 +1124,14 @@ dir:
 
         lda #<cwdbuf
         ldx #>cwdbuf
-        jsr krn_opendir
+        jsr fat_opendir
         bcs @error
 
 
 @read_next:
         lda #<dirent
         ldy #>dirent
-        jsr krn_readdir
+        jsr fat_readdir
         rol
         cmp #1
         beq @end
@@ -1178,11 +1180,11 @@ dir:
         bra @read_next
 
 @error:
-        jsr krn_close
+        jsr fat_close
         jmp errmsg
 
 @end:
-        jsr krn_close
+        jsr fat_close
 @exit:
         jmp mainloop
 
@@ -1421,19 +1423,7 @@ space:
         rts 
 
 ;dummy symbols
-krn_readdir:
-krn_opendir:
-krn_write_byte:
-krn_fread_byte:
-krn_fopen:
-krn_close:
-krn_close_all:
-krn_sd_read_block:
-krn_execv:
-krn_rmdir:
-krn_mkdir:
-krn_unlink:
-krn_chdir:
+
 string_fat_mask:
 filenameptr:
 print_fat_time:
@@ -1442,16 +1432,17 @@ print_filesize:
 print_attribs:
 print_cluster_no:
 print_filename:
-krn_textui_init:
-krn_textui_update_crs_ptr:
-krn_getcwd:
-strout:
+fat_textui_init:
+fat_textui_update_crs_ptr:
+execv:
+; strout:
         rts
 .bss
 tmpbuf:           .res BUF_SIZE
 buf:              .res BUF_SIZE
 cwdbuf:           .res cwdbuf_size
 dirent:           .res .sizeof(F32DirEntry)
+; .segment "ZP_EXT"
 filenamebuf:      .res 12
 fat_dirname_mask: .res 8+3 ;8.3 fat mask <name><ext>
 tmp1:             .res 1

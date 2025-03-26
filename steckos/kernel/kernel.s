@@ -45,9 +45,10 @@
 
 .bss
 save_stat:          .res .sizeof(save_status)
+sd_block_buffer:    .res 512
+; .segment "ZP_EXT"
 atmp:               .res 1
 lba_addr:           .res 4
-sd_block_buffer:    .res 512
 
 
 
@@ -103,6 +104,17 @@ do_reset:
     bne @sdcard_error
     jsr primm
     .byte CODE_LF, "SD card init successful", CODE_LF, 0
+
+    jsr primm
+    .byte CODE_LF, "Mount SD card ", 0
+
+    jsr fat_mount 
+    tax
+    bcc @startup_done
+    jsr primm
+    .byte CODE_LF, "failed ", CODE_LF, 0
+    txa
+    jsr hexout
     
     bra @startup_done
 @sdcard_error:
@@ -120,11 +132,9 @@ do_reset:
 
     SetVector sd_blkptr, $1000
 
-    jsr fat_mount 
-    jsr hexout
 
-    ; jmp shell_init
-    jmp register_status
+    jmp shell_init
+    ; jmp register_status
 
 upload:
     lda #OUTPUT_DEVICE_NULL
