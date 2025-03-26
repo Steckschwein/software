@@ -19,11 +19,11 @@ BUF_SIZE    = 80 ;TODO maybe too small?
 cwdbuf_size = 25
 prompt  = '>'
 
-;.autoimport
 .import upload
 .import primm, char_out, char_in, hexout, strout
 .import fat_fread_byte, fat_fopen, fat_rmdir, fat_mkdir, fat_unlink, fat_chdir, fat_readdir, fat_opendir, fat_close, fat_close_all, fat_write_byte, fat_get_root_and_pwd
 .import print_filename, print_fat_date, print_fat_time, print_filesize, print_attribs, print_cluster_no, space
+.import string_fat_mask
 
 .import sd_read_block
 
@@ -1139,13 +1139,19 @@ dir:
         cmp #1
         beq @end
 
+
         ldy #F32DirEntry::Attr
         lda dirent,y
         bit dir_attrib_mask ; Hidden attribute set, skip
         bne @read_next
 
-        jsr string_fat_mask_matcher
-        bcc @read_next
+
+        ; jsr string_fat_mask_matcher
+        ; bcc @read_next
+
+        ; lda #'C'
+        ; jsr char_out
+
 
         jsr dir_show_entry
 
@@ -1220,7 +1226,7 @@ cmd_path:
 PATH:           .asciiz "./:/steckos/:/progs/"
 PRGEXT:         .asciiz ".PRG"
 pd_header:      .asciiz "####   0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F  0123457890ABCDEF"
-pattern:        .byte "*.*",$00
+pattern:        .asciiz "*.*"
 press_key_msg:  .byte $0a, $0d,"-- press a key-- ",$00
 dir_marker_txt: .asciiz " <DIR> "
 
@@ -1422,7 +1428,7 @@ atoi:
 
 ;dummy symbols
 
-string_fat_mask:
+; string_fat_mask:
 ; print_fat_time:
 ; print_fat_date:
 ; print_filesize:
