@@ -15,6 +15,8 @@ OBJS+=sdcard.o
 OBJS+=charset_6x8.o
 OBJS+=wozmon.o
 OBJS+=shell.o
+OBJS+=fsutil.o
+
 
 OBJS+=jumptable.o
 

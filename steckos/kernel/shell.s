@@ -23,6 +23,8 @@ prompt  = '>'
 .import upload
 .import primm, char_out, char_in, hexout, strout
 .import fat_fread_byte, fat_fopen, fat_rmdir, fat_mkdir, fat_unlink, fat_chdir, fat_readdir, fat_opendir, fat_close, fat_close_all, fat_write_byte, fat_get_root_and_pwd
+.import print_filename, print_fat_date, print_fat_time, print_filesize, print_attribs, print_cluster_no, space
+
 .import sd_read_block
 
 .importzp sd_blkptr
@@ -42,6 +44,7 @@ prompt  = '>'
 
 .importzp retvec
 .importzp paramptr
+.importzp filenameptr
 .importzp cmdptr
 .importzp msg_ptr
 .importzp bufptr
@@ -1213,6 +1216,7 @@ cmd_path:
         jsr strout
         jmp mainloop
 
+.rodata
 PATH:           .asciiz "./:/steckos/:/progs/"
 PRGEXT:         .asciiz ".PRG"
 pd_header:      .asciiz "####   0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F  0123457890ABCDEF"
@@ -1415,23 +1419,16 @@ atoi:
         sbc #$30
         rts
 
-space:
-        pha 
-        lda #' '
-        jsr char_out
-        pla 
-        rts 
 
 ;dummy symbols
 
 string_fat_mask:
-filenameptr:
-print_fat_time:
-print_fat_date:
-print_filesize:
-print_attribs:
-print_cluster_no:
-print_filename:
+; print_fat_time:
+; print_fat_date:
+; print_filesize:
+; print_attribs:
+; print_cluster_no:
+; print_filename:
 fat_textui_init:
 fat_textui_update_crs_ptr:
 execv:
