@@ -3,8 +3,9 @@
 
 
 .export print_filename, print_fat_date, print_fat_time, print_filesize, print_attribs, print_cluster_no, space
+.import char_out, strout, hexout
+.import dirent
 
-.autoimport
 
 .code
 print_filename:
