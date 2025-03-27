@@ -33,7 +33,9 @@
 .exportzp retvec            = $e1
 .exportzp paramptr          = $e3
 .exportzp cmdptr            = $e5 
-.exportzp msg_ptr           = $e7
+; .exportzp msg_ptr           = $e7
+.exportzp volatile_tmp      = $e7
+
 .exportzp bufptr            = $e9
 
 ; xmodem upload
@@ -49,7 +51,6 @@
 .exportzp dumpvecs          = $f3
 .exportzp dirptr            = $f7
 .exportzp filenameptr       = $f9
-.exportzp volatile_tmp      = $fa
 .exportzp volatile_tmp2     = $fb
 
 

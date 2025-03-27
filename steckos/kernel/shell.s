@@ -46,7 +46,7 @@ prompt  = '>'
 .importzp paramptr
 .importzp filenameptr
 .importzp cmdptr
-.importzp msg_ptr
+.importzp tmp_ptr
 .importzp bufptr
 .importzp pathptr
 .importzp dumpvecs
@@ -341,12 +341,12 @@ errmsg:
         asl
         tax
         lda errors,x
-        sta msg_ptr
+        sta tmp_ptr
         lda errors+1,x
-        sta msg_ptr+1
+        sta tmp_ptr+1
         ldy #0
 :
-        lda (msg_ptr),y
+        lda (tmp_ptr),y
         beq @l_exit
         jsr char_out
         iny
@@ -1146,11 +1146,8 @@ dir:
         bne @read_next
 
 
-        ; jsr string_fat_mask_matcher
-        ; bcc @read_next
-
-        ; lda #'C'
-        ; jsr char_out
+        jsr string_fat_mask_matcher
+        bcc @read_next
 
 
         jsr dir_show_entry
@@ -1427,18 +1424,9 @@ atoi:
 
 
 ;dummy symbols
-
-; string_fat_mask:
-; print_fat_time:
-; print_fat_date:
-; print_filesize:
-; print_attribs:
-; print_cluster_no:
-; print_filename:
 fat_textui_init:
 fat_textui_update_crs_ptr:
 execv:
-; strout:
         rts
 .bss
 tmpbuf:           .res BUF_SIZE
