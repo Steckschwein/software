@@ -10,16 +10,12 @@
 
 .include "debug.inc"
 
-.autoimport
-
+; .autoimport
+.import __fat_open_rootdir_cwd, __fat_init_fdarea, __fat_shift_lba_addr, __fat_set_root_cluster_lba_addr, __fat_read_block_data
+.import lba_addr
 .export fat_mount
 ;@module: fat32
 .code
-;---------------------------------------------------------------------
-; Mount FAT32 on Partition 0
-;---------------------------------------------------------------------
-; out:
-;   C=0 on success, C=1 otherwise with A=<error code>
 ;@name: "fat_mount"
 ;@out: C, "0 on success, 1 on error"
 ;@out: A, "error code"
