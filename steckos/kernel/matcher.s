@@ -52,9 +52,9 @@ __dmm_neq:
 string_fat_mask:
     sta paramptr
     sty paramptr+1
-    jsr string_trim        ; trim input
-    bcs __tfm_exit          ; C=1, overflow
-    beq __tfm_exit          ; Z=1, empty input
+    ; jsr string_trim        ; trim input
+    ; bcs __tfm_exit          ; C=1, overflow
+    ; beq __tfm_exit          ; Z=1, empty input
 
     stz s_tmp1
     ldy #0
