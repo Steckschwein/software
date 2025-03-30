@@ -1299,10 +1299,10 @@ ls_usage_txt:
 .byte "   -?   show this useful message",$0a,$0d
 .byte 0
 hello_msg:
-;.byte 27,"[2J "
-;.byte 27,"[3B" ; move cursor down 3 lines
+.byte 27,"[2J "
+.byte 27,"[3B" ; move cursor down 3 lines
 .byte "steckOS shell  "
-;    .byte 27,"[5D" ; move cursor left 5 pos
+   .byte 27,"[5D" ; move cursor left 5 pos
 .include "version.inc"
 .byte CODE_LF,0
 unknown_error_msg:

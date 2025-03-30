@@ -4,34 +4,25 @@
 
 ; @module: console
 
-.export console_init, console_update_screen, console_putchar, console_put_cursor, console_handle_control_char
+.export console_init, console_update_screen, console_putchar, console_put_cursor, console_handle_control_char, console_clear_screenbuf
 .export crs_x, crs_y
 .import vdp_memcpy, key
 
-; .zeropage
-; console_ptr:   .res 2
-; cursor_ptr:    .res 2
-; scroll_src_ptr: .res 2
-; scroll_trg_ptr: .res 2
 .importzp console_ptr, cursor_ptr, scroll_src_ptr, scroll_trg_ptr
 
 
 .bss 
+; .segment "ZP_EXT"
 crs_x:          .res 1
 crs_y:          .res 1
 crs_x_sav:      .res 4
 crs_y_sav:      .res 4
-current_console: .res 1
-
-
-
 vdp_addr:       .res 2
 vdp_addr_old:   .res 2
-
 screen_status:  .res 1
+current_console: .res 1
 
 .code
-
 ;@name: console_init
 ;@desc: init console
 console_init:

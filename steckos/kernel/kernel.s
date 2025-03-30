@@ -16,10 +16,12 @@
 .import init_vdp, vdp_bgcolor, vdp_memcpy
 .import sdcard_init, sd_read_block, sd_write_block
 .import console_init, console_update_screen, console_putchar, console_put_cursor, console_handle_control_char
+.import ansi_chrout
 .import keyboard_init, fetchkey, getkey
 .import crs_x, crs_y
-.importzp in_vector, out_vector, startaddr
 .import shell_init
+.import rtc_systime_update
+.importzp in_vector, out_vector, startaddr
 .importzp sd_blkptr
 
 .import fat_mount
@@ -29,7 +31,6 @@
 .export lba_addr
 .export char_in, char_out
 .export set_input, set_output
-.export rtc_systime_update
 .exportzp xmodem_startaddress=startaddr
 
 .export read_block = sd_read_block
@@ -46,9 +47,9 @@
 .bss
 save_stat:          .res .sizeof(save_status)
 sd_block_buffer:    .res 512
-; .segment "ZP_EXT"
 atmp:               .res 1
 lba_addr:           .res 4
+; .segment "ZP_EXT"
 
 
 
@@ -308,13 +309,11 @@ set_input:
     sta in_vector+1
     rts 
 
-rtc_systime_update:
-    rts
 .rodata
 output_vectors:
 .word io_null
 .word uart_tx
-.word console_putchar
+.word ansi_chrout
 .word $dead
 input_vectors:
 .word io_null

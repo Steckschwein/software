@@ -20,3 +20,7 @@ KEY_FN1           = $f1
 KEY_FN2           = $f2
 KEY_FN3           = $f3
 KEY_FN4           = $f4
+
+
+ESCAPE = 27
+CSI	 = '['
