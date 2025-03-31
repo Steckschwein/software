@@ -15,8 +15,7 @@
 .import init_uart, uart_tx, uart_rx, primm, hexout, wozmon, xmodem_upload
 .import init_vdp, vdp_bgcolor, vdp_memcpy
 .import sdcard_init, sd_read_block, sd_write_block
-.import console_init, console_update_screen, console_putchar, console_put_cursor, console_handle_control_char
-.import ansi_chrout
+.import console_init, console_update_screen, console_chrout, console_put_cursor, console_handle_control_char
 .import keyboard_init, fetchkey, getkey
 .import crs_x, crs_y
 .import shell_init
@@ -313,7 +312,7 @@ set_input:
 output_vectors:
 .word io_null
 .word uart_tx
-.word ansi_chrout
+.word console_chrout
 .word $dead
 input_vectors:
 .word io_null

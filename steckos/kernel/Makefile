@@ -9,7 +9,6 @@ OBJS+=xmodem_upload.o
 OBJS+=xmodem_upload_prg.o
 OBJS+=vdp.o
 OBJS+=console.o
-OBJS+=ansi.o
 OBJS+=spi.o
 OBJS+=keyboard.o
 OBJS+=sdcard.o
