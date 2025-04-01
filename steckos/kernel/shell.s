@@ -23,7 +23,7 @@ prompt  = '>'
 .import primm, char_out, char_in, hexout, strout
 .import fat_fread_byte, fat_fopen, fat_rmdir, fat_mkdir, fat_unlink, fat_chdir, fat_readdir, fat_opendir, fat_close, fat_close_all, fat_write_byte, fat_get_root_and_pwd
 .import print_filename, print_fat_date, print_fat_time, print_filesize, print_attribs, print_cluster_no, space
-.import string_fat_mask
+.import string_fat_mask, string_fat_mask_matcher
 
 .import sd_read_block
 
@@ -1195,24 +1195,6 @@ dir:
         jmp mainloop
 
 
-string_fat_mask_matcher:
-        ldy #.sizeof(F32DirEntry::Name) + .sizeof(F32DirEntry::Ext) - 1
-__dmm:
-        lda fat_dirname_mask,y
-        cmp #'?'
-        beq __dmm_next
-        cmp dirent,y
-        bne __dmm_neq
-__dmm_next:
-        dey
-        bpl __dmm
-        rts ;exit, C=1 here from cmp above
-__dmm_neq:
-        clc
-        rts
-
-
-
 cmd_path:
         lda #<PATH
         ldx #>PATH
@@ -1299,10 +1281,10 @@ ls_usage_txt:
 .byte "   -?   show this useful message",$0a,$0d
 .byte 0
 hello_msg:
-.byte 27,"[2J "
-.byte 27,"[3B" ; move cursor down 3 lines
+.byte 27,"[2J"
+.byte 27,"[5B" ; move cursor down 5 lines
 .byte "steckOS shell  "
-   .byte 27,"[5D" ; move cursor left 5 pos
+.byte 27,"[25D" ; move cursor left 25 pos
 .include "version.inc"
 .byte CODE_LF,0
 unknown_error_msg:
