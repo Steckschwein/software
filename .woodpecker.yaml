@@ -2,9 +2,9 @@ when:
   branch: [main]
   event: [push, pull_request]
 
-clone:
-  git:
-    image: woodpeckerci/plugin-git
+# clone:
+#   git:
+#     image: woodpeckerci/plugin-git
 
 steps:
   - name: "build asmunit"
