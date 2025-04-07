@@ -10,6 +10,8 @@ steps:
   - name: "build"
     image: steckschwein/buildenv:cc65_2_20-snapshot
     commands:
+      - cd asmunit
+      - make
       - cd steckos/kernel
       - make 
     when:
