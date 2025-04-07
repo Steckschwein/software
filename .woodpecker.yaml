@@ -1,4 +1,5 @@
 when:  
+  branch: [main]
   event: [push, pull_request]
 
 # Recursive cloning is used to fully clone the themes given as Git submodules
