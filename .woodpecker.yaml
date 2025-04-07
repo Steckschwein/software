@@ -7,11 +7,17 @@ clone:
     image: woodpeckerci/plugin-git
 
 steps:
-  - name: "build"
+  - name: "build asmunit"
     image: steckschwein/buildenv:cc65_2_20-snapshot
     commands:
       - cd asmunit
       - make
+    when:
+      event: [pull_request, push]
+
+  - name: "build steckos"
+    image: steckschwein/buildenv:cc65_2_20-snapshot
+    commands:
       - cd steckos/kernel
       - make 
     when:
