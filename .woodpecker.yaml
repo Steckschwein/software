@@ -30,3 +30,13 @@ steps:
       - make
     when:
       event: [pull_request, push]
+
+  - name: "mail"
+    image: deblan/woodpecker-email
+    settings:
+       level: failure
+        recipients:
+        - info@steckschwein.de
+    when:
+      status:
+        - success
