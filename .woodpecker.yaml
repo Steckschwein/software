@@ -33,8 +33,13 @@ steps:
 
   - name: "mail"
     image: deblan/woodpecker-email
+    environment:
+      MAIL_USER:
+        from_secret: mailusr
+      MAIL_PW:
+        from_secret: mailpw
     settings:
-      dsn: "smtp://$mailusr:$mailpw@ssl0.ovh.net"
+      dsn: "smtp://$MAIL_USER:$MAIL_PW@ssl0.ovh.net"
       from:
         address: "woodpecker@example.com"
         name: "Woodpecker"
