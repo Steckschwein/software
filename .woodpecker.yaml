@@ -1,0 +1,21 @@
+when:  
+  event: [push, pull_request]
+
+# Recursive cloning is used to fully clone the themes given as Git submodules
+clone:
+  git:
+    image: woodpeckerci/plugin-git
+    settings:
+      recursive: true
+
+steps:
+  # Build hugo static files
+  build:
+    image: steckschwein/buildenv:cc65_2_20-snapshot
+    commands:
+      - cd steckos/kernel
+      - make 
+      - make test
+    when:
+      event: [pull_request, push]
+
