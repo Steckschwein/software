@@ -34,7 +34,7 @@ steps:
   - name: "mail"
     image: deblan/woodpecker-email
     settings:
-      dsn: "smtp://ssl0.ovh.de"
+      dsn: "smtp://ssl0.ovh.net"
       from:
         address: "woodpecker@example.com"
         name: "Woodpecker"
