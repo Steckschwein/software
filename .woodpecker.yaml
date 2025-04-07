@@ -34,9 +34,13 @@ steps:
   - name: "mail"
     image: deblan/woodpecker-email
     settings:
-       level: failure
-       recipients:
-        - info@steckschwein.de
+      dsn: "smtp://ssl0.ovh.de"
+      from:
+        address: "woodpecker@example.com"
+        name: "Woodpecker"
+        level: failure
+        recipients:
+          - info@steckschwein.de
     when:
       status:
         - success
