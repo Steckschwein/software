@@ -18,7 +18,9 @@
 .import console_init, console_update_screen, console_chrout, console_put_cursor, console_handle_control_char
 .import keyboard_init, fetchkey, getkey
 .import crs_x, crs_y
+.import blklayer_init, blklayer_flush, blklayer_write_block, blklayer_write_block_buffered, blklayer_read_block
 .import shell_init
+
 .import rtc_systime_update
 .importzp in_vector, out_vector, startaddr
 .importzp sd_blkptr
@@ -32,9 +34,13 @@
 .export set_input, set_output
 .exportzp xmodem_startaddress=startaddr
 
-.export read_block = sd_read_block
-.export write_block = sd_write_block
-.export write_block_buffered = sd_write_block
+; expose high level read_/write_block api
+.export read_block=             blklayer_read_block
+.export write_block=            blklayer_write_block
+.export write_block_buffered=   blklayer_write_block_buffered
+.export write_flush=            blklayer_flush
+.export dev_read_block=         sd_read_block
+.export dev_write_block=        sd_write_block
 
 
 
@@ -132,6 +138,7 @@ do_reset:
 
     SetVector sd_blkptr, $1000
 
+    jsr blklayer_init
 
     jmp shell_init
     ; jmp register_status
