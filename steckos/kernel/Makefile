@@ -20,6 +20,7 @@ OBJS+=matcher.o
 OBJS+=jumptable.o
 
 LIBS=fat32/fat32.a 
+LIBS+=blklayer/blklayer.a
 LIBS+=rtc/rtc.a
 
 ASM_INCLUDE=../asminc
@@ -31,6 +32,7 @@ all: kernel.bin kernel_jumptable loader.prg
 clean:
 	rm -f *.o *.bin *.map *.txt *.prg kernel_jumptable.inc version.inc
 	(cd fat32 && make clean )
+	(cd blklayer && make clean )	
 	(cd rtc && make clean )
 
 %.o: %.s $(ASM_INCLUDE)/*.inc version.inc
@@ -39,13 +41,17 @@ clean:
 version.inc:
 	echo -n ".byte \"`git rev-parse --short HEAD`\"" > version.inc
 
+blklayer.a: 
+	(cd blklayer && make )
+
+
 fat32.a: 
 	(cd fat32 && make )
 
 rtc.a:
 	(cd rtc && make )
 
-kernel.bin: version.inc fat32.a rtc.a $(OBJS) 
+kernel.bin: version.inc fat32.a rtc.a blklayer.a $(OBJS) 
 	ld65 -C steckschwein_kernel.cfg $(OBJS) $(LIBS) -m kernel.map -Ln symbols.txt -o kernel.bin
 #s=0 && for l in $$(cat kernel.map |grep fat32 -A 1|grep CODE |cut -d '=' -f3|cut -d ' ' -f1);do s=$$(($$s + 0x$$l));done && echo "fat32 size: $$s bytes"
 
