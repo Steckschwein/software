@@ -17,6 +17,7 @@ OBJS+=wozmon.o
 OBJS+=shell.o
 OBJS+=fsutil.o
 OBJS+=matcher.o
+OBJS+=exec.o
 OBJS+=jumptable.o
 
 LIBS=fat32/fat32.a 

@@ -31,6 +31,8 @@ prompt  = '>'
 .import lba_addr
 .import crs_x
 
+.import execv
+
 ; .export char_out                = fat_chrout
 .export dirent
 .export shell_init
@@ -1408,7 +1410,6 @@ atoi:
 ;dummy symbols
 fat_textui_init:
 fat_textui_update_crs_ptr:
-execv:
         rts
 .bss
 tmpbuf:           .res BUF_SIZE

@@ -26,7 +26,7 @@
   debug_enabled=1
 .endif
 
-.include "zeropage.inc"
+; .include "zeropage.inc"
 .include "common.inc"
 .include "fat32.inc"
 .include "errno.inc"  ; from ca65 api
@@ -35,12 +35,14 @@
 
 .include "debug.inc"
 
-.autoimport
+.import fat_fread_byte, __fat_add_seekpos, __fat_prepare_block_access
+.importzp tmp_ptr
+
 
 .export fat_fread_vollgas
-
-.segment "ZEROPAGE_LIB": zeropage
-  p_data: .res 2
+p_data = tmp_ptr
+; .segment "ZEROPAGE_LIB": zeropage
+;   p_data: .res 2
 
 .code
 
