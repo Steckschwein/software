@@ -28,7 +28,7 @@ ASM_INCLUDE=../asminc
 LDFLAGS=-C steckschwein_kernel.cfg
 
 .PHONY: all clean test
-all: kernel.bin kernel_jumptable loader.prg 
+all: kernel.bin rom.bin kernel_jumptable 
 
 clean:
 	rm -f *.o *.bin *.map *.txt *.prg kernel_jumptable.inc version.inc
