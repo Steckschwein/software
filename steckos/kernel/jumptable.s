@@ -1,19 +1,20 @@
 ;@module: jumptable
-.segment "JUMPTABLE"    ; "kernel" jumptable
 .importzp out_vector, in_vector
-.import primm, set_input, set_output, xmodem_upload
+.import char_in, char_out, primm, set_input, set_output, xmodem_upload
 .import upload
 .export krn_chrin, krn_chrout, krn_primm, krn_set_input, krn_set_output, krn_upload
+
+
+.segment "JUMPTABLE"    ; "kernel" jumptable
 ;@name: krn_chrin
 ;@desc: read character from current input device into A
 ;@out: A - received character
-krn_chrin:        jmp (out_vector)
+krn_chrin:        jmp char_in
 
 ;@name: krn_chrout
 ;@desc: print character in A to current output device
 ;@in: A - character to print
-
-krn_chrout:       jmp (in_vector)
+krn_chrout:       jmp char_out
 
 ;@name: krn_primm
 ;@desc: print immediate
