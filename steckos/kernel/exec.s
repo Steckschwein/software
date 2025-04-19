@@ -10,8 +10,9 @@
 
 
 .import fat_fopen, fat_close, fat_fread_byte, fat_fread_vollgas
-.importzp filenameptr
+.importzp filenameptr, startaddr
 
+.import char_out, hexout
 .export execv
 
 .code
@@ -25,15 +26,16 @@ execv:
       bcc :+
       rts
 
+
 :     jsr fat_fread_byte  ; start address low
       bcs @l_exit_close
-      sta filenameptr
+      sta startaddr
       jsr fat_fread_byte  ; start address high
       bcs @l_exit_close
-      sta filenameptr+1
+      sta startaddr+1
 
       tay
-      lda filenameptr
+      lda startaddr
       jsr fat_fread_vollgas
 
       pha
@@ -51,4 +53,5 @@ execv:
       ; get return address from stack to prevent stack corruption
       pla
       pla
-      jmp (filenameptr)
+      
+      jmp (startaddr)
