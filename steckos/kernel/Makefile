@@ -58,6 +58,7 @@ kernel.bin: version.inc fat32.a rtc.a blklayer.a $(OBJS)
 
 kernel_jumptable: kernel.bin
 	grep krn symbols.txt | egrep -v "(krn_tm|krn_ptr)" | sed "s/al 00//" | awk -F' ' '{print $$2" = $$"$$1}'| sed -e "s/^\.//g" > kernel_jumptable.inc
+	grep retvec symbols.txt | sed "s/al 0000//" | awk -F' ' '{print $$2" = $$"$$1}'| sed -e "s/^\.//g" >> kernel_jumptable.inc
 
 loader.prg: kernel.bin loader.o
 	ld65 -C steckschwein_prg.cfg -m loader.map loader.o -o loader.prg

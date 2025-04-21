@@ -2,7 +2,7 @@
 .importzp out_vector, in_vector
 .import char_in, char_out, primm, set_input, set_output, xmodem_upload
 .import upload
-.export krn_chrin, krn_chrout, krn_primm, krn_set_input, krn_set_output, krn_upload
+.export krn_chrin, krn_chrout, krn_primm, krn_set_input, krn_set_output, krn_upload, krn_return
 
 
 .segment "JUMPTABLE"    ; "kernel" jumptable
@@ -33,4 +33,7 @@ krn_set_input:    jmp set_input
 ;@name: krn_upload
 ;@desc: start XMODEM upload
 krn_upload:       jmp upload
+
+.import exit_from_prg
+krn_return:       jmp exit_from_prg
 
