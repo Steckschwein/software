@@ -1,7 +1,6 @@
 .include "steckos.inc"
 
 appstart $1000
-.importzp retvec
 
 .code
     jsr krn_primm
@@ -26,6 +25,5 @@ appstart $1000
     .byte "load <file> <addr> - load file to memory address", $0a, $0d
     .byte $00
 
-foo:
-    jmp foo
-    ; jmp (retvec)
+    jmp (retvec)
+    

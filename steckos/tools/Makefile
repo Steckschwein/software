@@ -1,7 +1,7 @@
 #CC65FLAGS=-I ../clib/include -I ../clib/ --cpu 65c02 --debug-info # --standard c89 #-Or
 CA65FLAGS=-I ../asminc -I ../kernel --cpu 65c02
 #LIBS=../lib/steckschwein.a
-LIBS=../kernel/zeropage.o
+#LIBS=../kernel/zeropage.o
 #CLIB=../clib/lib/steckschwein-clib.a
 LDFLAGS=-C ../kernel/steckschwein_prg.cfg -m $<.map $(LIBS)
 

@@ -1,11 +1,9 @@
 .include "steckos.inc"
 
-appstart $2000
+appstart $1000
 
 .code
-    sei
     lda #'A'
-    jsr $ff03
+    jsr krn_chrout
 
-foo:
-    jmp foo
+    jmp (retvec)
