@@ -14,11 +14,11 @@
 .include "debug.inc"
 
 .import fat_fread_byte, __fat_add_seekpos, __fat_prepare_block_access
-.importzp tmp_ptr
+.importzp volatile_tmp
 
 
 .export fat_fread_vollgas
-p_data = tmp_ptr
+p_data = volatile_tmp
 
 
 .code
