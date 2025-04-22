@@ -2,9 +2,9 @@
 .importzp out_vector, in_vector
 .import char_in, char_out, primm, set_input, set_output, xmodem_upload, strout, hexout
 .import upload
-.import fat_fopen, fat_close, fat_read_direntry
+.import fat_fopen, fat_close, fat_read_direntry, fat_fread_byte, fat_write_byte
 .export krn_chrin, krn_chrout, krn_primm, krn_strout, krn_hexout, krn_set_input, krn_set_output, krn_upload
-.export krn_close, krn_open, krn_read_direntry
+.export krn_close, krn_open, krn_read_direntry, krn_write_byte, krn_fread_byte
 
 
 .segment "JUMPTABLE"    ; "kernel" jumptable
@@ -42,4 +42,6 @@ krn_upload:       jmp upload
 krn_open:         jmp fat_fopen
 krn_close:        jmp fat_close
 krn_read_direntry: jmp fat_read_direntry
+krn_fread_byte:    jmp fat_fread_byte
+krn_write_byte:   jmp fat_write_byte
 
