@@ -1,8 +1,10 @@
 ;@module: jumptable
 .importzp out_vector, in_vector
-.import char_in, char_out, primm, set_input, set_output, xmodem_upload
+.import char_in, char_out, primm, set_input, set_output, xmodem_upload, strout, hexout
 .import upload
-.export krn_chrin, krn_chrout, krn_primm, krn_set_input, krn_set_output, krn_upload
+.import fat_fopen, fat_close, fat_read_direntry
+.export krn_chrin, krn_chrout, krn_primm, krn_strout, krn_hexout, krn_set_input, krn_set_output, krn_upload
+.export krn_close, krn_open, krn_read_direntry
 
 
 .segment "JUMPTABLE"    ; "kernel" jumptable
@@ -20,6 +22,9 @@ krn_chrout:       jmp char_out
 ;@desc: print immediate
 krn_primm:        jmp primm
 
+krn_strout:       jmp strout
+krn_hexout:       jmp hexout
+
 ;@name: krn_set_output
 ;@desc: set current output device to one of: OUTPUT_DEVICE_NULL, OUTPUT_DEVICE_UART, OUTPUT_DEVICE_CONSOLE 
 ;@in: A - device id to be set
@@ -33,4 +38,8 @@ krn_set_input:    jmp set_input
 ;@name: krn_upload
 ;@desc: start XMODEM upload
 krn_upload:       jmp upload
+
+krn_open:         jmp fat_fopen
+krn_close:        jmp fat_close
+krn_read_direntry: jmp fat_read_direntry
 

@@ -5,7 +5,7 @@ CA65FLAGS=-I ../asminc -I ../kernel --cpu 65c02
 #CLIB=../clib/lib/steckschwein-clib.a
 LDFLAGS=-C ../kernel/steckschwein_prg.cfg -m $<.map $(LIBS)
 
-TOOLS=help.prg test.prg
+TOOLS=help.prg stat.prg
 
 # c tools
 #TOOLS+=\
