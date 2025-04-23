@@ -9,6 +9,8 @@ TOOLS=cp.prg
 TOOLS+=help.prg
 TOOLS+=stat.prg
 TOOLS+=touch.prg
+TOOLS+=attrib.prg
+
 
 
 # c tools
