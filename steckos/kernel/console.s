@@ -93,10 +93,12 @@ console_set_screen_buffer:
 
     stx current_console
 
+    ; fall through to console_set_screen_dirty
+    
+console_set_screen_dirty:
     lda screen_status
     ora #SCREEN_DIRTY
     sta screen_status
-
     rts
 
 
@@ -463,9 +465,15 @@ console_putchar:
 : 
     cmp #KEY_BACKSPACE
     bne :+
-    jmp console_cursor_left
+    jsr console_cursor_left
+    lda #' '
+    jmp console_update_char
 :
+    jsr console_update_char
+    jmp console_cursor_right
+    ; rts
 
+console_update_char:
     pha 
     phx
 
@@ -482,15 +490,12 @@ console_putchar:
     plx 
     stx slot2_ctrl  
 
-    jsr console_cursor_right
 
-    lda screen_status
-    ora #SCREEN_DIRTY
-    sta screen_status
+    jsr console_set_screen_dirty
 
     plx
     pla 
-    rts
+    rts 
 
 ;@name: console_handle_control_char
 ;@desc: handle control character in A.
@@ -567,11 +572,11 @@ console_scroll:
     
     ; source pointer starts at console_ptr plus one line
     clc
-    lda console_ptr
+    lda scroll_trg_ptr
     adc #COLS
     sta scroll_src_ptr 
 
-    lda console_ptr+1
+    lda scroll_trg_ptr+1
     adc #0 
     sta scroll_src_ptr+1
 
@@ -600,9 +605,8 @@ console_scroll:
     plx 
     stx slot2_ctrl  
     
-    lda screen_status
-    ora #SCREEN_DIRTY
-    sta screen_status    
+
+    jsr console_set_screen_dirty
 
     restore
     rts
