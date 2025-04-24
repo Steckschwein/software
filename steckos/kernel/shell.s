@@ -36,11 +36,6 @@ prompt  = '>'
 ; .export char_out                = fat_chrout
 .export dirent
 .export shell_init
-;---------------------------------------------------------------------------------------------------------
-; init shell
-;  - print welcome message
-;---------------------------------------------------------------------------------------------------------
-
 
 
 
@@ -55,11 +50,12 @@ prompt  = '>'
 dumpend = dumpvecs
 dumpvec = dumpvecs+2
 
-
-
-; appstart __SHELL_START__
-; .export __APP_SIZE__=kernel_start-__SHELL_START__ ; adjust __APP_SIZE__ for linker accordingly
 .code
+;---------------------------------------------------------------------------------------------------------
+; init shell
+;  - print welcome message
+;---------------------------------------------------------------------------------------------------------
+
 shell_init:
         lda #<hello_msg
         ldx #>hello_msg
@@ -68,7 +64,7 @@ shell_init:
 exit_from_prg:
         cld
         jsr fat_close_all   ; make sure all fd's are closed
-        jsr fat_textui_init
+        ; jsr fat_textui_init
 
         ldx #BUF_SIZE
 :       stz tmpbuf,x
@@ -115,8 +111,6 @@ mainloop:
 
   ; put input into buffer until return is pressed
 inputloop:
-        ; keyin
-
 :       
         jsr char_in
         bcc :-
@@ -323,7 +317,7 @@ try_exec:
 printbuf:
         ldy #$01
         sty crs_x
-        jsr fat_textui_update_crs_ptr
+        ; jsr fat_textui_update_crs_ptr
 
         ldy #$00
 @l1:
@@ -820,7 +814,6 @@ cmd_savemem:
         jsr strout
         jmp mainloop
 
-
 cmd_cls:
         jsr primm
         .byte 27,"[2J ",0
@@ -1203,6 +1196,19 @@ cmd_path:
         jsr strout
         jmp mainloop
 
+atoi:
+        cmp #'9'+1
+        bcc @l1   ; 0-9?
+        ; must be hex digit
+        adc #$08
+        and #$0f
+        rts
+
+@l1:
+        sec
+        sbc #$30
+        rts
+
 .rodata
 PATH:           .asciiz "./:/steckos/:/progs/"
 PRGEXT:         .asciiz ".PRG"
@@ -1283,10 +1289,10 @@ ls_usage_txt:
 .byte "   -?   show this useful message",$0a,$0d
 .byte 0
 hello_msg:
-.byte 27,"[2J"
-.byte 27,"[5B" ; move cursor down 5 lines
+; .byte 27,"[2J"
+.byte 27,"[2B" ; move cursor down 5 lines
 .byte "steckOS shell  "
-.byte 27,"[25D" ; move cursor left 25 pos
+.byte 27,"[3D" ; move cursor left 25 pos
 .include "version.inc"
 .byte CODE_LF,0
 unknown_error_msg:
@@ -1393,24 +1399,7 @@ key_addr_tbl:
         .word key_fn11
         .word key_fn12
 
-atoi:
-        cmp #'9'+1
-        bcc @l1   ; 0-9?
-        ; must be hex digit
-        adc #$08
-        and #$0f
-        rts
 
-@l1:
-        sec
-        sbc #$30
-        rts
-
-
-;dummy symbols
-fat_textui_init:
-fat_textui_update_crs_ptr:
-        rts
 .bss
 tmpbuf:           .res BUF_SIZE
 buf:              .res BUF_SIZE
