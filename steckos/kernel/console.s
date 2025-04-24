@@ -136,8 +136,15 @@ console_update_screen:
 
 ;@name: console_clear_screenbuf
 ;@desc: clear screenbuffer area pointed to by cursor_ptr
-;@in: cursor_ptr - address of buffer 
+;@in: console_ptr - address of buffer 
 console_clear_screenbuf:
+    copypointer console_ptr, scroll_trg_ptr
+
+    lda slot2_ctrl
+    pha
+    lda #SCREEN_BUFFER_PAGE
+    sta slot2_ctrl 
+    
     lda #' '
     ldx #SCREEN_BUFFER_SIZE
 
@@ -145,15 +152,26 @@ console_clear_screenbuf:
     ldy #0
 :
 
-    sta (cursor_ptr),y
+    sta (scroll_trg_ptr),y
     iny 
     bne :-
 
-    inc cursor_ptr+1
+    inc scroll_trg_ptr+1
 
     dex 
     bpl @loop
 
+
+    pla
+    sta slot2_ctrl
+    
+
+
+    stz crs_x
+    stz crs_y
+    jsr console_put_cursor
+
+    ; jmp console_set_screen_dirty
     rts
 
 ;@name: console_get_pointer_from_cursor
