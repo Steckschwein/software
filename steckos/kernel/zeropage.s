@@ -41,43 +41,71 @@
 ; vectors for input/output routines
 ; @name: out_vector
 ; @desc: vector pointing to standard output routine
+; @type: pointer
 out_vector:       .res 2
 
 ; @name: in_vector
 ; @desc: vector pointing to standard input routine
+; @type: pointer
 in_vector:        .res 2
 
 ; startaddress for uploaded images
+; @name: startaddr
+; @desc: startaddress for uploaded images
+; @type: pointer
 startaddr:         .res 2
 
 ; console stuff
-; pointer to current screen buffer
+; 
+; @name: console_ptr
+; @desc: pointer to current screen buffer
+; @type: pointer
 console_ptr:      .res 2
 
-; pointer to cursor position within screen buffer
+; @name: cursor_ptr
+; @desc: pointer to cursor position within screen buffer
+; @type: pointer
 cursor_ptr:       .res 2
 
-; scroll source pointer
+
+; @name: scroll_src_ptr
+; @desc: scroll source pointer
+; @type: pointer
 scroll_src_ptr:   .res 2
-; scroll target pointer
+
+; @name: scroll_trg_ptr
+; @desc: scroll target pointer
+; @type: pointer
 scroll_trg_ptr:   .res 2
 
-; vdp pointer 
+; @name: vdp_ptr
+; @desc: vdp pointer 
+; @type: pointer
 vdp_ptr:          .res 2
 
-; SPI shift register
-spi_sr:           .res 2
+; @name: spi_sr
+; @desc: SPI shift register
+; @type: byte
+spi_sr:           .res 1
 
-; shell return vector
+; @name: retvec
+; @desc: shell return vector
+; @type: pointer
 retvec:           .res 2
 
-; shell parameter pointer
+; @name: paramptr
+; @desc: shell parameter pointer
+; @type: pointer
 paramptr:         .res 2
 
-; shell command pointer
+; @name: cmdptr
+; @desc: shell command pointer
+; @type: pointer
 cmdptr:           .res 2
 
-; shell buffer pointer
+; @name: cmdptr
+; @desc: shell buffer pointer
+; @type: pointer
 bufptr:           .res 2
 
 ; temp
