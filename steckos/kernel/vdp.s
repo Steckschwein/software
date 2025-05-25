@@ -179,7 +179,7 @@ vdp_text_init_bytes:
     .byte v_reg9_nt                                             ; #R9, set bit to 1 for PAL
     .byte <.HIWORD(ADDRESS_TEXT_COLOR<<2)                       ;#R10
     .byte 0
-    .byte Black<<4|Gray                                         ; blink color to inverse text / on phase #R12
+    .byte Black<<4|Light_Green                                       ; blink color to inverse text / on phase #R12
     .byte %00100010                                             ; blink frequency high nibble -> time to show color from #R07   #R13
                                                                 ;                  low nibble -> time to show color from #R12 
     .byte <.HIWORD(ADDRESS_TEXT_SCREEN<<2)
