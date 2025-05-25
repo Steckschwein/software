@@ -19,3 +19,7 @@ img: build
 
 doc: build 
 	util/asmdoc.py -d steckos/kernel/ --format md --title kernel -f doc/kernel.md --filespec="*.s"
+
+
+emu: build img
+	steckschwein-emu -rom steckos/kernel/rom.bin -sdcard steckos.img
