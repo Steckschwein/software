@@ -1,6 +1,6 @@
 # kernel
 
-[console](#console) | [fat32](#fat32) | [io](#io) | [jumptable](#jumptable) | [kernel](#kernel) | [keyboard](#keyboard) | [sdcard](#sdcard) | [spi](#spi) | [uart](#uart) | [vdp](#vdp) | [xmodem_upload](#xmodem_upload) | 
+[console](#console) | [fat32](#fat32) | [io](#io) | [jumptable](#jumptable) | [kernel](#kernel) | [keyboard](#keyboard) | [sdcard](#sdcard) | [spi](#spi) | [uart](#uart) | [vdp](#vdp) | [xmodem_upload](#xmodem_upload) | [zeropage](#zeropage) | 
 ***
 
 
@@ -1097,6 +1097,35 @@ In
 
 Out
 : C=0 on success, C=1 on any i/o or protocoll related error
+
+
+***
+
+
+## zeropage
+[in_vector](#in_vector) | [out_vector](#out_vector) | 
+
+***
+
+
+
+### <a name="in_vector" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L46">in_vector</a>
+
+> vector pointing to standard input routine
+
+
+
+
+
+***
+
+
+### <a name="out_vector" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L42">out_vector</a>
+
+> vector pointing to standard output routine
+
+
+
 
 
 ***

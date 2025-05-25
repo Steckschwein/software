@@ -34,12 +34,17 @@
 .exportzp protocol
 .exportzp block_rx_cb
 
-
+; @module: zeropage
 
 
 .zeropage
 ; vectors for input/output routines
+; @name: out_vector
+; @desc: vector pointing to standard output routine
 out_vector:       .res 2
+
+; @name: in_vector
+; @desc: vector pointing to standard input routine
 in_vector:        .res 2
 
 ; startaddress for uploaded images
