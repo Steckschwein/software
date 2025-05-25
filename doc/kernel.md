@@ -1,6 +1,6 @@
 # kernel
 
-[console](#console) | [fat32](#fat32) | [io](#io) | [jumptable](#jumptable) | [kernel](#kernel) | [keyboard](#keyboard) | [sdcard](#sdcard) | [spi](#spi) | [uart](#uart) | [vdp](#vdp) | [xmodem_upload](#xmodem_upload) | [zeropage](#zeropage) | 
+[console](#console) | [fat32](#fat32) | [io](#io) | [jumptable](#jumptable) | [kernel](#kernel) | [keyboard](#keyboard) | [sdcard](#sdcard) | [spi](#spi) | [uart](#uart) | [vdp](#vdp) | [xmodem_upload](#xmodem_upload) | [zeropage](#zeropage) | [zp_ext](#zp_ext) | 
 ***
 
 
@@ -1103,7 +1103,7 @@ Out
 
 
 ## zeropage
-[cmdptr](#cmdptr) | [console_ptr](#console_ptr) | [cursor_ptr](#cursor_ptr) | [in_vector](#in_vector) | [out_vector](#out_vector) | [paramptr](#paramptr) | [retvec](#retvec) | [scroll_src_ptr](#scroll_src_ptr) | [scroll_trg_ptr](#scroll_trg_ptr) | [spi_sr](#spi_sr) | [startaddr](#startaddr) | [vdp_ptr](#vdp_ptr) | 
+[cmdptr](#cmdptr) | [console_ptr](#console_ptr) | [cursor_ptr](#cursor_ptr) | [dirptr](#dirptr) | [dumpvecs](#dumpvecs) | [filenameptr](#filenameptr) | [in_vector](#in_vector) | [out_vector](#out_vector) | [paramptr](#paramptr) | [pathptr](#pathptr) | [retvec](#retvec) | [scroll_src_ptr](#scroll_src_ptr) | [scroll_trg_ptr](#scroll_trg_ptr) | [sd_blkptr](#sd_blkptr) | [spi_sr](#spi_sr) | [startaddr](#startaddr) | [tmp_ptr](#tmp_ptr) | [vdp_ptr](#vdp_ptr) | [volatile_tmp](#volatile_tmp) | [volatile_tmp2](#volatile_tmp2) | 
 
 ***
 
@@ -1134,6 +1134,39 @@ Out
 ### <a name="cursor_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L65">cursor_ptr</a>
 
 > pointer to cursor position within screen buffer
+
+
+
+
+
+***
+
+
+### <a name="dirptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L133">dirptr</a>
+
+> directory pointer
+
+
+
+
+
+***
+
+
+### <a name="dumpvecs" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L128">dumpvecs</a>
+
+> shell dump command vectors (2 pointer)
+
+
+
+
+
+***
+
+
+### <a name="filenameptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L138">filenameptr</a>
+
+> filename pointer
 
 
 
@@ -1175,6 +1208,17 @@ Out
 ***
 
 
+### <a name="pathptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L123">pathptr</a>
+
+> path pointer
+
+
+
+
+
+***
+
+
 ### <a name="retvec" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L91">retvec</a>
 
 > shell return vector
@@ -1208,6 +1252,17 @@ Out
 ***
 
 
+### <a name="sd_blkptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L143">sd_blkptr</a>
+
+> sd card block pointer
+
+
+
+
+
+***
+
+
 ### <a name="spi_sr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L86">spi_sr</a>
 
 > SPI shift register
@@ -1230,9 +1285,60 @@ Out
 ***
 
 
+### <a name="tmp_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L148">tmp_ptr</a>
+
+> temp volatile pointer for general usage
+
+
+
+
+
+***
+
+
 ### <a name="vdp_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L81">vdp_ptr</a>
 
 > vdp pointer
+
+
+
+
+
+***
+
+
+### <a name="volatile_tmp" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L112">volatile_tmp</a>
+
+> volatile tmp location
+
+
+
+
+
+***
+
+
+### <a name="volatile_tmp2" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L117">volatile_tmp2</a>
+
+> volatile tmp location 2
+
+
+
+
+
+***
+
+
+## zp_ext
+[lba_addr](#lba_addr) | 
+
+***
+
+
+
+### <a name="lba_addr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L176">lba_addr</a>
+
+> LBA address for media block operations
 
 
 

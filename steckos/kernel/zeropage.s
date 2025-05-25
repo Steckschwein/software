@@ -109,25 +109,45 @@ cmdptr:           .res 2
 bufptr:           .res 2
 
 ; temp
+; @name: volatile_tmp
+; @desc: volatile tmp location
+; @type: byte
 volatile_tmp:     .res 1
+
+; @name: volatile_tmp2
+; @desc: volatile tmp location 2
+; @type: byte
 volatile_tmp2:    .res 1
 
 ; path ptr
+; @name: pathptr
+; @desc: path pointer
+; @type: pointer
 pathptr:          .res 2
 
-; shell dump command vectors
+; @name: dumpvecs
+; @desc: shell dump command vectors (2 pointer)
+; @type: pointer
 dumpvecs:         .res 4
 
-; directory pointer
+; @name: dirptr
+; @desc: directory pointer
+; @type: pointer
 dirptr:           .res 2
 
-; filename pointer
+; @name: filenameptr
+; @desc: filename pointer
+; @type: pointer
 filenameptr:      .res 2
 
-; sd card block pointer
+; @name: sd_blkptr
+; @desc: sd card block pointer
+; @type: pointer
 sd_blkptr:        .res 2
 
-; temp volatile pointer for general usage
+; @name: tmp_ptr
+; @desc: temp volatile pointer for general usage
+; @type: pointer
 tmp_ptr:          .res 2
 
 ; stuff for wozmon
@@ -151,7 +171,11 @@ blkno=            volatile_tmp ; block number
 protocol=         volatile_tmp2 ; 2nd counter
 block_rx_cb=      tmp_ptr
 
+; @module zp_ext
 .segment "ZP_EXT"
+; @name: lba_addr
+; @desc: LBA address for media block operations
+; @type: pointer
 .export lba_addr
 lba_addr:           .res 4
 
