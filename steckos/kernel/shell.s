@@ -1399,13 +1399,12 @@ key_addr_tbl:
         .word key_fn11
         .word key_fn12
 
-
+; .segment "ZP_EXT"
 .bss
-tmpbuf:           .res BUF_SIZE
 buf:              .res BUF_SIZE
+tmpbuf:           .res BUF_SIZE
 cwdbuf:           .res cwdbuf_size
 dirent:           .res .sizeof(F32DirEntry)
-; .segment "ZP_EXT"
 filenamebuf:      .res 12
 fat_dirname_mask: .res 8+3 ;8.3 fat mask <name><ext>
 tmp1:             .res 1
@@ -1413,5 +1412,5 @@ tmp2:             .res 1
 options:          .res 1
 dir_attrib_mask:  .res 1
 pagecnt:          .res 1
-cnt:              .res 1
 entries_per_page: .res 1
+cnt:              .res 1
