@@ -17,5 +17,5 @@ test: build
 img: build
 	./mkimg.sh
 
-doc:
-	(cd doc; make)
+doc: build 
+	util/asmdoc.py -d steckos/kernel/ --format md --title kernel -f doc/kernel.md --filespec="*.s"
