@@ -35,6 +35,8 @@
 .exportzp block_rx_cb
 
 
+
+
 .zeropage
 ; vectors for input/output routines
 out_vector:       .res 2
@@ -115,6 +117,10 @@ crch=             dumpvecs+3  ; CRC hi byte
 blkno=            volatile_tmp ; block number
 protocol=         volatile_tmp2 ; 2nd counter
 block_rx_cb=      tmp_ptr
+
+.segment "ZP_EXT"
+.export lba_addr
+lba_addr:           .res 4
 
 
 

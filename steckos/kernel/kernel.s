@@ -29,7 +29,6 @@
 
 .export input_vectors, output_vectors
 .export upload
-.export lba_addr
 .export char_in, char_out
 .export set_input, set_output
 .exportzp xmodem_startaddress=startaddr
@@ -50,11 +49,10 @@
 
 
 .bss
-save_stat:          .res .sizeof(save_status)
 sd_block_buffer:    .res 512
+
+save_stat:          .res .sizeof(save_status)
 atmp:               .res 1
-lba_addr:           .res 4
-; .segment "ZP_EXT"
 
 
 
