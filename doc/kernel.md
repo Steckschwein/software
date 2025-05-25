@@ -1103,13 +1103,46 @@ Out
 
 
 ## zeropage
-[in_vector](#in_vector) | [out_vector](#out_vector) | 
+[cmdptr](#cmdptr) | [console_ptr](#console_ptr) | [cursor_ptr](#cursor_ptr) | [in_vector](#in_vector) | [out_vector](#out_vector) | [paramptr](#paramptr) | [retvec](#retvec) | [scroll_src_ptr](#scroll_src_ptr) | [scroll_trg_ptr](#scroll_trg_ptr) | [spi_sr](#spi_sr) | [startaddr](#startaddr) | [vdp_ptr](#vdp_ptr) | 
 
 ***
 
 
 
-### <a name="in_vector" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L46">in_vector</a>
+### <a name="cmdptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L106">cmdptr</a>
+
+> shell buffer pointer
+
+
+
+
+
+***
+
+
+### <a name="console_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L60">console_ptr</a>
+
+> pointer to current screen buffer
+
+
+
+
+
+***
+
+
+### <a name="cursor_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L65">cursor_ptr</a>
+
+> pointer to cursor position within screen buffer
+
+
+
+
+
+***
+
+
+### <a name="in_vector" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L47">in_vector</a>
 
 > vector pointing to standard input routine
 
@@ -1123,6 +1156,83 @@ Out
 ### <a name="out_vector" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L42">out_vector</a>
 
 > vector pointing to standard output routine
+
+
+
+
+
+***
+
+
+### <a name="paramptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L96">paramptr</a>
+
+> shell parameter pointer
+
+
+
+
+
+***
+
+
+### <a name="retvec" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L91">retvec</a>
+
+> shell return vector
+
+
+
+
+
+***
+
+
+### <a name="scroll_src_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L71">scroll_src_ptr</a>
+
+> scroll source pointer
+
+
+
+
+
+***
+
+
+### <a name="scroll_trg_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L76">scroll_trg_ptr</a>
+
+> scroll target pointer
+
+
+
+
+
+***
+
+
+### <a name="spi_sr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L86">spi_sr</a>
+
+> SPI shift register
+
+
+
+
+
+***
+
+
+### <a name="startaddr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L53">startaddr</a>
+
+> startaddress for uploaded images
+
+
+
+
+
+***
+
+
+### <a name="vdp_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L81">vdp_ptr</a>
+
+> vdp pointer
 
 
 
