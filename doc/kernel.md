@@ -11,7 +11,7 @@
 
 
 
-### <a name="console_chrout" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L317">console_chrout</a>
+### <a name="console_chrout" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L318">console_chrout</a>
 
 #### Description
 print character in A at current cursor position.\
@@ -43,7 +43,7 @@ In
 
 
 
-### <a name="console_clear_screenbuf" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L126">console_clear_screenbuf</a>
+### <a name="console_clear_screenbuf" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L127">console_clear_screenbuf</a>
 
 #### Description
 clear screenbuffer area pointed to by cursor_ptr
@@ -67,7 +67,7 @@ In
 
 
 
-### <a name="console_cursor_down" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L272">console_cursor_down</a>
+### <a name="console_cursor_down" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L273">console_cursor_down</a>
 
 #### Description
 move cursor down by 1 row, scroll screen buffer when reached row 24
@@ -81,7 +81,7 @@ move cursor down by 1 row, scroll screen buffer when reached row 24
 
 
 
-### <a name="console_cursor_right" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L288">console_cursor_right</a>
+### <a name="console_cursor_right" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L289">console_cursor_right</a>
 
 #### Description
 increase cursor x position. wrap around when x = 80.
@@ -108,7 +108,7 @@ Out
 
 
 
-### <a name="console_get_pointer_from_cursor" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L166">console_get_pointer_from_cursor</a>
+### <a name="console_get_pointer_from_cursor" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L167">console_get_pointer_from_cursor</a>
 
 #### Description
 calculate screen buffer address for cursor position in crs_x/crs_y
@@ -132,7 +132,7 @@ In
 
 
 
-### <a name="console_handle_control_char" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L510">console_handle_control_char</a>
+### <a name="console_handle_control_char" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L511">console_handle_control_char</a>
 
 #### Description
 handle control character in A.
@@ -156,7 +156,7 @@ In
 
 
 
-### <a name="console_init" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L19">console_init</a>
+### <a name="console_init" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L20">console_init</a>
 
 #### Description
 init console
@@ -170,7 +170,7 @@ init console
 
 
 
-### <a name="console_put_cursor" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L203">console_put_cursor</a>
+### <a name="console_put_cursor" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L204">console_put_cursor</a>
 
 #### Description
 place cursor at position pointed to by crs_x/crs_y
@@ -194,7 +194,7 @@ In
 
 
 
-### <a name="console_putchar" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L456">console_putchar</a>
+### <a name="console_putchar" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L457">console_putchar</a>
 
 #### Description
 print character in A at current cursor position. handle CR/LF.
@@ -218,7 +218,7 @@ In
 
 
 
-### <a name="console_scroll" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L575">console_scroll</a>
+### <a name="console_scroll" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L576">console_scroll</a>
 
 #### Description
 scroll screen buffer up 1 row
@@ -232,7 +232,7 @@ scroll screen buffer up 1 row
 
 
 
-### <a name="console_set_screen_buffer" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L56">console_set_screen_buffer</a>
+### <a name="console_set_screen_buffer" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L57">console_set_screen_buffer</a>
 
 #### Description
 switch to screen buffer number in A
@@ -256,7 +256,7 @@ In
 
 
 
-### <a name="console_update_screen" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L94">console_update_screen</a>
+### <a name="console_update_screen" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L95">console_update_screen</a>
 
 #### Description
 update vdp text screen memory with contents from console buffer
@@ -992,7 +992,7 @@ In
 
 
 
-### <a name="fetchkey" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//keyboard.s#L28">fetchkey</a>
+### <a name="fetchkey" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//keyboard.s#L29">fetchkey</a>
 
 #### Description
 fetch byte from keyboard controller
@@ -1016,7 +1016,7 @@ Out
 
 
 
-### <a name="getkey" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//keyboard.s#L56">getkey</a>
+### <a name="getkey" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//keyboard.s#L57">getkey</a>
 
 #### Description
 get byte from keyboard buffer
@@ -2007,7 +2007,7 @@ volatile tmp location 2
 
 
 ## zp_ext
-[crs_x](#crs_x) | [crs_x_sav](#crs_x_sav) | [crs_y](#crs_y) | [crs_y_sav](#crs_y_sav) | [current_console](#current_console) | [lba_addr](#lba_addr) | [screen_status](#screen_status) | [vdp_addr](#vdp_addr) | [vdp_addr_old](#vdp_addr_old) | 
+[crs_x](#crs_x) | [crs_x_sav](#crs_x_sav) | [crs_y](#crs_y) | [crs_y_sav](#crs_y_sav) | [current_console](#current_console) | [keyboard_key](#keyboard_key) | [lba_addr](#lba_addr) | [screen_status](#screen_status) | [vdp_addr](#vdp_addr) | [vdp_addr_old](#vdp_addr_old) | 
 
 ***
 
@@ -2075,6 +2075,20 @@ cursor y position save location\
 
 #### Description
 number of current virtual console
+
+
+
+
+***
+
+
+
+
+
+### <a name="keyboard_key" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L233">keyboard_key</a>
+
+#### Description
+value of last pressed key
 
 
 

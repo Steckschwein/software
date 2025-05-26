@@ -12,13 +12,14 @@
 .import spi_set_device
 
 .import primm, hexout, char_out
+.import keyboard_key
 
-.export keyboard_init, getkey, fetchkey, key
+.export keyboard_init, keyboard_getkey, keyboard_fetchkey
 
 
 ;@module: keyboard
 .bss
-key:  .res 1
+
 
 .code
 ; Select Keyboard controller on SPI, read one byte
@@ -29,24 +30,24 @@ key:  .res 1
 ;@out: A, "fetched key / error code"
 ;@out:  C, "1 - key was fetched, 0 - nothing fetched"
 ;@desc: "fetch byte from keyboard controller"
-fetchkey:
-		lda #spi_device_keyboard
-		jsr spi_select_device
-		bne exit
+keyboard_fetchkey:
+    lda #spi_device_keyboard
+    jsr spi_select_device
+    bne exit
 
-		phx
+    phx
 
-		jsr spi_r_byte
-		jsr spi_deselect
+    jsr spi_r_byte
+    jsr spi_deselect
 
-		plx
+    plx
 
     cmp #0
     beq exit
 
-		sta key
+    sta keyboard_key
     sec
-		rts
+    rts
 
 
 ; get byte from keyboard buffer
@@ -57,10 +58,10 @@ fetchkey:
 ;@out: A, "fetched key"
 ;@out:  C, "1 - key was fetched, 0 - nothing fetched"
 ;@desc: "get byte from keyboard buffer"
-getkey:
-    lda key
+keyboard_getkey:
+    lda keyboard_key
     beq exit
-    stz key
+    stz keyboard_key
     sec
     rts
 exit:
@@ -69,62 +70,62 @@ exit:
 
 ;  requires nvram init beforehand
 keyboard_init:
-      jsr primm
-      .byte "Keyboard init.", 0
+    jsr primm
+    .byte "Keyboard init.", 0
 
-      ldy #50
-      jsr _delay_10ms
+    ldy #50
+    jsr _delay_10ms
 
-      ; stz init_step
+    ; stz init_step
 
-      lda #spi_device_keyboard
-      jsr spi_select_device
-      bne @fail
+    lda #spi_device_keyboard
+    jsr spi_select_device
+    bne @fail
 
-      ; inc init_step
-      lda #KBD_CMD_RESET
-      jsr spi_rw_byte
-      jsr _keyboard_cmd_status
-      bne @fail
+    ; inc init_step
+    lda #KBD_CMD_RESET
+    jsr spi_rw_byte
+    jsr _keyboard_cmd_status
+    bne @fail
 
-      jsr primm 
-      .asciiz "OK"
-      clc
-      jmp spi_deselect
+    jsr primm 
+    .asciiz "OK"
+    clc
+    jmp spi_deselect
 @fail:
-      pha
-      jsr primm
-      .byte "FAIL (",0
-      ; lda init_step
-      ; jsr hexout
-      ; lda #'/'
-      jsr char_out
-      pla
-      jsr hexout
-      jsr primm
-      .byte ")", CODE_LF, 0
-      sec
-      jmp spi_deselect
+    pha
+    jsr primm
+    .byte "FAIL (",0
+    ; lda init_step
+    ; jsr hexout
+    ; lda #'/'
+    jsr char_out
+    pla
+    jsr hexout
+    jsr primm
+    .byte ")", CODE_LF, 0
+    sec
+    jmp spi_deselect
 
 _keyboard_cmd_status:
-      lda #'.'
-      jsr char_out
+    lda #'.'
+    jsr char_out
 
-      ldy #100
-:     dey
-      bmi :+
-      phy
-      ldy #10
-      jsr _delay_10ms
-      lda #KBD_HOST_CMD_CMD_STATUS
-      jsr spi_rw_byte
-      ply
-      cmp #KBD_HOST_CMD_STATUS_EOT
-      bne :-
-:     rts 
+    ldy #100
+:   dey
+    bmi :+
+    phy
+    ldy #10
+    jsr _delay_10ms
+    lda #KBD_HOST_CMD_CMD_STATUS
+    jsr spi_rw_byte
+    ply
+    cmp #KBD_HOST_CMD_STATUS_EOT
+    bne :-
+:   rts 
 
 _delay_10ms:
-:     sys_delay_ms 10
-      dey 
-      bne :-
-      rts 
+:   sys_delay_ms 10
+    dey 
+    bne :-
+    rts 

@@ -16,7 +16,7 @@
 .import init_vdp, vdp_bgcolor, vdp_memcpy
 .import sdcard_init, sd_read_block, sd_write_block
 .import console_init, console_update_screen, console_chrout, console_put_cursor, console_handle_control_char
-.import keyboard_init, fetchkey, getkey
+.import keyboard_init, keyboard_fetchkey, keyboard_getkey
 .import crs_x, crs_y
 .import blklayer_init, blklayer_flush, blklayer_write_block, blklayer_write_block_buffered, blklayer_read_block
 .import shell_init
@@ -191,7 +191,7 @@ do_irq:
     jsr console_update_screen
 
 @handle_keyboard:
-    jsr fetchkey
+    jsr keyboard_fetchkey
     bcc @exit_isr
 
     jsr console_handle_control_char
@@ -322,7 +322,7 @@ output_vectors:
 input_vectors:
 .word io_null
 .word uart_rx
-.word getkey
+.word keyboard_getkey
 .word $dead 
 
 

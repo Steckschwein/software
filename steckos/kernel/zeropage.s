@@ -229,4 +229,8 @@ ansi_state:  .res 1
 ansi_param1: .res 1
 ansi_param2: .res 1
 
-
+.export keyboard_key
+; @name: keyboard_key
+; @desc: value of last pressed key
+; @type: byte
+keyboard_key:  .res 1

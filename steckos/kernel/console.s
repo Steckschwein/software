@@ -6,7 +6,7 @@
 
 .export console_init, console_update_screen, console_putchar, console_put_cursor, console_handle_control_char, console_clear_screenbuf, console_chrout
 
-.import vdp_memcpy, key
+.import vdp_memcpy
 
 .importzp console_ptr, cursor_ptr, scroll_src_ptr, scroll_trg_ptr
 
@@ -14,6 +14,7 @@
 .import vdp_addr, vdp_addr_old
 .import screen_status, current_console
 .import ansi_index, ansi_param1, ansi_param2, ansi_state
+.import keyboard_key
 
 .code
 ;@name: console_init
@@ -568,7 +569,7 @@ console_handle_control_char:
     rts
 @exit:
     lda #0
-    stz key
+    stz keyboard_key
     clc
     rts
 
