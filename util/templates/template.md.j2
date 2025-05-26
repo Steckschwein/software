@@ -16,13 +16,6 @@
 #### Description
 {{ "\\\n".join(info.desc) }}
 
-{% if info.example %}
-#### Example
-{% for line in info.example %}
-    {{ line }}
-{% endfor %}
-{% endif %}
-
 #### Parameters
 {% if info.in %}
 In
@@ -39,3 +32,10 @@ Clobbers
 ***
 {% endfor %}
 {% endfor %}
+
+{% if info.example %}
+#### Example
+{% for line in info.example %}
+    {{ line }}
+{% endfor %}
+{% endif %}
