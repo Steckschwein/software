@@ -16,6 +16,7 @@
 
 
 print character in A at current cursor position.
+
 handle ANSI ESC sequences
 
 
@@ -515,6 +516,7 @@ Out
 
 
 print value in A as 2 hex digits
+
 Output string on active output device
 
 
