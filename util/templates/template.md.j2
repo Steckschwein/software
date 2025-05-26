@@ -12,18 +12,18 @@
 {% for proc in doc_struct[module]|sort() %}
 
 ### <a name="{{proc}}" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/{{doc_struct[module][proc].filename}}#L{{doc_struct[module][proc].line}}">{{ proc }}</a>
-
 {% set info = doc_struct[module][proc] %}
-
+#### Description
 {{ "\\\n".join(info.desc) }}
 
 {% if info.example %}
+#### Example
 {% for line in info.example %}
     {{ line }}
 {% endfor %}
 {% endif %}
 
-
+#### Parameters
 {% if info.in %}
 In
 : {{ "<br />".join(info.in) }}
