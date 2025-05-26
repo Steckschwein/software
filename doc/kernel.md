@@ -15,9 +15,16 @@
 
 
 
-print character in A at current cursor position.
-
+print character in A at current cursor position.\
 handle ANSI ESC sequences
+
+
+
+    lda #'A'
+
+    jsr console_chrout
+
+
 
 
 
@@ -34,6 +41,8 @@ In
 
 
 clear screenbuffer area pointed to by cursor_ptr
+
+
 
 
 
@@ -55,6 +64,8 @@ move cursor down by 1 row, scroll screen buffer when reached row 24
 
 
 
+
+
 ***
 
 
@@ -63,6 +74,8 @@ move cursor down by 1 row, scroll screen buffer when reached row 24
 
 
 increase cursor x position. wrap around when x = 80.
+
+
 
 
 
@@ -85,6 +98,8 @@ calculate screen buffer address for cursor position in crs_x/crs_y
 
 
 
+
+
 In
 : crs_x - cursor x position<br />crs_y - cursor y position
 
@@ -93,11 +108,13 @@ In
 ***
 
 
-### <a name="console_handle_control_char" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L519">console_handle_control_char</a>
+### <a name="console_handle_control_char" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L521">console_handle_control_char</a>
 
 
 
 handle control character in A.
+
+
 
 
 
@@ -119,6 +136,8 @@ init console
 
 
 
+
+
 ***
 
 
@@ -130,6 +149,8 @@ place cursor at position pointed to by crs_x/crs_y
 
 
 
+
+
 In
 : crs_x - cursor x position<br />crs_y - cursor y position
 
@@ -138,11 +159,13 @@ In
 ***
 
 
-### <a name="console_putchar" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L465">console_putchar</a>
+### <a name="console_putchar" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L467">console_putchar</a>
 
 
 
 print character in A at current cursor position. handle CR/LF.
+
+
 
 
 
@@ -154,11 +177,13 @@ In
 ***
 
 
-### <a name="console_scroll" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L584">console_scroll</a>
+### <a name="console_scroll" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L586">console_scroll</a>
 
 
 
 scroll screen buffer up 1 row
+
+
 
 
 
@@ -175,6 +200,8 @@ switch to screen buffer number in A
 
 
 
+
+
 In
 : A - screen buffer number to switch to
 
@@ -188,6 +215,8 @@ In
 
 
 update vdp text screen memory with contents from console buffer
+
+
 
 
 
@@ -211,6 +240,8 @@ change current directory
 
 
 
+
+
 In
 : A, low byte of pointer to zero terminated string with the file path<br />X, high byte of pointer to zero terminated string with the file path
 
@@ -227,6 +258,8 @@ Out
 
 
 close file, update dir entry and free file descriptor quietly
+
+
 
 
 
@@ -249,6 +282,8 @@ open file
 
 
 
+
+
 In
 : A, low byte of pointer to zero terminated string with the file path<br />X, high byte of pointer to zero terminated string with the file path<br />Y, file mode constants O_RDONLY = $01, O_WRONLY = $02, O_RDWR = $03, O_CREAT = $10, O_TRUNC = $20, O_APPEND = $40, O_EXCL = $80
 
@@ -265,6 +300,8 @@ Out
 
 
 read byte from file
+
+
 
 
 
@@ -287,6 +324,8 @@ read the file denoted by given file descriptor (X) until EOF and store data at g
 
 
 
+
+
 In
 : X - offset into fd_area<br />A/Y - pointer to target address
 
@@ -303,6 +342,8 @@ Out
 
 
 seek n bytes within file denoted by the given FD
+
+
 
 
 
@@ -325,6 +366,8 @@ get current directory
 
 
 
+
+
 In
 : A, low byte of address to write the current work directory string into<br />Y, high byte address to write the current work directory string into<br />X, size of result buffer pointet to by A/X
 
@@ -341,6 +384,8 @@ Out
 
 
 create directory denoted by given path in A/X
+
+
 
 
 
@@ -364,6 +409,8 @@ mount fat32 file system
 
 
 
+
+
 Out
 : C, 0 on success, 1 on error<br />A, error code
 
@@ -376,6 +423,8 @@ Out
 
 
 open directory by given path starting from directory given as file descriptor
+
+
 
 
 
@@ -398,6 +447,8 @@ readdir expects a pointer in A/Y to store the F32DirEntry structure representing
 
 
 
+
+
 In
 : X - file descriptor to fd_area of the file<br />A/Y - pointer to target buffer which must be .sizeof(F32DirEntry)
 
@@ -414,6 +465,8 @@ Out
 
 
 readdir expects a pointer in A/Y to store the next F32DirEntry structure representing the next FAT32 directory entry in the directory stream pointed of directory X.
+
+
 
 
 
@@ -436,6 +489,8 @@ delete a directory entry denoted by given path in A/X
 
 
 
+
+
 In
 : A, low byte of pointer to directory string<br />X, high byte of pointer to directory string
 
@@ -452,6 +507,8 @@ Out
 
 
 unlink (delete) a file denoted by given path in A/X
+
+
 
 
 
@@ -474,6 +531,8 @@ update direntry given as pointer (A/Y) to FAT32 directory entry structure for fi
 
 
 
+
+
 In
 : X - file descriptor to fd_area of the file<br />A/Y - pointer to direntry buffer with updated direntry data of type F32DirEntry
 
@@ -490,6 +549,8 @@ Out
 
 
 write byte to file
+
+
 
 
 
@@ -515,9 +576,10 @@ Out
 
 
 
-print value in A as 2 hex digits
-
+print value in A as 2 hex digits\
 Output string on active output device
+
+
 
 
 
@@ -534,6 +596,8 @@ In
 
 
 print string inlined after call to primm terminated by null byte - see http://6502.org/source/io/primm.htm
+
+
 
 
 
@@ -558,6 +622,8 @@ read character from current input device into A
 
 
 
+
+
 Out
 : A - received character
 
@@ -570,6 +636,8 @@ Out
 
 
 print character in A to current output device
+
+
 
 
 
@@ -591,6 +659,8 @@ print immediate
 
 
 
+
+
 ***
 
 
@@ -599,6 +669,8 @@ print immediate
 
 
 set current output device to one of: INPUT_DEVICE_NULL, INPUT_DEVICE_UART, INPUT_DEVICE_CONSOLE
+
+
 
 
 
@@ -618,6 +690,8 @@ set current output device to one of: OUTPUT_DEVICE_NULL, OUTPUT_DEVICE_UART, OUT
 
 
 
+
+
 In
 : A - device id to be set
 
@@ -631,6 +705,8 @@ In
 
 
 start XMODEM upload
+
+
 
 
 
@@ -656,6 +732,8 @@ system irq handler
 
 
 
+
+
 ***
 
 
@@ -664,6 +742,8 @@ system irq handler
 
 
 system nmi handler
+
+
 
 
 
@@ -682,6 +762,8 @@ dummy routine to suppress output
 
 
 
+
+
 ***
 
 
@@ -690,6 +772,8 @@ dummy routine to suppress output
 
 
 set current output device to one of: INPUT_DEVICE_NULL, INPUT_DEVICE_UART, INPUT_DEVICE_CONSOLE
+
+
 
 
 
@@ -706,6 +790,8 @@ In
 
 
 set current output device to one of: OUTPUT_DEVICE_NULL, OUTPUT_DEVICE_UART, OUTPUT_DEVICE_CONSOLE
+
+
 
 
 
@@ -733,6 +819,8 @@ fetch byte from keyboard controller
 
 
 
+
+
 Out
 : A, fetched key / error code<br />C, 1 - key was fetched, 0 - nothing fetched
 
@@ -745,6 +833,8 @@ Out
 
 
 get byte from keyboard buffer
+
+
 
 
 
@@ -772,6 +862,8 @@ wait while sd card is busy
 
 
 
+
+
 Out
 : C, C = 0 on success, C = 1 on error (timeout)
 
@@ -787,6 +879,8 @@ Clobbers
 
 
 send command to sd card
+
+
 
 
 
@@ -813,6 +907,8 @@ Read block from SD Card
 
 
 
+
+
 Out
 : A, error code<br />C, 0 - success, 1 - error
 
@@ -828,6 +924,8 @@ Clobbers
 
 
 Read block from SD Card
+
+
 
 
 
@@ -854,6 +952,8 @@ select sd card, pull CS line to low with busy wait
 
 
 
+
+
 Out
 : C, C = 0 on success, C = 1 on error (timeout)
 
@@ -869,6 +969,8 @@ Clobbers
 
 
 wait for sd card data token
+
+
 
 
 
@@ -891,6 +993,8 @@ Write block to SD Card
 
 
 
+
+
 In
 : lba_addr, LBA address of block<br />sd_blkptr, target adress for the block data to be read
 
@@ -910,6 +1014,8 @@ Clobbers
 
 
 initialize sd card in SPI mode
+
+
 
 
 
@@ -941,6 +1047,8 @@ deselect all SPI devices
 
 
 
+
+
 ***
 
 
@@ -949,6 +1057,8 @@ deselect all SPI devices
 
 
 read byte via SPI
+
+
 
 
 
@@ -971,6 +1081,8 @@ transmit byte via SPI
 
 
 
+
+
 In
 : A, byte to transmit
 
@@ -990,6 +1102,8 @@ Clobbers
 
 
 select spi device given in A. the method is aware of the current processor state, especially the interrupt flag
+
+
 
 
 
@@ -1019,6 +1133,8 @@ init UART to 115200 baud, 8N1
 
 
 
+
+
 In
 : -
 
@@ -1038,6 +1154,8 @@ receive byte, no wait, set carry and store in A when received
 
 
 
+
+
 In
 : -
 
@@ -1054,6 +1172,8 @@ Out
 
 
 send byte in A
+
+
 
 
 
@@ -1083,6 +1203,8 @@ Out
 
 
 
+
+
 In
 : A - color
 
@@ -1096,6 +1218,8 @@ In
 
 
 fill vdp VRAM with given value page wise
+
+
 
 
 
@@ -1115,6 +1239,8 @@ fill vdp VRAM with given value
 
 
 
+
+
 In
 : A - value to write<br />X - amount of bytes
 
@@ -1128,6 +1254,8 @@ In
 
 
 setup video registers upon given table starting from register #R.X down to #R0
+
+
 
 
 
@@ -1147,6 +1275,8 @@ copy data from host memory denoted by pointer (A/Y) to vdp VRAM (page wise). the
 
 
 
+
+
 In
 : X - amount of 256byte blocks (page counter)<br />A/Y - pointer to source data
 
@@ -1160,6 +1290,8 @@ In
 
 
 set value to vdp register
+
+
 
 
 
@@ -1181,6 +1313,8 @@ text mode blank screen and color vram
 
 
 
+
+
 ***
 
 
@@ -1189,6 +1323,8 @@ text mode blank screen and color vram
 
 
 text mode - 40x24/80x24 character mode, 2 colors
+
+
 
 
 
@@ -1215,6 +1351,8 @@ output 8bit value as 2 digit decimal
 
 
 
+
+
 In
 : A, value to output
 
@@ -1224,6 +1362,8 @@ In
 
 
 ### <a name="xmodem_upload_callback" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//xmodem_upload.s#L128">xmodem_upload_callback</a>
+
+
 
 
 
@@ -1259,6 +1399,8 @@ shell buffer pointer
 
 
 
+
+
 ***
 
 
@@ -1267,6 +1409,8 @@ shell buffer pointer
 
 
 pointer to current screen buffer
+
+
 
 
 
@@ -1285,6 +1429,8 @@ pointer to cursor position within screen buffer
 
 
 
+
+
 ***
 
 
@@ -1293,6 +1439,8 @@ pointer to cursor position within screen buffer
 
 
 directory pointer
+
+
 
 
 
@@ -1311,6 +1459,8 @@ shell dump command vectors (2 pointer)
 
 
 
+
+
 ***
 
 
@@ -1319,6 +1469,8 @@ shell dump command vectors (2 pointer)
 
 
 filename pointer
+
+
 
 
 
@@ -1337,6 +1489,8 @@ vector pointing to standard input routine
 
 
 
+
+
 ***
 
 
@@ -1345,6 +1499,8 @@ vector pointing to standard input routine
 
 
 vector pointing to standard output routine
+
+
 
 
 
@@ -1363,6 +1519,8 @@ shell parameter pointer
 
 
 
+
+
 ***
 
 
@@ -1371,6 +1529,8 @@ shell parameter pointer
 
 
 path pointer
+
+
 
 
 
@@ -1389,6 +1549,8 @@ shell return vector
 
 
 
+
+
 ***
 
 
@@ -1397,6 +1559,8 @@ shell return vector
 
 
 scroll source pointer
+
+
 
 
 
@@ -1415,6 +1579,8 @@ scroll target pointer
 
 
 
+
+
 ***
 
 
@@ -1423,6 +1589,8 @@ scroll target pointer
 
 
 sd card block pointer
+
+
 
 
 
@@ -1441,6 +1609,8 @@ SPI shift register
 
 
 
+
+
 ***
 
 
@@ -1449,6 +1619,8 @@ SPI shift register
 
 
 startaddress for uploaded images
+
+
 
 
 
@@ -1467,6 +1639,8 @@ temp volatile pointer for general usage
 
 
 
+
+
 ***
 
 
@@ -1475,6 +1649,8 @@ temp volatile pointer for general usage
 
 
 vdp pointer
+
+
 
 
 
@@ -1493,6 +1669,8 @@ volatile tmp location
 
 
 
+
+
 ***
 
 
@@ -1501,6 +1679,8 @@ volatile tmp location
 
 
 volatile tmp location 2
+
+
 
 
 
@@ -1521,6 +1701,8 @@ volatile tmp location 2
 
 
 LBA address for media block operations
+
+
 
 
 

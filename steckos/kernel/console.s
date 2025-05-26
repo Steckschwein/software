@@ -326,7 +326,10 @@ console_cursor_left:
     rts
 
 ;@name: console_chrout
-;@desc: print character in A at current cursor position. handle ANSI ESC sequences
+;@desc: print character in A at current cursor position.
+;@desc: handle ANSI ESC sequences
+;@example: lda #'A'
+;@example: jsr console_chrout
 ;@in: A - character to print
 console_chrout:
     bit ansi_state
