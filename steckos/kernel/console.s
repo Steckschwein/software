@@ -5,26 +5,15 @@
 ; @module: console
 
 .export console_init, console_update_screen, console_putchar, console_put_cursor, console_handle_control_char, console_clear_screenbuf, console_chrout
-.export crs_x, crs_y
+
 .import vdp_memcpy, key
 
 .importzp console_ptr, cursor_ptr, scroll_src_ptr, scroll_trg_ptr
 
-
-.bss 
-; .segment "ZP_EXT"
-crs_x:          .res 1
-crs_y:          .res 1
-crs_x_sav:      .res 4
-crs_y_sav:      .res 4
-vdp_addr:       .res 2
-vdp_addr_old:   .res 2
-screen_status:  .res 1
-current_console: .res 1
-ansi_index:  .res 1
-ansi_state:  .res 1
-ansi_param1: .res 1
-ansi_param2: .res 1
+.import crs_x, crs_y, crs_x_sav, crs_y_sav
+.import vdp_addr, vdp_addr_old
+.import screen_status, current_console
+.import ansi_index, ansi_param1, ansi_param2, ansi_state
 
 .code
 ;@name: console_init

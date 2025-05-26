@@ -179,5 +179,54 @@ block_rx_cb=      tmp_ptr
 .export lba_addr
 lba_addr:           .res 4
 
+.export crs_x, crs_y, crs_x_sav, crs_y_sav
+.export vdp_addr, vdp_addr_old
+.export screen_status, current_console
+.export ansi_index, ansi_param1, ansi_param2, ansi_state
+; @name: crs_x
+; @desc: cursor x position
+; @type: byte
+crs_x:          .res 1
+; @name: crs_y
+; @desc: cursor y position
+; @type: byte
+crs_y:          .res 1
+
+; @name: crs_x_sav
+; @desc: cursor x position save location
+; @desc: 1 byte per console
+; @type: byte
+crs_x_sav:      .res 4
+
+; @name: crs_y_sav
+; @desc: cursor y position save location
+; @desc: 1 byte per console
+; @type: byte
+crs_y_sav:      .res 4
+
+; @name: vdp_addr
+; @desc: cursor position vdp address
+; @type: address
+vdp_addr:       .res 2
+
+; @name: vdp_addr_old
+; @desc: previous cursor position vdp address
+; @type: address
+vdp_addr_old:   .res 2
+
+; @name: screen_status
+; @desc: state of screen - bit 7 -> dirty
+; @type: byte
+screen_status:  .res 1
+
+; @name: current_console
+; @desc: number of current virtual console
+; @type: byte
+current_console: .res 1
+
+ansi_index:  .res 1
+ansi_state:  .res 1
+ansi_param1: .res 1
+ansi_param2: .res 1
 
 
