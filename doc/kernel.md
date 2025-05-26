@@ -17,10 +17,16 @@
 print character in A at current cursor position.\
 handle ANSI ESC sequences
 
+
+
 #### Parameters
 
 In
 : A - character to print
+
+
+
+
 
 
 
@@ -42,10 +48,16 @@ In
 #### Description
 clear screenbuffer area pointed to by cursor_ptr
 
+
+
 #### Parameters
 
 In
 : console_ptr - address of buffer
+
+
+
+
 
 
 
@@ -60,7 +72,6 @@ In
 #### Description
 move cursor down by 1 row, scroll screen buffer when reached row 24
 
-#### Parameters
 
 
 
@@ -75,6 +86,8 @@ move cursor down by 1 row, scroll screen buffer when reached row 24
 #### Description
 increase cursor x position. wrap around when x = 80.
 
+
+
 #### Parameters
 
 In
@@ -83,6 +96,10 @@ In
 
 Out
 : crs_x - cursor x position<br />crs_y - cursor y position
+
+
+
+
 
 
 ***
@@ -96,10 +113,16 @@ Out
 #### Description
 calculate screen buffer address for cursor position in crs_x/crs_y
 
+
+
 #### Parameters
 
 In
 : crs_x - cursor x position<br />crs_y - cursor y position
+
+
+
+
 
 
 
@@ -114,10 +137,16 @@ In
 #### Description
 handle control character in A.
 
+
+
 #### Parameters
 
 In
 : A - control char<br />crs_x - cursor x position<br />crs_y - cursor y position
+
+
+
+
 
 
 
@@ -132,7 +161,6 @@ In
 #### Description
 init console
 
-#### Parameters
 
 
 
@@ -147,10 +175,16 @@ init console
 #### Description
 place cursor at position pointed to by crs_x/crs_y
 
+
+
 #### Parameters
 
 In
 : crs_x - cursor x position<br />crs_y - cursor y position
+
+
+
+
 
 
 
@@ -165,10 +199,16 @@ In
 #### Description
 print character in A at current cursor position. handle CR/LF.
 
+
+
 #### Parameters
 
 In
 : A - character to print<br />crs_x - cursor x position<br />crs_y - cursor y position
+
+
+
+
 
 
 
@@ -183,7 +223,6 @@ In
 #### Description
 scroll screen buffer up 1 row
 
-#### Parameters
 
 
 
@@ -198,10 +237,16 @@ scroll screen buffer up 1 row
 #### Description
 switch to screen buffer number in A
 
+
+
 #### Parameters
 
 In
 : A - screen buffer number to switch to
+
+
+
+
 
 
 
@@ -216,7 +261,6 @@ In
 #### Description
 update vdp text screen memory with contents from console buffer
 
-#### Parameters
 
 
 
@@ -239,6 +283,8 @@ update vdp text screen memory with contents from console buffer
 #### Description
 change current directory
 
+
+
 #### Parameters
 
 In
@@ -247,6 +293,10 @@ In
 
 Out
 : C, C=0 on success (A=0), C=1 and A=<error code> otherwise<br />X, index into fd_area of the opened directory (which is FD_INDEX_CURRENT_DIR)
+
+
+
+
 
 
 ***
@@ -260,6 +310,8 @@ Out
 #### Description
 close file, update dir entry and free file descriptor quietly
 
+
+
 #### Parameters
 
 In
@@ -268,6 +320,10 @@ In
 
 Out
 : C, 0 on success, 1 on error<br />A, error code
+
+
+
+
 
 
 ***
@@ -281,6 +337,8 @@ Out
 #### Description
 open file
 
+
+
 #### Parameters
 
 In
@@ -289,6 +347,10 @@ In
 
 Out
 : C, 0 on success, 1 on error<br />A, error code<br />X, index into fd_area of the opened file
+
+
+
+
 
 
 ***
@@ -302,6 +364,8 @@ Out
 #### Description
 read byte from file
 
+
+
 #### Parameters
 
 In
@@ -310,6 +374,10 @@ In
 
 Out
 : C=0 on success and A=received byte, C=1 on error and A=error code or C=1 and A=0 (EOK) if EOF is reached
+
+
+
+
 
 
 ***
@@ -323,6 +391,8 @@ Out
 #### Description
 read the file denoted by given file descriptor (X) until EOF and store data at given address (A/Y)
 
+
+
 #### Parameters
 
 In
@@ -331,6 +401,10 @@ In
 
 Out
 : C=0 on success, C=1 on error and A=error code or C=1 and A=0 (EOK) if EOF is reached
+
+
+
+
 
 
 ***
@@ -344,6 +418,8 @@ Out
 #### Description
 seek n bytes within file denoted by the given FD
 
+
+
 #### Parameters
 
 In
@@ -352,6 +428,10 @@ In
 
 Out
 : C=0 on success (A=0), C=1 and A=<error code> or C=1 and A=0 (EOK) if EOF reached<br />
+
+
+
+
 
 
 ***
@@ -365,6 +445,8 @@ Out
 #### Description
 get current directory
 
+
+
 #### Parameters
 
 In
@@ -373,6 +455,10 @@ In
 
 Out
 : C, 0 on success, 1 on error<br />A, error code
+
+
+
+
 
 
 ***
@@ -386,6 +472,8 @@ Out
 #### Description
 create directory denoted by given path in A/X
 
+
+
 #### Parameters
 
 In
@@ -394,6 +482,10 @@ In
 
 Out
 : C, 0 on success, 1 on error<br />A, error code
+
+
+
+
 
 
 ***
@@ -407,11 +499,17 @@ Out
 #### Description
 mount fat32 file system
 
+
+
 #### Parameters
 
 
 Out
 : C, 0 on success, 1 on error<br />A, error code
+
+
+
+
 
 
 ***
@@ -425,6 +523,8 @@ Out
 #### Description
 open directory by given path starting from directory given as file descriptor
 
+
+
 #### Parameters
 
 In
@@ -433,6 +533,10 @@ In
 
 Out
 : C, C=0 on success (A=0), C=1 and A=<error code> otherwise<br />X, index into fd_area of the opened directory
+
+
+
+
 
 
 ***
@@ -446,6 +550,8 @@ Out
 #### Description
 readdir expects a pointer in A/Y to store the F32DirEntry structure representing the requested FAT32 directory entry for the given fd (X).
 
+
+
 #### Parameters
 
 In
@@ -454,6 +560,10 @@ In
 
 Out
 : C - C = 0 on success (A=0), C = 1 and A = <error code> otherwise. C=1/A=EOK if end of directory is reached
+
+
+
+
 
 
 ***
@@ -467,6 +577,8 @@ Out
 #### Description
 readdir expects a pointer in A/Y to store the next F32DirEntry structure representing the next FAT32 directory entry in the directory stream pointed of directory X.
 
+
+
 #### Parameters
 
 In
@@ -475,6 +587,10 @@ In
 
 Out
 : C - C = 0 on success (A=0), C = 1 and A = <error code> otherwise. C=1/A=EOK if end of directory is reached
+
+
+
+
 
 
 ***
@@ -488,6 +604,8 @@ Out
 #### Description
 delete a directory entry denoted by given path in A/X
 
+
+
 #### Parameters
 
 In
@@ -496,6 +614,10 @@ In
 
 Out
 : C, 0 on success, 1 on error<br />A, error code
+
+
+
+
 
 
 ***
@@ -509,6 +631,8 @@ Out
 #### Description
 unlink (delete) a file denoted by given path in A/X
 
+
+
 #### Parameters
 
 In
@@ -517,6 +641,10 @@ In
 
 Out
 : C, C=0 on success (A=0), C=1 and A=<error code> otherwise
+
+
+
+
 
 
 ***
@@ -530,6 +658,8 @@ Out
 #### Description
 update direntry given as pointer (A/Y) to FAT32 directory entry structure for file fd (X).
 
+
+
 #### Parameters
 
 In
@@ -538,6 +668,10 @@ In
 
 Out
 : C - C = 0 on success (A=0), C = 1 and A = <error code> otherwise. C=1/A=EOK if end of directory is reached
+
+
+
+
 
 
 ***
@@ -551,6 +685,8 @@ Out
 #### Description
 write byte to file
 
+
+
 #### Parameters
 
 In
@@ -559,6 +695,10 @@ In
 
 Out
 : C, 0 on success, 1 on error
+
+
+
+
 
 
 ***
@@ -581,10 +721,16 @@ Out
 print value in A as 2 hex digits\
 Output string on active output device
 
+
+
 #### Parameters
 
 In
 : A - value to print<br />A, lowbyte  of string address<br />X, highbyte of string address
+
+
+
+
 
 
 
@@ -599,7 +745,6 @@ In
 #### Description
 print string inlined after call to primm terminated by null byte - see http://6502.org/source/io/primm.htm
 
-#### Parameters
 
 
 
@@ -622,11 +767,17 @@ print string inlined after call to primm terminated by null byte - see http://65
 #### Description
 read character from current input device into A
 
+
+
 #### Parameters
 
 
 Out
 : A - received character
+
+
+
+
 
 
 ***
@@ -640,10 +791,16 @@ Out
 #### Description
 print character in A to current output device
 
+
+
 #### Parameters
 
 In
 : A - character to print
+
+
+
+
 
 
 
@@ -658,7 +815,6 @@ In
 #### Description
 print immediate
 
-#### Parameters
 
 
 
@@ -673,10 +829,16 @@ print immediate
 #### Description
 set current output device to one of: INPUT_DEVICE_NULL, INPUT_DEVICE_UART, INPUT_DEVICE_CONSOLE
 
+
+
 #### Parameters
 
 In
 : A - device id to be set
+
+
+
+
 
 
 
@@ -691,10 +853,16 @@ In
 #### Description
 set current output device to one of: OUTPUT_DEVICE_NULL, OUTPUT_DEVICE_UART, OUTPUT_DEVICE_CONSOLE
 
+
+
 #### Parameters
 
 In
 : A - device id to be set
+
+
+
+
 
 
 
@@ -709,7 +877,6 @@ In
 #### Description
 start XMODEM upload
 
-#### Parameters
 
 
 
@@ -732,7 +899,6 @@ start XMODEM upload
 #### Description
 system irq handler
 
-#### Parameters
 
 
 
@@ -747,7 +913,6 @@ system irq handler
 #### Description
 system nmi handler
 
-#### Parameters
 
 
 
@@ -762,7 +927,6 @@ system nmi handler
 #### Description
 dummy routine to suppress output
 
-#### Parameters
 
 
 
@@ -777,10 +941,16 @@ dummy routine to suppress output
 #### Description
 set current output device to one of: INPUT_DEVICE_NULL, INPUT_DEVICE_UART, INPUT_DEVICE_CONSOLE
 
+
+
 #### Parameters
 
 In
 : A - device id to be set
+
+
+
+
 
 
 
@@ -795,10 +965,16 @@ In
 #### Description
 set current output device to one of: OUTPUT_DEVICE_NULL, OUTPUT_DEVICE_UART, OUTPUT_DEVICE_CONSOLE
 
+
+
 #### Parameters
 
 In
 : A - device id to be set
+
+
+
+
 
 
 
@@ -821,11 +997,17 @@ In
 #### Description
 fetch byte from keyboard controller
 
+
+
 #### Parameters
 
 
 Out
 : A, fetched key / error code<br />C, 1 - key was fetched, 0 - nothing fetched
+
+
+
+
 
 
 ***
@@ -839,11 +1021,17 @@ Out
 #### Description
 get byte from keyboard buffer
 
+
+
 #### Parameters
 
 
 Out
 : A, fetched key<br />C, 1 - key was fetched, 0 - nothing fetched
+
+
+
+
 
 
 ***
@@ -865,6 +1053,8 @@ Out
 #### Description
 wait while sd card is busy
 
+
+
 #### Parameters
 
 
@@ -874,6 +1064,10 @@ Out
 
 Clobbers
 : A,X,Y
+
+
+
+
 
 ***
 
@@ -885,6 +1079,8 @@ Clobbers
 
 #### Description
 send command to sd card
+
+
 
 #### Parameters
 
@@ -899,6 +1095,10 @@ Out
 Clobbers
 : A,X,Y
 
+
+
+
+
 ***
 
 
@@ -910,6 +1110,8 @@ Clobbers
 #### Description
 Read block from SD Card
 
+
+
 #### Parameters
 
 
@@ -919,6 +1121,10 @@ Out
 
 Clobbers
 : X
+
+
+
+
 
 ***
 
@@ -931,6 +1137,8 @@ Clobbers
 #### Description
 Read block from SD Card
 
+
+
 #### Parameters
 
 In
@@ -943,6 +1151,10 @@ Out
 
 Clobbers
 : A,X,Y
+
+
+
+
 
 ***
 
@@ -955,6 +1167,8 @@ Clobbers
 #### Description
 select sd card, pull CS line to low with busy wait
 
+
+
 #### Parameters
 
 
@@ -964,6 +1178,10 @@ Out
 
 Clobbers
 : A,X,Y
+
+
+
+
 
 ***
 
@@ -976,6 +1194,8 @@ Clobbers
 #### Description
 wait for sd card data token
 
+
+
 #### Parameters
 
 
@@ -985,6 +1205,10 @@ Out
 
 Clobbers
 : A,X,Y
+
+
+
+
 
 ***
 
@@ -996,6 +1220,8 @@ Clobbers
 
 #### Description
 Write block to SD Card
+
+
 
 #### Parameters
 
@@ -1010,6 +1236,10 @@ Out
 Clobbers
 : A,X,Y
 
+
+
+
+
 ***
 
 
@@ -1021,6 +1251,8 @@ Clobbers
 #### Description
 initialize sd card in SPI mode
 
+
+
 #### Parameters
 
 
@@ -1030,6 +1262,10 @@ Out
 
 Clobbers
 : A,X,Y
+
+
+
+
 
 ***
 
@@ -1050,7 +1286,6 @@ Clobbers
 #### Description
 deselect all SPI devices
 
-#### Parameters
 
 
 
@@ -1065,6 +1300,8 @@ deselect all SPI devices
 #### Description
 read byte via SPI
 
+
+
 #### Parameters
 
 
@@ -1074,6 +1311,10 @@ Out
 
 Clobbers
 : A,X
+
+
+
+
 
 ***
 
@@ -1085,6 +1326,8 @@ Clobbers
 
 #### Description
 transmit byte via SPI
+
+
 
 #### Parameters
 
@@ -1099,6 +1342,10 @@ Out
 Clobbers
 : A,X,Y
 
+
+
+
+
 ***
 
 
@@ -1110,6 +1357,8 @@ Clobbers
 #### Description
 select spi device given in A. the method is aware of the current processor state, especially the interrupt flag
 
+
+
 #### Parameters
 
 In
@@ -1118,6 +1367,10 @@ In
 
 Out
 : Z = 1 spi for given device could be selected (not busy), Z=0 otherwise
+
+
+
+
 
 
 ***
@@ -1139,6 +1392,8 @@ Out
 #### Description
 init UART to 115200 baud, 8N1
 
+
+
 #### Parameters
 
 In
@@ -1147,6 +1402,10 @@ In
 
 Out
 : -
+
+
+
+
 
 
 ***
@@ -1160,6 +1419,8 @@ Out
 #### Description
 receive byte, no wait, set carry and store in A when received
 
+
+
 #### Parameters
 
 In
@@ -1168,6 +1429,10 @@ In
 
 Out
 : A - received byte
+
+
+
+
 
 
 ***
@@ -1181,6 +1446,8 @@ Out
 #### Description
 send byte in A
 
+
+
 #### Parameters
 
 In
@@ -1189,6 +1456,10 @@ In
 
 Out
 : 
+
+
+
+
 
 
 ***
@@ -1210,10 +1481,16 @@ Out
 #### Description
 
 
+
+
 #### Parameters
 
 In
 : A - color
+
+
+
+
 
 
 
@@ -1228,10 +1505,16 @@ In
 #### Description
 fill vdp VRAM with given value page wise
 
+
+
 #### Parameters
 
 In
 : A - byte to fill<br />X - amount of 256byte blocks (page counter)
+
+
+
+
 
 
 
@@ -1246,10 +1529,16 @@ In
 #### Description
 fill vdp VRAM with given value
 
+
+
 #### Parameters
 
 In
 : A - value to write<br />X - amount of bytes
+
+
+
+
 
 
 
@@ -1264,10 +1553,16 @@ In
 #### Description
 setup video registers upon given table starting from register #R.X down to #R0
 
+
+
 #### Parameters
 
 In
 : X - length of init table, corresponds to video register to start R#+X - e.g. X=10 start with R#10<br />A/Y - pointer to vdp init table
+
+
+
+
 
 
 
@@ -1282,10 +1577,16 @@ In
 #### Description
 copy data from host memory denoted by pointer (A/Y) to vdp VRAM (page wise). the VRAM address must be setup beforehand e.g. with macro vdp_vram_w <address>
 
+
+
 #### Parameters
 
 In
 : X - amount of 256byte blocks (page counter)<br />A/Y - pointer to source data
+
+
+
+
 
 
 
@@ -1300,10 +1601,16 @@ In
 #### Description
 set value to vdp register
 
+
+
 #### Parameters
 
 In
 : A - value<br />Y - register
+
+
+
+
 
 
 
@@ -1318,7 +1625,6 @@ In
 #### Description
 text mode blank screen and color vram
 
-#### Parameters
 
 
 
@@ -1333,10 +1639,16 @@ text mode blank screen and color vram
 #### Description
 text mode - 40x24/80x24 character mode, 2 colors
 
+
+
 #### Parameters
 
 In
 : A - color settings (#R07)
+
+
+
+
 
 
 
@@ -1359,10 +1671,16 @@ In
 #### Description
 output 8bit value as 2 digit decimal
 
+
+
 #### Parameters
 
 In
 : A, value to output
+
+
+
+
 
 
 
@@ -1377,6 +1695,8 @@ In
 #### Description
 
 
+
+
 #### Parameters
 
 In
@@ -1385,6 +1705,10 @@ In
 
 Out
 : C=0 on success, C=1 on any i/o or protocoll related error
+
+
+
+
 
 
 ***
@@ -1406,7 +1730,6 @@ Out
 #### Description
 shell buffer pointer
 
-#### Parameters
 
 
 
@@ -1421,7 +1744,6 @@ shell buffer pointer
 #### Description
 pointer to current screen buffer
 
-#### Parameters
 
 
 
@@ -1436,7 +1758,6 @@ pointer to current screen buffer
 #### Description
 pointer to cursor position within screen buffer
 
-#### Parameters
 
 
 
@@ -1451,7 +1772,6 @@ pointer to cursor position within screen buffer
 #### Description
 directory pointer
 
-#### Parameters
 
 
 
@@ -1466,7 +1786,6 @@ directory pointer
 #### Description
 shell dump command vectors (2 pointer)
 
-#### Parameters
 
 
 
@@ -1481,7 +1800,6 @@ shell dump command vectors (2 pointer)
 #### Description
 filename pointer
 
-#### Parameters
 
 
 
@@ -1496,7 +1814,6 @@ filename pointer
 #### Description
 vector pointing to standard input routine
 
-#### Parameters
 
 
 
@@ -1511,7 +1828,6 @@ vector pointing to standard input routine
 #### Description
 vector pointing to standard output routine
 
-#### Parameters
 
 
 
@@ -1526,7 +1842,6 @@ vector pointing to standard output routine
 #### Description
 shell parameter pointer
 
-#### Parameters
 
 
 
@@ -1541,7 +1856,6 @@ shell parameter pointer
 #### Description
 path pointer
 
-#### Parameters
 
 
 
@@ -1556,7 +1870,6 @@ path pointer
 #### Description
 shell return vector
 
-#### Parameters
 
 
 
@@ -1571,7 +1884,6 @@ shell return vector
 #### Description
 scroll source pointer
 
-#### Parameters
 
 
 
@@ -1586,7 +1898,6 @@ scroll source pointer
 #### Description
 scroll target pointer
 
-#### Parameters
 
 
 
@@ -1601,7 +1912,6 @@ scroll target pointer
 #### Description
 sd card block pointer
 
-#### Parameters
 
 
 
@@ -1616,7 +1926,6 @@ sd card block pointer
 #### Description
 SPI shift register
 
-#### Parameters
 
 
 
@@ -1631,7 +1940,6 @@ SPI shift register
 #### Description
 startaddress for uploaded images
 
-#### Parameters
 
 
 
@@ -1646,7 +1954,6 @@ startaddress for uploaded images
 #### Description
 temp volatile pointer for general usage
 
-#### Parameters
 
 
 
@@ -1661,7 +1968,6 @@ temp volatile pointer for general usage
 #### Description
 vdp pointer
 
-#### Parameters
 
 
 
@@ -1676,7 +1982,6 @@ vdp pointer
 #### Description
 volatile tmp location
 
-#### Parameters
 
 
 
@@ -1691,7 +1996,6 @@ volatile tmp location
 #### Description
 volatile tmp location 2
 
-#### Parameters
 
 
 
@@ -1714,7 +2018,6 @@ volatile tmp location 2
 #### Description
 cursor x position
 
-#### Parameters
 
 
 
@@ -1730,7 +2033,6 @@ cursor x position
 cursor x position save location\
 1 byte per console
 
-#### Parameters
 
 
 
@@ -1745,7 +2047,6 @@ cursor x position save location\
 #### Description
 cursor y position
 
-#### Parameters
 
 
 
@@ -1761,7 +2062,6 @@ cursor y position
 cursor y position save location\
 1 byte per console
 
-#### Parameters
 
 
 
@@ -1776,7 +2076,6 @@ cursor y position save location\
 #### Description
 number of current virtual console
 
-#### Parameters
 
 
 
@@ -1791,7 +2090,6 @@ number of current virtual console
 #### Description
 LBA address for media block operations
 
-#### Parameters
 
 
 
@@ -1806,7 +2104,6 @@ LBA address for media block operations
 #### Description
 state of screen - bit 7 -> dirty
 
-#### Parameters
 
 
 
@@ -1821,7 +2118,6 @@ state of screen - bit 7 -> dirty
 #### Description
 cursor position vdp address
 
-#### Parameters
 
 
 
@@ -1836,7 +2132,6 @@ cursor position vdp address
 #### Description
 previous cursor position vdp address
 
-#### Parameters
 
 
 

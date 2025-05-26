@@ -16,6 +16,8 @@
 #### Description
 {{ "\\\n".join(info.desc) }}
 
+{% if info.in or info.out %}
+
 #### Parameters
 {% if info.in %}
 In
@@ -29,6 +31,10 @@ Out
 Clobbers
 : {{ "<br />".join(info.clobbers) }}
 {% endif %}
+
+{% endif %}
+
+
 ***
 
 {% if info.example %}
