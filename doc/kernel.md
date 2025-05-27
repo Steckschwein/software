@@ -908,7 +908,7 @@ system irq handler
 
 
 
-### <a name="do_nmi" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L198">do_nmi</a>
+### <a name="do_nmi" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L218">do_nmi</a>
 
 #### Description
 system nmi handler
@@ -922,7 +922,7 @@ system nmi handler
 
 
 
-### <a name="io_null" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L280">io_null</a>
+### <a name="io_null" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L300">io_null</a>
 
 #### Description
 dummy routine to suppress output
@@ -936,7 +936,7 @@ dummy routine to suppress output
 
 
 
-### <a name="set_input" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L297">set_input</a>
+### <a name="set_input" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L317">set_input</a>
 
 #### Description
 set current output device to one of: INPUT_DEVICE_NULL, INPUT_DEVICE_UART, INPUT_DEVICE_CONSOLE
@@ -960,7 +960,7 @@ In
 
 
 
-### <a name="set_output" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L285">set_output</a>
+### <a name="set_output" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L305">set_output</a>
 
 #### Description
 set current output device to one of: OUTPUT_DEVICE_NULL, OUTPUT_DEVICE_UART, OUTPUT_DEVICE_CONSOLE
