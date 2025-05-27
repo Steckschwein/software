@@ -13,7 +13,7 @@
 
 .import init_via
 .import init_uart, uart_tx, uart_rx, primm, hexout, wozmon, xmodem_upload
-.import init_vdp, vdp_bgcolor, vdp_memcpy
+.import vdp_init, vdp_bgcolor, vdp_memcpy
 .import sdcard_init, sd_read_block, sd_write_block
 .import console_init, console_update_screen, console_chrout, console_put_cursor, console_handle_control_char
 .import keyboard_init, keyboard_fetchkey, keyboard_getkey
@@ -79,11 +79,7 @@ do_reset:
     lda #OUTPUT_DEVICE_CONSOLE
     jsr set_output
 
-
-
-
-    lda a_vreg
-    jsr init_vdp
+    jsr vdp_init
     vdp_wait_l 
 
     
@@ -182,9 +178,6 @@ upload:
 do_irq:
     save 
 
-    ; lda #Cyan<<4|Cyan
-    ; jsr vdp_bgcolor
-
     bit a_vreg
     bpl @handle_keyboard
 
@@ -194,7 +187,7 @@ do_irq:
     jsr keyboard_fetchkey
     bcc @exit_isr
 
-    jsr console_handle_control_char
+    ; jsr console_hamakendle_control_char
 
 @exit_isr:
     ; lda #VIDEO_COLOR 

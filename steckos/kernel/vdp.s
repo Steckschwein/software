@@ -3,21 +3,24 @@
 
 
 
-.export init_vdp, vdp_bgcolor, vdp_fill, vdp_text_on, vdp_memcpy
+.export vdp_init, vdp_bgcolor, vdp_fill, vdp_text_on, vdp_memcpy
 .export vdp_nopslide_2m, vdp_nopslide_8m, vdp_nopslide_end
 
 ; .import primm
 ; .import char_out
 .import charset_6x8
-.importzp vdp_ptr
+.importzp tmp_ptr
 ; .zeropage
 ; vdp_ptr:       .res 2
+vdp_ptr = tmp_ptr
 
 .code
 
 m_vdp_nopslide
 
-init_vdp:
+;@name: vdp_init
+;@desc: init vdp, set text mode 2, blank screen, load charset into vram
+vdp_init:
     lda #VIDEO_COLOR
     jsr vdp_text_on
 

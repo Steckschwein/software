@@ -11,31 +11,18 @@
 
 
 
-### <a name="console_init" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L20">console_init</a>
+### <a name="console_chrout" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L318">console_chrout</a>
 
 #### Description
-init console
-
-
-
-
-***
-
-
-
-
-
-### <a name="console_set_screen_buffer" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L57">console_set_screen_buffer</a>
-
-#### Description
-switch to screen buffer number in A
+print character in A at current cursor position.\
+handle ANSI ESC sequences
 
 
 
 #### Parameters
 
 In
-: A - screen buffer number to switch to
+: A - character to print
 
 
 
@@ -46,18 +33,11 @@ In
 ***
 
 
+#### Example
 
+    lda #'A'
 
-
-### <a name="console_update_screen" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L95">console_update_screen</a>
-
-#### Description
-update vdp text screen memory with contents from console buffer
-
-
-
-
-***
+    jsr console_chrout
 
 
 
@@ -74,54 +54,6 @@ clear screenbuffer area pointed to by cursor_ptr
 
 In
 : console_ptr - address of buffer
-
-
-
-
-
-
-
-***
-
-
-
-
-
-### <a name="console_get_pointer_from_cursor" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L167">console_get_pointer_from_cursor</a>
-
-#### Description
-calculate screen buffer address for cursor position in crs_x/crs_y
-
-
-
-#### Parameters
-
-In
-: crs_x - cursor x position<br />crs_y - cursor y position
-
-
-
-
-
-
-
-***
-
-
-
-
-
-### <a name="console_put_cursor" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L204">console_put_cursor</a>
-
-#### Description
-place cursor at position pointed to by crs_x/crs_y
-
-
-
-#### Parameters
-
-In
-: crs_x - cursor x position<br />crs_y - cursor y position
 
 
 
@@ -176,49 +108,17 @@ Out
 
 
 
-### <a name="console_chrout" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L318">console_chrout</a>
+### <a name="console_get_pointer_from_cursor" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L167">console_get_pointer_from_cursor</a>
 
 #### Description
-print character in A at current cursor position.\
-handle ANSI ESC sequences
+calculate screen buffer address for cursor position in crs_x/crs_y
 
 
 
 #### Parameters
 
 In
-: A - character to print
-
-
-
-
-
-
-
-***
-
-
-#### Example
-
-    lda #'A'
-
-    jsr console_chrout
-
-
-
-
-
-### <a name="console_putchar" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L457">console_putchar</a>
-
-#### Description
-print character in A at current cursor position. handle CR/LF.
-
-
-
-#### Parameters
-
-In
-: A - character to print<br />crs_x - cursor x position<br />crs_y - cursor y position
+: crs_x - cursor x position<br />crs_y - cursor y position
 
 
 
@@ -256,10 +156,110 @@ In
 
 
 
+### <a name="console_init" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L20">console_init</a>
+
+#### Description
+init console
+
+
+
+
+***
+
+
+
+
+
+### <a name="console_put_cursor" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L204">console_put_cursor</a>
+
+#### Description
+place cursor at position pointed to by crs_x/crs_y
+
+
+
+#### Parameters
+
+In
+: crs_x - cursor x position<br />crs_y - cursor y position
+
+
+
+
+
+
+
+***
+
+
+
+
+
+### <a name="console_putchar" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L457">console_putchar</a>
+
+#### Description
+print character in A at current cursor position. handle CR/LF.
+
+
+
+#### Parameters
+
+In
+: A - character to print<br />crs_x - cursor x position<br />crs_y - cursor y position
+
+
+
+
+
+
+
+***
+
+
+
+
+
 ### <a name="console_scroll" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L576">console_scroll</a>
 
 #### Description
 scroll screen buffer up 1 row
+
+
+
+
+***
+
+
+
+
+
+### <a name="console_set_screen_buffer" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L57">console_set_screen_buffer</a>
+
+#### Description
+switch to screen buffer number in A
+
+
+
+#### Parameters
+
+In
+: A - screen buffer number to switch to
+
+
+
+
+
+
+
+***
+
+
+
+
+
+### <a name="console_update_screen" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L95">console_update_screen</a>
+
+#### Description
+update vdp text screen memory with contents from console buffer
 
 
 
@@ -275,6 +275,114 @@ scroll screen buffer up 1 row
 [fat_chdir](#fat_chdir) | [fat_close](#fat_close) | [fat_fopen](#fat_fopen) | [fat_fread_byte](#fat_fread_byte) | [fat_fread_vollgas](#fat_fread_vollgas) | [fat_fseek](#fat_fseek) | [fat_get_root_and_pwd](#fat_get_root_and_pwd) | [fat_mkdir](#fat_mkdir) | [fat_mount](#fat_mount) | [fat_opendir](#fat_opendir) | [fat_read_direntry](#fat_read_direntry) | [fat_readdir](#fat_readdir) | [fat_rmdir](#fat_rmdir) | [fat_unlink](#fat_unlink) | [fat_update_direntry](#fat_update_direntry) | [fat_write_byte](#fat_write_byte) | 
 
 ***
+
+
+
+### <a name="fat_chdir" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel/fat32/fat32_dir.s#L64">fat_chdir</a>
+
+#### Description
+change current directory
+
+
+
+#### Parameters
+
+In
+: A, low byte of pointer to zero terminated string with the file path<br />X, high byte of pointer to zero terminated string with the file path
+
+
+Out
+: C, C=0 on success (A=0), C=1 and A=<error code> otherwise<br />X, index into fd_area of the opened directory (which is FD_INDEX_CURRENT_DIR)
+
+
+
+
+
+
+***
+
+
+
+
+
+### <a name="fat_close" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel/fat32/fat32.s#L221">fat_close</a>
+
+#### Description
+close file, update dir entry and free file descriptor quietly
+
+
+
+#### Parameters
+
+In
+: X, index into fd_area of the opened file
+
+
+Out
+: C, 0 on success, 1 on error<br />A, error code
+
+
+
+
+
+
+***
+
+
+
+
+
+### <a name="fat_fopen" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel/fat32/fat32.s#L174">fat_fopen</a>
+
+#### Description
+open file
+
+
+
+#### Parameters
+
+In
+: A, low byte of pointer to zero terminated string with the file path<br />X, high byte of pointer to zero terminated string with the file path<br />Y, file mode constants O_RDONLY = $01, O_WRONLY = $02, O_RDWR = $03, O_CREAT = $10, O_TRUNC = $20, O_APPEND = $40, O_EXCL = $80
+
+
+Out
+: C, 0 on success, 1 on error<br />A, error code<br />X, index into fd_area of the opened file
+
+
+
+
+
+
+***
+
+
+
+
+
+### <a name="fat_fread_byte" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel/fat32/fat32.s#L101">fat_fread_byte</a>
+
+#### Description
+read byte from file
+
+
+
+#### Parameters
+
+In
+: X, offset into fd_area
+
+
+Out
+: C=0 on success and A=received byte, C=1 on error and A=error code or C=1 and A=0 (EOK) if EOF is reached
+
+
+
+
+
+
+***
+
+
 
 
 
@@ -305,18 +413,21 @@ Out
 
 
 
-### <a name="fat_mount" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel/fat32/fat32_mount.s#L19">fat_mount</a>
+### <a name="fat_fseek" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel/fat32/fat32_seek.s#L24">fat_fseek</a>
 
 #### Description
-mount fat32 file system
+seek n bytes within file denoted by the given FD
 
 
 
 #### Parameters
 
+In
+: X - offset into fd_area<br />A/Y - pointer to seek_struct - @see fat32.inc
+
 
 Out
-: C, 0 on success, 1 on error<br />A, error code
+: C=0 on success (A=0), C=1 and A=<error code> or C=1 and A=0 (EOK) if EOF reached<br />
 
 
 
@@ -329,71 +440,17 @@ Out
 
 
 
-### <a name="fat_write_byte" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel/fat32/fat32_write.s#L57">fat_write_byte</a>
+### <a name="fat_get_root_and_pwd" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel/fat32/fat32_cwd.s#L33">fat_get_root_and_pwd</a>
 
 #### Description
-write byte to file
+get current directory
 
 
 
 #### Parameters
 
 In
-: A, byte to write<br />X, offset into fs area
-
-
-Out
-: C, 0 on success, 1 on error
-
-
-
-
-
-
-***
-
-
-
-
-
-### <a name="fat_unlink" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel/fat32/fat32_write.s#L544">fat_unlink</a>
-
-#### Description
-unlink (delete) a file denoted by given path in A/X
-
-
-
-#### Parameters
-
-In
-: A, low byte of pointer to zero terminated string with the file path<br />X, high byte of pointer to zero terminated string with the file path
-
-
-Out
-: C, C=0 on success (A=0), C=1 and A=<error code> otherwise
-
-
-
-
-
-
-***
-
-
-
-
-
-### <a name="fat_rmdir" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel/fat32/fat32_write_dir.s#L51">fat_rmdir</a>
-
-#### Description
-delete a directory entry denoted by given path in A/X
-
-
-
-#### Parameters
-
-In
-: A, low byte of pointer to directory string<br />X, high byte of pointer to directory string
+: A, low byte of address to write the current work directory string into<br />Y, high byte address to write the current work directory string into<br />X, size of result buffer pointet to by A/X
 
 
 Out
@@ -437,183 +494,18 @@ Out
 
 
 
-### <a name="fat_update_direntry" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel/fat32/fat32_write_dir.s#L246">fat_update_direntry</a>
+### <a name="fat_mount" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel/fat32/fat32_mount.s#L19">fat_mount</a>
 
 #### Description
-update direntry given as pointer (A/Y) to FAT32 directory entry structure for file fd (X).
+mount fat32 file system
 
 
 
 #### Parameters
-
-In
-: X - file descriptor to fd_area of the file<br />A/Y - pointer to direntry buffer with updated direntry data of type F32DirEntry
-
-
-Out
-: C - C = 0 on success (A=0), C = 1 and A = <error code> otherwise. C=1/A=EOK if end of directory is reached
-
-
-
-
-
-
-***
-
-
-
-
-
-### <a name="fat_get_root_and_pwd" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel/fat32/fat32_cwd.s#L33">fat_get_root_and_pwd</a>
-
-#### Description
-get current directory
-
-
-
-#### Parameters
-
-In
-: A, low byte of address to write the current work directory string into<br />Y, high byte address to write the current work directory string into<br />X, size of result buffer pointet to by A/X
 
 
 Out
 : C, 0 on success, 1 on error<br />A, error code
-
-
-
-
-
-
-***
-
-
-
-
-
-### <a name="fat_fread_byte" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel/fat32/fat32.s#L101">fat_fread_byte</a>
-
-#### Description
-read byte from file
-
-
-
-#### Parameters
-
-In
-: X, offset into fd_area
-
-
-Out
-: C=0 on success and A=received byte, C=1 on error and A=error code or C=1 and A=0 (EOK) if EOF is reached
-
-
-
-
-
-
-***
-
-
-
-
-
-### <a name="fat_fopen" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel/fat32/fat32.s#L174">fat_fopen</a>
-
-#### Description
-open file
-
-
-
-#### Parameters
-
-In
-: A, low byte of pointer to zero terminated string with the file path<br />X, high byte of pointer to zero terminated string with the file path<br />Y, file mode constants O_RDONLY = $01, O_WRONLY = $02, O_RDWR = $03, O_CREAT = $10, O_TRUNC = $20, O_APPEND = $40, O_EXCL = $80
-
-
-Out
-: C, 0 on success, 1 on error<br />A, error code<br />X, index into fd_area of the opened file
-
-
-
-
-
-
-***
-
-
-
-
-
-### <a name="fat_close" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel/fat32/fat32.s#L221">fat_close</a>
-
-#### Description
-close file, update dir entry and free file descriptor quietly
-
-
-
-#### Parameters
-
-In
-: X, index into fd_area of the opened file
-
-
-Out
-: C, 0 on success, 1 on error<br />A, error code
-
-
-
-
-
-
-***
-
-
-
-
-
-### <a name="fat_read_direntry" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel/fat32/fat32_dir.s#L143">fat_read_direntry</a>
-
-#### Description
-readdir expects a pointer in A/Y to store the F32DirEntry structure representing the requested FAT32 directory entry for the given fd (X).
-
-
-
-#### Parameters
-
-In
-: X - file descriptor to fd_area of the file<br />A/Y - pointer to target buffer which must be .sizeof(F32DirEntry)
-
-
-Out
-: C - C = 0 on success (A=0), C = 1 and A = <error code> otherwise. C=1/A=EOK if end of directory is reached
-
-
-
-
-
-
-***
-
-
-
-
-
-### <a name="fat_fseek" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel/fat32/fat32_seek.s#L24">fat_fseek</a>
-
-#### Description
-seek n bytes within file denoted by the given FD
-
-
-
-#### Parameters
-
-In
-: X - offset into fd_area<br />A/Y - pointer to seek_struct - @see fat32.inc
-
-
-Out
-: C=0 on success (A=0), C=1 and A=<error code> or C=1 and A=0 (EOK) if EOF reached<br />
 
 
 
@@ -653,21 +545,21 @@ Out
 
 
 
-### <a name="fat_chdir" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel/fat32/fat32_dir.s#L64">fat_chdir</a>
+### <a name="fat_read_direntry" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel/fat32/fat32_dir.s#L143">fat_read_direntry</a>
 
 #### Description
-change current directory
+readdir expects a pointer in A/Y to store the F32DirEntry structure representing the requested FAT32 directory entry for the given fd (X).
 
 
 
 #### Parameters
 
 In
-: A, low byte of pointer to zero terminated string with the file path<br />X, high byte of pointer to zero terminated string with the file path
+: X - file descriptor to fd_area of the file<br />A/Y - pointer to target buffer which must be .sizeof(F32DirEntry)
 
 
 Out
-: C, C=0 on success (A=0), C=1 and A=<error code> otherwise<br />X, index into fd_area of the opened directory (which is FD_INDEX_CURRENT_DIR)
+: C - C = 0 on success (A=0), C = 1 and A = <error code> otherwise. C=1/A=EOK if end of directory is reached
 
 
 
@@ -695,6 +587,114 @@ In
 
 Out
 : C - C = 0 on success (A=0), C = 1 and A = <error code> otherwise. C=1/A=EOK if end of directory is reached
+
+
+
+
+
+
+***
+
+
+
+
+
+### <a name="fat_rmdir" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel/fat32/fat32_write_dir.s#L51">fat_rmdir</a>
+
+#### Description
+delete a directory entry denoted by given path in A/X
+
+
+
+#### Parameters
+
+In
+: A, low byte of pointer to directory string<br />X, high byte of pointer to directory string
+
+
+Out
+: C, 0 on success, 1 on error<br />A, error code
+
+
+
+
+
+
+***
+
+
+
+
+
+### <a name="fat_unlink" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel/fat32/fat32_write.s#L544">fat_unlink</a>
+
+#### Description
+unlink (delete) a file denoted by given path in A/X
+
+
+
+#### Parameters
+
+In
+: A, low byte of pointer to zero terminated string with the file path<br />X, high byte of pointer to zero terminated string with the file path
+
+
+Out
+: C, C=0 on success (A=0), C=1 and A=<error code> otherwise
+
+
+
+
+
+
+***
+
+
+
+
+
+### <a name="fat_update_direntry" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel/fat32/fat32_write_dir.s#L246">fat_update_direntry</a>
+
+#### Description
+update direntry given as pointer (A/Y) to FAT32 directory entry structure for file fd (X).
+
+
+
+#### Parameters
+
+In
+: X - file descriptor to fd_area of the file<br />A/Y - pointer to direntry buffer with updated direntry data of type F32DirEntry
+
+
+Out
+: C - C = 0 on success (A=0), C = 1 and A = <error code> otherwise. C=1/A=EOK if end of directory is reached
+
+
+
+
+
+
+***
+
+
+
+
+
+### <a name="fat_write_byte" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel/fat32/fat32_write.s#L57">fat_write_byte</a>
+
+#### Description
+write byte to file
+
+
+
+#### Parameters
+
+In
+: A, byte to write<br />X, offset into fs area
+
+
+Out
+: C, 0 on success, 1 on error
 
 
 
@@ -824,10 +824,10 @@ print immediate
 
 
 
-### <a name="krn_set_output" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//jumptable.s#L28">krn_set_output</a>
+### <a name="krn_set_input" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//jumptable.s#L33">krn_set_input</a>
 
 #### Description
-set current output device to one of: OUTPUT_DEVICE_NULL, OUTPUT_DEVICE_UART, OUTPUT_DEVICE_CONSOLE
+set current output device to one of: INPUT_DEVICE_NULL, INPUT_DEVICE_UART, INPUT_DEVICE_CONSOLE
 
 
 
@@ -848,10 +848,10 @@ In
 
 
 
-### <a name="krn_set_input" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//jumptable.s#L33">krn_set_input</a>
+### <a name="krn_set_output" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//jumptable.s#L28">krn_set_output</a>
 
 #### Description
-set current output device to one of: INPUT_DEVICE_NULL, INPUT_DEVICE_UART, INPUT_DEVICE_CONSOLE
+set current output device to one of: OUTPUT_DEVICE_NULL, OUTPUT_DEVICE_UART, OUTPUT_DEVICE_CONSOLE
 
 
 
@@ -894,7 +894,7 @@ start XMODEM upload
 
 
 
-### <a name="do_irq" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L180">do_irq</a>
+### <a name="do_irq" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L176">do_irq</a>
 
 #### Description
 system irq handler
@@ -908,7 +908,7 @@ system irq handler
 
 
 
-### <a name="do_nmi" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L205">do_nmi</a>
+### <a name="do_nmi" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L198">do_nmi</a>
 
 #### Description
 system nmi handler
@@ -922,7 +922,7 @@ system nmi handler
 
 
 
-### <a name="io_null" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L287">io_null</a>
+### <a name="io_null" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L280">io_null</a>
 
 #### Description
 dummy routine to suppress output
@@ -936,10 +936,10 @@ dummy routine to suppress output
 
 
 
-### <a name="set_output" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L292">set_output</a>
+### <a name="set_input" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L297">set_input</a>
 
 #### Description
-set current output device to one of: OUTPUT_DEVICE_NULL, OUTPUT_DEVICE_UART, OUTPUT_DEVICE_CONSOLE
+set current output device to one of: INPUT_DEVICE_NULL, INPUT_DEVICE_UART, INPUT_DEVICE_CONSOLE
 
 
 
@@ -960,10 +960,10 @@ In
 
 
 
-### <a name="set_input" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L304">set_input</a>
+### <a name="set_output" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L285">set_output</a>
 
 #### Description
-set current output device to one of: INPUT_DEVICE_NULL, INPUT_DEVICE_UART, INPUT_DEVICE_CONSOLE
+set current output device to one of: OUTPUT_DEVICE_NULL, OUTPUT_DEVICE_UART, OUTPUT_DEVICE_CONSOLE
 
 
 
@@ -1048,10 +1048,10 @@ Out
 
 
 
-### <a name="sdcard_init" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//sdcard.s#L28">sdcard_init</a>
+### <a name="sd_busy_wait" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//sdcard.s#L356">sd_busy_wait</a>
 
 #### Description
-initialize sd card in SPI mode
+wait while sd card is busy
 
 
 
@@ -1059,7 +1059,7 @@ initialize sd card in SPI mode
 
 
 Out
-: Z,1 on success, 0 on error<br />A, error code
+: C, C = 0 on success, C = 1 on error (timeout)
 
 
 Clobbers
@@ -1105,36 +1105,6 @@ Clobbers
 
 
 
-### <a name="sd_read_block" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//sdcard.s#L243">sd_read_block</a>
-
-#### Description
-Read block from SD Card
-
-
-
-#### Parameters
-
-In
-: lba_addr, LBA address of block<br />sd_blkptr, target adress for the block data to be read
-
-
-Out
-: A, error code<br />C, 0 - success, 1 - error
-
-
-Clobbers
-: A,X,Y
-
-
-
-
-
-***
-
-
-
-
-
 ### <a name="sd_deselect_card" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//sdcard.s#L264">sd_deselect_card</a>
 
 #### Description
@@ -1162,14 +1132,17 @@ Clobbers
 
 
 
-### <a name="sd_wait" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//sdcard.s#L319">sd_wait</a>
+### <a name="sd_read_block" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//sdcard.s#L243">sd_read_block</a>
 
 #### Description
-wait for sd card data token
+Read block from SD Card
 
 
 
 #### Parameters
+
+In
+: lba_addr, LBA address of block<br />sd_blkptr, target adress for the block data to be read
 
 
 Out
@@ -1216,10 +1189,10 @@ Clobbers
 
 
 
-### <a name="sd_busy_wait" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//sdcard.s#L356">sd_busy_wait</a>
+### <a name="sd_wait" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//sdcard.s#L319">sd_wait</a>
 
 #### Description
-wait while sd card is busy
+wait for sd card data token
 
 
 
@@ -1227,7 +1200,7 @@ wait while sd card is busy
 
 
 Out
-: C, C = 0 on success, C = 1 on error (timeout)
+: A, error code<br />C, 0 - success, 1 - error
 
 
 Clobbers
@@ -1258,6 +1231,33 @@ In
 
 Out
 : A, error code<br />C, 0 - success, 1 - error
+
+
+Clobbers
+: A,X,Y
+
+
+
+
+
+***
+
+
+
+
+
+### <a name="sdcard_init" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//sdcard.s#L28">sdcard_init</a>
+
+#### Description
+initialize sd card in SPI mode
+
+
+
+#### Parameters
+
+
+Out
+: Z,1 on success, 0 on error<br />A, error code
 
 
 Clobbers
@@ -1414,33 +1414,6 @@ Out
 
 
 
-### <a name="uart_tx" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//uart.s#L41">uart_tx</a>
-
-#### Description
-send byte in A
-
-
-
-#### Parameters
-
-In
-: A - byte to be sent
-
-
-Out
-: 
-
-
-
-
-
-
-***
-
-
-
-
-
 ### <a name="uart_rx" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//uart.s#L77">uart_rx</a>
 
 #### Description
@@ -1468,101 +1441,42 @@ Out
 
 
 
+### <a name="uart_tx" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//uart.s#L41">uart_tx</a>
+
+#### Description
+send byte in A
+
+
+
+#### Parameters
+
+In
+: A - byte to be sent
+
+
+Out
+: 
+
+
+
+
+
+
+***
+
+
+
+
+
 
 ## vdp
-[vdp_bgcolor](#vdp_bgcolor) | [vdp_fill](#vdp_fill) | [vdp_fills](#vdp_fills) | [vdp_init_reg](#vdp_init_reg) | [vdp_memcpy](#vdp_memcpy) | [vdp_set_reg](#vdp_set_reg) | [vdp_text_blank](#vdp_text_blank) | [vdp_text_on](#vdp_text_on) | 
+[vdp_bgcolor](#vdp_bgcolor) | [vdp_fill](#vdp_fill) | [vdp_fills](#vdp_fills) | [vdp_init](#vdp_init) | [vdp_init_reg](#vdp_init_reg) | [vdp_memcpy](#vdp_memcpy) | [vdp_set_reg](#vdp_set_reg) | [vdp_text_blank](#vdp_text_blank) | [vdp_text_on](#vdp_text_on) | 
 
 ***
 
 
 
-### <a name="vdp_memcpy" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L33">vdp_memcpy</a>
-
-#### Description
-copy data from host memory denoted by pointer (A/Y) to vdp VRAM (page wise). the VRAM address must be setup beforehand e.g. with macro vdp_vram_w <address>
-
-
-
-#### Parameters
-
-In
-: X - amount of 256byte blocks (page counter)<br />A/Y - pointer to source data
-
-
-
-
-
-
-
-***
-
-
-
-
-
-### <a name="vdp_text_blank" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L54">vdp_text_blank</a>
-
-#### Description
-text mode blank screen and color vram
-
-
-
-
-***
-
-
-
-
-
-### <a name="vdp_fill" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L68">vdp_fill</a>
-
-#### Description
-fill vdp VRAM with given value page wise
-
-
-
-#### Parameters
-
-In
-: A - byte to fill<br />X - amount of 256byte blocks (page counter)
-
-
-
-
-
-
-
-***
-
-
-
-
-
-### <a name="vdp_fills" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L84">vdp_fills</a>
-
-#### Description
-fill vdp VRAM with given value
-
-
-
-#### Parameters
-
-In
-: A - value to write<br />X - amount of bytes
-
-
-
-
-
-
-
-***
-
-
-
-
-
-### <a name="vdp_bgcolor" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L96">vdp_bgcolor</a>
+### <a name="vdp_bgcolor" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L99">vdp_bgcolor</a>
 
 #### Description
 
@@ -1586,17 +1500,17 @@ In
 
 
 
-### <a name="vdp_set_reg" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L101">vdp_set_reg</a>
+### <a name="vdp_fill" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L71">vdp_fill</a>
 
 #### Description
-set value to vdp register
+fill vdp VRAM with given value page wise
 
 
 
 #### Parameters
 
 In
-: A - value<br />Y - register
+: A - byte to fill<br />X - amount of 256byte blocks (page counter)
 
 
 
@@ -1610,17 +1524,17 @@ In
 
 
 
-### <a name="vdp_text_on" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L113">vdp_text_on</a>
+### <a name="vdp_fills" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L87">vdp_fills</a>
 
 #### Description
-text mode - 40x24/80x24 character mode, 2 colors
+fill vdp VRAM with given value
 
 
 
 #### Parameters
 
 In
-: A - color settings (#R07)
+: A - value to write<br />X - amount of bytes
 
 
 
@@ -1634,7 +1548,21 @@ In
 
 
 
-### <a name="vdp_init_reg" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L136">vdp_init_reg</a>
+### <a name="vdp_init" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L21">vdp_init</a>
+
+#### Description
+init vdp, set text mode 2, blank screen, load charset into vram
+
+
+
+
+***
+
+
+
+
+
+### <a name="vdp_init_reg" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L139">vdp_init_reg</a>
 
 #### Description
 setup video registers upon given table starting from register #R.X down to #R0
@@ -1658,11 +1586,121 @@ In
 
 
 
+### <a name="vdp_memcpy" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L36">vdp_memcpy</a>
+
+#### Description
+copy data from host memory denoted by pointer (A/Y) to vdp VRAM (page wise). the VRAM address must be setup beforehand e.g. with macro vdp_vram_w <address>
+
+
+
+#### Parameters
+
+In
+: X - amount of 256byte blocks (page counter)<br />A/Y - pointer to source data
+
+
+
+
+
+
+
+***
+
+
+
+
+
+### <a name="vdp_set_reg" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L104">vdp_set_reg</a>
+
+#### Description
+set value to vdp register
+
+
+
+#### Parameters
+
+In
+: A - value<br />Y - register
+
+
+
+
+
+
+
+***
+
+
+
+
+
+### <a name="vdp_text_blank" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L57">vdp_text_blank</a>
+
+#### Description
+text mode blank screen and color vram
+
+
+
+
+***
+
+
+
+
+
+### <a name="vdp_text_on" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L116">vdp_text_on</a>
+
+#### Description
+text mode - 40x24/80x24 character mode, 2 colors
+
+
+
+#### Parameters
+
+In
+: A - color settings (#R07)
+
+
+
+
+
+
+
+***
+
+
+
+
+
 
 ## xmodem_upload
 [b2ad](#b2ad) | [xmodem_upload_callback](#xmodem_upload_callback) | 
 
 ***
+
+
+
+### <a name="b2ad" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//fsutil.s#L257">b2ad</a>
+
+#### Description
+output 8bit value as 2 digit decimal
+
+
+
+#### Parameters
+
+In
+: A, value to output
+
+
+
+
+
+
+
+***
+
+
 
 
 
@@ -1693,30 +1731,6 @@ Out
 
 
 
-### <a name="b2ad" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//fsutil.s#L257">b2ad</a>
-
-#### Description
-output 8bit value as 2 digit decimal
-
-
-
-#### Parameters
-
-In
-: A, value to output
-
-
-
-
-
-
-
-***
-
-
-
-
-
 
 ## zeropage
 [cmdptr](#cmdptr) | [console_ptr](#console_ptr) | [cursor_ptr](#cursor_ptr) | [dirptr](#dirptr) | [dumpvecs](#dumpvecs) | [filenameptr](#filenameptr) | [in_vector](#in_vector) | [out_vector](#out_vector) | [paramptr](#paramptr) | [pathptr](#pathptr) | [retvec](#retvec) | [scroll_src_ptr](#scroll_src_ptr) | [scroll_trg_ptr](#scroll_trg_ptr) | [sd_blkptr](#sd_blkptr) | [spi_sr](#spi_sr) | [startaddr](#startaddr) | [tmp_ptr](#tmp_ptr) | [vdp_ptr](#vdp_ptr) | [volatile_tmp](#volatile_tmp) | [volatile_tmp2](#volatile_tmp2) | 
@@ -1725,38 +1739,10 @@ In
 
 
 
-### <a name="out_vector" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L43">out_vector</a>
+### <a name="cmdptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L107">cmdptr</a>
 
 #### Description
-vector pointing to standard output routine
-
-
-
-
-***
-
-
-
-
-
-### <a name="in_vector" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L48">in_vector</a>
-
-#### Description
-vector pointing to standard input routine
-
-
-
-
-***
-
-
-
-
-
-### <a name="startaddr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L54">startaddr</a>
-
-#### Description
-startaddress for uploaded images
+shell buffer pointer
 
 
 
@@ -1795,6 +1781,118 @@ pointer to cursor position within screen buffer
 
 
 
+### <a name="dirptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L134">dirptr</a>
+
+#### Description
+directory pointer
+
+
+
+
+***
+
+
+
+
+
+### <a name="dumpvecs" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L129">dumpvecs</a>
+
+#### Description
+shell dump command vectors (2 pointer)
+
+
+
+
+***
+
+
+
+
+
+### <a name="filenameptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L139">filenameptr</a>
+
+#### Description
+filename pointer
+
+
+
+
+***
+
+
+
+
+
+### <a name="in_vector" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L48">in_vector</a>
+
+#### Description
+vector pointing to standard input routine
+
+
+
+
+***
+
+
+
+
+
+### <a name="out_vector" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L43">out_vector</a>
+
+#### Description
+vector pointing to standard output routine
+
+
+
+
+***
+
+
+
+
+
+### <a name="paramptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L97">paramptr</a>
+
+#### Description
+shell parameter pointer
+
+
+
+
+***
+
+
+
+
+
+### <a name="pathptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L124">pathptr</a>
+
+#### Description
+path pointer
+
+
+
+
+***
+
+
+
+
+
+### <a name="retvec" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L92">retvec</a>
+
+#### Description
+shell return vector
+
+
+
+
+***
+
+
+
+
+
 ### <a name="scroll_src_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L72">scroll_src_ptr</a>
 
 #### Description
@@ -1823,10 +1921,10 @@ scroll target pointer
 
 
 
-### <a name="vdp_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L82">vdp_ptr</a>
+### <a name="sd_blkptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L144">sd_blkptr</a>
 
 #### Description
-vdp pointer
+sd card block pointer
 
 
 
@@ -1851,10 +1949,10 @@ SPI shift register
 
 
 
-### <a name="retvec" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L92">retvec</a>
+### <a name="startaddr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L54">startaddr</a>
 
 #### Description
-shell return vector
+startaddress for uploaded images
 
 
 
@@ -1865,10 +1963,10 @@ shell return vector
 
 
 
-### <a name="paramptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L97">paramptr</a>
+### <a name="tmp_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L149">tmp_ptr</a>
 
 #### Description
-shell parameter pointer
+temp volatile pointer for general usage
 
 
 
@@ -1879,10 +1977,10 @@ shell parameter pointer
 
 
 
-### <a name="cmdptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L107">cmdptr</a>
+### <a name="vdp_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L82">vdp_ptr</a>
 
 #### Description
-shell buffer pointer
+vdp pointer
 
 
 
@@ -1921,90 +2019,6 @@ volatile tmp location 2
 
 
 
-### <a name="pathptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L124">pathptr</a>
-
-#### Description
-path pointer
-
-
-
-
-***
-
-
-
-
-
-### <a name="dumpvecs" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L129">dumpvecs</a>
-
-#### Description
-shell dump command vectors (2 pointer)
-
-
-
-
-***
-
-
-
-
-
-### <a name="dirptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L134">dirptr</a>
-
-#### Description
-directory pointer
-
-
-
-
-***
-
-
-
-
-
-### <a name="filenameptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L139">filenameptr</a>
-
-#### Description
-filename pointer
-
-
-
-
-***
-
-
-
-
-
-### <a name="sd_blkptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L144">sd_blkptr</a>
-
-#### Description
-sd card block pointer
-
-
-
-
-***
-
-
-
-
-
-### <a name="tmp_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L149">tmp_ptr</a>
-
-#### Description
-temp volatile pointer for general usage
-
-
-
-
-***
-
-
-
-
-
 
 ## zp_ext
 [blklayer_store](#blklayer_store) | [crs_x](#crs_x) | [crs_x_sav](#crs_x_sav) | [crs_y](#crs_y) | [crs_y_sav](#crs_y_sav) | [current_console](#current_console) | [keyboard_key](#keyboard_key) | [lba_addr](#lba_addr) | [screen_status](#screen_status) | [vdp_addr](#vdp_addr) | [vdp_addr_old](#vdp_addr_old) | 
@@ -2013,10 +2027,10 @@ temp volatile pointer for general usage
 
 
 
-### <a name="lba_addr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L177">lba_addr</a>
+### <a name="blklayer_store" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L241">blklayer_store</a>
 
 #### Description
-LBA address for media block operations
+blklayer state store
 
 
 
@@ -2031,20 +2045,6 @@ LBA address for media block operations
 
 #### Description
 cursor x position
-
-
-
-
-***
-
-
-
-
-
-### <a name="crs_y" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L191">crs_y</a>
-
-#### Description
-cursor y position
 
 
 
@@ -2070,53 +2070,25 @@ cursor x position save location\
 
 
 
+### <a name="crs_y" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L191">crs_y</a>
+
+#### Description
+cursor y position
+
+
+
+
+***
+
+
+
+
+
 ### <a name="crs_y_sav" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L202">crs_y_sav</a>
 
 #### Description
 cursor y position save location\
 1 byte per console
-
-
-
-
-***
-
-
-
-
-
-### <a name="vdp_addr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L208">vdp_addr</a>
-
-#### Description
-cursor position vdp address
-
-
-
-
-***
-
-
-
-
-
-### <a name="vdp_addr_old" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L213">vdp_addr_old</a>
-
-#### Description
-previous cursor position vdp address
-
-
-
-
-***
-
-
-
-
-
-### <a name="screen_status" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L218">screen_status</a>
-
-#### Description
-state of screen - bit 7 -> dirty
 
 
 
@@ -2155,10 +2127,52 @@ value of last pressed key
 
 
 
-### <a name="blklayer_store" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L241">blklayer_store</a>
+### <a name="lba_addr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L177">lba_addr</a>
 
 #### Description
-blklayer state store
+LBA address for media block operations
+
+
+
+
+***
+
+
+
+
+
+### <a name="screen_status" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L218">screen_status</a>
+
+#### Description
+state of screen - bit 7 -> dirty
+
+
+
+
+***
+
+
+
+
+
+### <a name="vdp_addr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L208">vdp_addr</a>
+
+#### Description
+cursor position vdp address
+
+
+
+
+***
+
+
+
+
+
+### <a name="vdp_addr_old" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L213">vdp_addr_old</a>
+
+#### Description
+previous cursor position vdp address
 
 
 
