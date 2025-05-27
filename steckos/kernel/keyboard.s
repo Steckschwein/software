@@ -18,9 +18,6 @@
 
 
 ;@module: keyboard
-.bss
-
-
 .code
 ; Select Keyboard controller on SPI, read one byte
 ;	in: -
