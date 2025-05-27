@@ -26,7 +26,7 @@
 ;	in: -
 ;	out:
 ;		C=1 key was fetched and A=<key code>, C=0 otherwise and A=<error / status code> e.g. #EBUSY
-;@name: "fetchkey"
+;@name: "keyboard_fetchkey"
 ;@out: A, "fetched key / error code"
 ;@out:  C, "1 - key was fetched, 0 - nothing fetched"
 ;@desc: "fetch byte from keyboard controller"
@@ -54,7 +54,7 @@ keyboard_fetchkey:
 ;	in: -
 ;	out:
 ;		C=1 key was pressed and A=<key code>, C=0 otherwise
-;@name: "getkey"
+;@name: "keyboard_getkey"
 ;@out: A, "fetched key"
 ;@out:  C, "1 - key was fetched, 0 - nothing fetched"
 ;@desc: "get byte from keyboard buffer"

@@ -986,13 +986,13 @@ In
 
 
 ## keyboard
-[fetchkey](#fetchkey) | [getkey](#getkey) | 
+[keyboard_fetchkey](#keyboard_fetchkey) | [keyboard_getkey](#keyboard_getkey) | 
 
 ***
 
 
 
-### <a name="fetchkey" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//keyboard.s#L29">fetchkey</a>
+### <a name="keyboard_fetchkey" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//keyboard.s#L29">keyboard_fetchkey</a>
 
 #### Description
 fetch byte from keyboard controller
@@ -1016,7 +1016,7 @@ Out
 
 
 
-### <a name="getkey" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//keyboard.s#L57">getkey</a>
+### <a name="keyboard_getkey" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//keyboard.s#L57">keyboard_getkey</a>
 
 #### Description
 get byte from keyboard buffer
