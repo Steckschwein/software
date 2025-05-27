@@ -176,6 +176,20 @@ upload:
 ; @name: do_irq
 ; @desc: system irq handler
 do_irq:
+
+    ; check for BRK by fetching the copy of the status register
+    ; from the stack. 
+    ; php/pla will not work as the BRK bit will always be set from within
+    ; the isr
+    phx
+    pha
+    tsx
+    lda $0103,x
+    and #%00010000
+    bne @handle_brk
+    pla
+    plx
+
     save 
 
     bit a_vreg
@@ -187,13 +201,19 @@ do_irq:
     jsr keyboard_fetchkey
     bcc @exit_isr
 
-    ; jsr console_hamakendle_control_char
+    ; jsr console_handle_control_char
 
 @exit_isr:
     ; lda #VIDEO_COLOR 
     ; jsr vdp_bgcolor
-    restore 
+    restore
     rti
+
+@handle_brk:
+    pla                     ;
+    plx                     ;
+    ; jmp   (BRKvector)       ; patch in user BRK routine
+    jmp register_status
 
 ; @name: do_nmi
 ; @desc: system nmi handler
