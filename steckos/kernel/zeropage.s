@@ -1,3 +1,4 @@
+.include "blklayer.inc"
 .exportzp out_vector, in_vector
 .exportzp startaddr
 .exportzp console_ptr, cursor_ptr
@@ -234,3 +235,12 @@ ansi_param2: .res 1
 ; @desc: value of last pressed key
 ; @type: byte
 keyboard_key:  .res 1
+
+
+.export blklayer_store
+; @name: blklayer_store
+; @desc: blklayer state store
+; @type: byte
+blklayer_store:
+    .tag _blkl_state  ; fat32 currently uses $400/$600 as fixed block address - so we only need 2 states
+    .tag _blkl_state
