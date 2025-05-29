@@ -8,7 +8,7 @@
 
 .import vdp_memcpy
 
-.importzp console_ptr, cursor_ptr, scroll_src_ptr, scroll_trg_ptr
+.importzp console_buffer_ptr, console_cursor_ptr, console_scroll_src_ptr, console_scroll_trg_ptr
 
 .import crs_x, crs_y, crs_x_sav, crs_y_sav
 .import vdp_addr, vdp_addr_old
@@ -49,7 +49,7 @@ console_init:
     pla 
     sta slot2_ctrl
 
-    copypointer console_ptr, cursor_ptr
+    copypointer console_buffer_ptr, console_cursor_ptr
 
 
     rts
@@ -70,16 +70,16 @@ console_set_screen_buffer:
 
     
     lda screen_buffer_list,x 
-    sta console_ptr
+    sta console_buffer_ptr
     lda screen_buffer_list+1,x 
-    sta console_ptr+1
+    sta console_buffer_ptr+1
 
     lda crs_x_sav,x 
     sta crs_x 
     lda crs_y_sav,x
     sta crs_y
 
-    copypointer console_ptr, cursor_ptr
+    copypointer console_buffer_ptr, console_cursor_ptr
 
     stx current_console
 
@@ -107,8 +107,8 @@ console_update_screen:
     lda #SCREEN_BUFFER_PAGE
     sta slot2_ctrl 
 
-    lda console_ptr
-    ldy console_ptr+1
+    lda console_buffer_ptr
+    ldy console_buffer_ptr+1
     ldx #SCREEN_BUFFER_SIZE
     jsr vdp_memcpy
     
@@ -125,10 +125,10 @@ console_update_screen:
     ; rts 
 
 ;@name: console_clear_screenbuf
-;@desc: clear screenbuffer area pointed to by cursor_ptr
-;@in: console_ptr - address of buffer 
+;@desc: clear screenbuffer area pointed to by console_cursor_ptr
+;@in: console_buffer_ptr - address of buffer 
 console_clear_screenbuf:
-    copypointer console_ptr, scroll_trg_ptr
+    copypointer console_buffer_ptr, console_scroll_trg_ptr
 
     lda slot2_ctrl
     pha
@@ -142,11 +142,11 @@ console_clear_screenbuf:
     ldy #0
 :
 
-    sta (scroll_trg_ptr),y
+    sta (console_scroll_trg_ptr),y
     iny 
     bne :-
 
-    inc scroll_trg_ptr+1
+    inc console_scroll_trg_ptr+1
 
     dex 
     bpl @loop
@@ -177,23 +177,23 @@ console_get_pointer_from_cursor:
 
     clc 
     lda multab,x 
-    adc console_ptr
-    sta cursor_ptr
+    adc console_buffer_ptr
+    sta console_cursor_ptr
 
     lda multab+1,x 
-    adc console_ptr+1
-    sta cursor_ptr+1
+    adc console_buffer_ptr+1
+    sta console_cursor_ptr+1
 
     ; add x position
     clc 
     lda crs_x
     beq @exit
-    adc cursor_ptr
-    sta cursor_ptr
+    adc console_cursor_ptr
+    sta console_cursor_ptr
 
     lda #0
-    adc cursor_ptr+1
-    sta cursor_ptr+1 
+    adc console_cursor_ptr+1
+    sta console_cursor_ptr+1 
 
 @exit:
     restore
@@ -496,7 +496,7 @@ console_update_char:
     ldx #SCREEN_BUFFER_PAGE
     stx slot2_ctrl 
 
-    sta (cursor_ptr)
+    sta (console_cursor_ptr)
 
     plx 
     stx slot2_ctrl  
@@ -578,18 +578,18 @@ console_handle_control_char:
 console_scroll:
     save
     ; setup pointers
-    ; target pointer start at console_ptr
-    copypointer console_ptr, scroll_trg_ptr
+    ; target pointer start at console_buffer_ptr
+    copypointer console_buffer_ptr, console_scroll_trg_ptr
     
-    ; source pointer starts at console_ptr plus one line
+    ; source pointer starts at console_buffer_ptr plus one line
     clc
-    lda scroll_trg_ptr
+    lda console_scroll_trg_ptr
     adc #COLS
-    sta scroll_src_ptr 
+    sta console_scroll_src_ptr 
 
-    lda scroll_trg_ptr+1
+    lda console_scroll_trg_ptr+1
     adc #0 
-    sta scroll_src_ptr+1
+    sta console_scroll_src_ptr+1
 
     ldx slot2_ctrl
     phx
@@ -601,13 +601,13 @@ console_scroll:
 @scroll_row:
     ldy #0
 @loop:
-    lda (scroll_src_ptr),y 
-    sta (scroll_trg_ptr),y 
+    lda (console_scroll_src_ptr),y 
+    sta (console_scroll_trg_ptr),y 
     iny
     bne @loop
 
-    inc scroll_src_ptr+1
-    inc scroll_trg_ptr+1
+    inc console_scroll_src_ptr+1
+    inc console_scroll_trg_ptr+1
     
     dex
     bne @scroll_row

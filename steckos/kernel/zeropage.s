@@ -1,9 +1,9 @@
 .include "blklayer.inc"
 .exportzp out_vector, in_vector
 .exportzp startaddr
-.exportzp console_ptr, cursor_ptr
-.exportzp scroll_src_ptr, scroll_trg_ptr 
-.exportzp vdp_ptr
+.exportzp console_buffer_ptr, console_cursor_ptr
+.exportzp console_scroll_src_ptr, console_scroll_trg_ptr 
+; .exportzp vdp_ptr
 .exportzp spi_sr 
 .exportzp retvec 
 .exportzp paramptr
@@ -58,31 +58,31 @@ startaddr:         .res 2
 
 ; console stuff
 ; 
-; @name: console_ptr
+; @name: console_buffer_ptr
 ; @desc: pointer to current screen buffer
 ; @type: pointer
-console_ptr:      .res 2
+console_buffer_ptr:      .res 2
 
-; @name: cursor_ptr
+; @name: console_cursor_ptr
 ; @desc: pointer to cursor position within screen buffer
 ; @type: pointer
-cursor_ptr:       .res 2
+console_cursor_ptr:       .res 2
 
 
-; @name: scroll_src_ptr
+; @name: console_scroll_src_ptr
 ; @desc: scroll source pointer
 ; @type: pointer
-scroll_src_ptr:   .res 2
+console_scroll_src_ptr:   .res 2
 
-; @name: scroll_trg_ptr
+; @name: console_scroll_trg_ptr
 ; @desc: scroll target pointer
 ; @type: pointer
-scroll_trg_ptr:   .res 2
+console_scroll_trg_ptr:   .res 2
 
 ; @name: vdp_ptr
 ; @desc: vdp pointer 
 ; @type: pointer
-vdp_ptr:          .res 2
+;vdp_ptr:          .res 2
 
 ; @name: spi_sr
 ; @desc: SPI shift register

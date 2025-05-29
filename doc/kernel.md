@@ -46,14 +46,14 @@ In
 ### <a name="console_clear_screenbuf" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//console.s#L127">console_clear_screenbuf</a>
 
 #### Description
-clear screenbuffer area pointed to by cursor_ptr
+clear screenbuffer area pointed to by console_cursor_ptr
 
 
 
 #### Parameters
 
 In
-: console_ptr - address of buffer
+: console_buffer_ptr - address of buffer
 
 
 
@@ -1733,7 +1733,7 @@ Out
 
 
 ## zeropage
-[cmdptr](#cmdptr) | [console_ptr](#console_ptr) | [cursor_ptr](#cursor_ptr) | [dirptr](#dirptr) | [dumpvecs](#dumpvecs) | [filenameptr](#filenameptr) | [in_vector](#in_vector) | [out_vector](#out_vector) | [paramptr](#paramptr) | [pathptr](#pathptr) | [retvec](#retvec) | [scroll_src_ptr](#scroll_src_ptr) | [scroll_trg_ptr](#scroll_trg_ptr) | [sd_blkptr](#sd_blkptr) | [spi_sr](#spi_sr) | [startaddr](#startaddr) | [tmp_ptr](#tmp_ptr) | [vdp_ptr](#vdp_ptr) | [volatile_tmp](#volatile_tmp) | [volatile_tmp2](#volatile_tmp2) | 
+[cmdptr](#cmdptr) | [console_buffer_ptr](#console_buffer_ptr) | [console_cursor_ptr](#console_cursor_ptr) | [console_scroll_src_ptr](#console_scroll_src_ptr) | [console_scroll_trg_ptr](#console_scroll_trg_ptr) | [dirptr](#dirptr) | [dumpvecs](#dumpvecs) | [filenameptr](#filenameptr) | [in_vector](#in_vector) | [out_vector](#out_vector) | [paramptr](#paramptr) | [pathptr](#pathptr) | [retvec](#retvec) | [sd_blkptr](#sd_blkptr) | [spi_sr](#spi_sr) | [startaddr](#startaddr) | [tmp_ptr](#tmp_ptr) | [vdp_ptr](#vdp_ptr) | [volatile_tmp](#volatile_tmp) | [volatile_tmp2](#volatile_tmp2) | 
 
 ***
 
@@ -1753,7 +1753,7 @@ shell buffer pointer
 
 
 
-### <a name="console_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L61">console_ptr</a>
+### <a name="console_buffer_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L61">console_buffer_ptr</a>
 
 #### Description
 pointer to current screen buffer
@@ -1767,10 +1767,38 @@ pointer to current screen buffer
 
 
 
-### <a name="cursor_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L66">cursor_ptr</a>
+### <a name="console_cursor_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L66">console_cursor_ptr</a>
 
 #### Description
 pointer to cursor position within screen buffer
+
+
+
+
+***
+
+
+
+
+
+### <a name="console_scroll_src_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L72">console_scroll_src_ptr</a>
+
+#### Description
+scroll source pointer
+
+
+
+
+***
+
+
+
+
+
+### <a name="console_scroll_trg_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L77">console_scroll_trg_ptr</a>
+
+#### Description
+scroll target pointer
 
 
 
@@ -1883,34 +1911,6 @@ path pointer
 
 #### Description
 shell return vector
-
-
-
-
-***
-
-
-
-
-
-### <a name="scroll_src_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L72">scroll_src_ptr</a>
-
-#### Description
-scroll source pointer
-
-
-
-
-***
-
-
-
-
-
-### <a name="scroll_trg_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L77">scroll_trg_ptr</a>
-
-#### Description
-scroll target pointer
 
 
 
