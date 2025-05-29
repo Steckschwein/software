@@ -1,7 +1,7 @@
 ; @module: uart
 .include "system.inc"
 .include "uart.inc"
-.export  init_uart, uart_tx, uart_rx, uart_rx_nowait
+.export  uart_init, uart_tx, uart_rx, uart_rx_nowait
 
 
 .code
@@ -13,7 +13,7 @@
 ;@in: - 
 ;@out: -
 ;----------------------------------------------------------------------------------------------
-init_uart:
+uart_init:
     lda #lcr_DLAB       ; enable divisor latch access bit in order to write divisor
     sta uart1+uart_lcr
 

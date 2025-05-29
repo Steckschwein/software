@@ -12,7 +12,7 @@
 .include "vdp.inc"
 
 .import init_via
-.import init_uart, uart_tx, uart_rx, primm, hexout, wozmon, xmodem_upload
+.import uart_init, uart_tx, uart_rx, primm, hexout, wozmon, xmodem_upload
 .import vdp_init, vdp_bgcolor, vdp_memcpy
 .import sdcard_init, sd_read_block, sd_write_block
 .import console_init, console_update_screen, console_chrout, console_put_cursor, console_handle_control_char
@@ -71,7 +71,7 @@ do_reset:
 
     jsr init_via
 
-    jsr init_uart
+    jsr uart_init
 
 
     lda #INPUT_DEVICE_CONSOLE
