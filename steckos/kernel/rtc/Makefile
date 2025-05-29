@@ -17,6 +17,6 @@ clean:
 %.o: %.s $(ASM_INCLUDE)/*.inc 
 	ca65 --target none --cpu 65c02 $(DEFINES) $(DEBUG) $(OPT) -I $(ASM_INCLUDE) $<
 
-$(LIBNAME): $(OBJS) 
-	ar65 a $(LIBNAME) $(OBJS)
+%.a: $(OBJS) 
+	ar65 a $@ $(OBJS)
 	

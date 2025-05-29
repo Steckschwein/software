@@ -21,6 +21,6 @@ clean:
 %.o: %.s $(ASM_INCLUDE)/*.inc 
 	ca65 --target none --cpu 65c02 $(DEFINES) $(DEBUG) $(OPT) -I $(ASM_INCLUDE) $<
 
-fat32.a: $(OBJS) 
-	ar65 a fat32.a $(OBJS)
+%.a: $(OBJS) 
+	ar65 a $@ $(OBJS)
 	
