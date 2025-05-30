@@ -76,6 +76,8 @@ rom.bin: kernel.bin
 
 test: all
 	(cd test; make all)
+	(cd fat32/test; make all)
+	
 
 emu: kernel.bin rom.bin
 	../../../emulator/steckschwein-emu -rom rom.bin -log_writes rom 
