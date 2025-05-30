@@ -62,7 +62,6 @@ get_filename:
     cmp #' '
     beq @skip
     sta filename,x
-    jsr krn_chrout
     inx
     stz filename,x
 @skip:
@@ -72,7 +71,6 @@ get_filename:
 attrib:
     lda #<filename
     ldx #>filename
-    jsr krn_strout
     ldy #O_WRONLY
     jsr krn_open
     bcs oerror
