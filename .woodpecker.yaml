@@ -8,7 +8,7 @@ when:
 
 steps:
   - name: "build"
-    image: steckschwein/buildenv:ubuntu_24.04
+    image: steckschwein/buildenv:cc65_2_20-snapshot
     commands:
       - make 
       - make test
