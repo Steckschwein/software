@@ -1,5 +1,5 @@
 MAKEFILE=Makefile
-all: build doc
+all: build
 
 clean:
 	(cd steckos; make clean)
