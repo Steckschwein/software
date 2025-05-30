@@ -7,15 +7,7 @@ when:
 #     image: woodpeckerci/plugin-git
 
 steps:
-  - name: "build asmunit"
-    image: steckschwein/buildenv:cc65_2_20-snapshot
-    commands:
-      - cd asmunit
-      - make
-    when:
-      event: [pull_request, push]
-
-  - name: "build steckos"
+  - name: "build"
     image: steckschwein/buildenv:cc65_2_20-snapshot
     commands:
       - make 
