@@ -7,10 +7,17 @@ when:
 #     image: woodpeckerci/plugin-git
 
 steps:
+
   - name: "build"
     image: steckschwein/buildenv:cc65_2_20-snapshot
     commands:
       - make 
+    when:
+      event: [pull_request, push]
+
+  - name: "unit tests"
+    image: steckschwein/buildenv:cc65_2_20-snapshot
+    commands:
       - make test
     when:
       event: [pull_request, push]
