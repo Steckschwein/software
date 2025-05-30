@@ -18,7 +18,6 @@ steps:
   - name: "build steckos"
     image: steckschwein/buildenv:cc65_2_20-snapshot
     commands:
-      - cd steckos/kernel
       - make 
     when:
       event: [pull_request, push]
@@ -26,8 +25,7 @@ steps:
   - name: "test"
     image: steckschwein/buildenv:cc65_2_20-snapshot
     commands:
-      - cd steckos/kernel
-      - make all test
+      - make test
     when:
       event: [pull_request, push]
 
