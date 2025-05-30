@@ -8,7 +8,7 @@ when:
 
 steps:
   - name: "build"
-    image: steckschwein/buildenv:cc65_2_20-snapshot
+    image: steckschwein/buildenv:bookworm
     commands:
       - make 
       - make test
