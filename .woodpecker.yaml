@@ -11,31 +11,6 @@ steps:
     image: steckschwein/buildenv:cc65_2_20-snapshot
     commands:
       - make 
-    when:
-      event: [pull_request, push]
-
-  - name: "test"
-    image: steckschwein/buildenv:cc65_2_20-snapshot
-    commands:
       - make test
     when:
       event: [pull_request, push]
-
-  # - name: "mail"
-  #   image: deblan/woodpecker-email
-  #   environment:
-  #     MAIL_USER:
-  #       from_secret: mailusr
-  #     MAIL_PW:
-  #       from_secret: mailpw
-  #   settings:
-  #     dsn: "smtp://$MAIL_USER:$MAIL_PW@ssl0.ovh.net"
-  #     from:
-  #       address: "woodpecker@example.com"
-  #       name: "Woodpecker"
-  #       level: failure
-  #       recipients:
-  #         - info@steckschwein.de
-  #   when:
-  #     status:
-  #       - success
