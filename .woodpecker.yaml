@@ -27,7 +27,7 @@ steps:
     image: steckschwein/buildenv:cc65_2_20-snapshot
     commands:
       - cd steckos/kernel
-      - make test
+      - make all test
     when:
       event: [pull_request, push]
 
