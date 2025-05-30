@@ -1,3 +1,4 @@
+.include "debug.inc"
 .include "test_fat32.inc"
 
 ; .autoimport
@@ -16,18 +17,19 @@ lba_addr:   .res 4
 
 .import __calc_lba_addr, __fat_open_rootdir_cwd, __fat_is_cln_zero, __fat_alloc_fd, __fat_init_fdarea
 .import fat_fopen, fat_fread_byte
-.import blklayer_init, blklayer_flush, blklayer_read_block
+; .import blklayer_init, blklayer_flush, blklayer_read_block
 .import load_test_data, store_test_data
 
 .export dev_read_block=         mock_read_block
-.export read_block=             blklayer_read_block
+.export read_block=             mock_read_block
 .export dev_write_block=        mock_not_implemented
 .export write_block=            mock_not_implemented
 .export write_block_buffered=   mock_not_implemented
-.export write_flush=            blklayer_flush
+; .export write_flush=            blklayer_flush
 
 
 .export __rtc_systime_update=   mock_not_implemented
+.export rtc_systime_update=   mock_not_implemented
 
 debug_enabled=1
 
@@ -447,35 +449,35 @@ TEST_FILE_CL2=$19
 test_end
 
 setUp:
-    jsr blklayer_init
-    init_volume_id SEC_PER_CL
-    jsr __fat_init_fdarea
-    ;setup fd0 (cwd) to root cluster
-    jsr __fat_open_rootdir_cwd
+;     jsr blklayer_init
+;     init_volume_id SEC_PER_CL
+;     jsr __fat_init_fdarea
+;     ;setup fd0 (cwd) to root cluster
+;     jsr __fat_open_rootdir_cwd
 
-    ; fill fat block
-    m_memset block_fat_0+$000, $ff, $80  ; simulate reserved
-    m_memset block_fat_0+$080, $ff, $80
-    m_memset block_fat_0+$100, $ff, $80
-    m_memset block_fat_0+$180, $ff, $80
-    set32 block_fat_0+(TEST_FILE_CL<<2), 0 ; mark TEST_FILE_CL as free
-    set32 block_fat_0+(TEST_FILE_CL2<<2), 0 ; mark TEST_FILE_CL2 as free
+;     ; fill fat block
+;     m_memset block_fat_0+$000, $ff, $80  ; simulate reserved
+;     m_memset block_fat_0+$080, $ff, $80
+;     m_memset block_fat_0+$100, $ff, $80
+;     m_memset block_fat_0+$180, $ff, $80
+;     set32 block_fat_0+(TEST_FILE_CL<<2), 0 ; mark TEST_FILE_CL as free
+;     set32 block_fat_0+(TEST_FILE_CL2<<2), 0 ; mark TEST_FILE_CL2 as free
 
-    init_block block_root_dir_init_00, block_root_dir_00
-    init_block block_empty          , block_root_dir_01
-    init_block block_empty          , block_root_dir_02
-    init_block block_empty          , block_root_dir_03
+;     init_block block_root_dir_init_00, block_root_dir_00
+;     init_block block_empty          , block_root_dir_01
+;     init_block block_empty          , block_root_dir_02
+;     init_block block_empty          , block_root_dir_03
 
-    ;setup fd1 with test cluster
-    set8 fd_area+(1*FD_Entry_Size)+F32_fd::status, FD_STATUS_FILE_OPEN | FD_STATUS_DIRTY
-    set32 fd_area+(1*FD_Entry_Size)+F32_fd::StartCluster, test_start_cluster
-    set32 fd_area+(1*FD_Entry_Size)+F32_fd::CurrentCluster, test_start_cluster
-    set8 fd_area+(1*FD_Entry_Size)+F32_fd::Attr, DIR_Attr_Mask_Archive
-    set32 fd_area+(1*FD_Entry_Size)+F32_fd::SeekPos, 0
-    set8 fd_area+(1*FD_Entry_Size)+F32_fd::flags, O_RDONLY
-    set32 fd_area+(1*FD_Entry_Size)+F32_fd::FileSize, $1000
+;     ;setup fd1 with test cluster
+;     set8 fd_area+(1*FD_Entry_Size)+F32_fd::status, FD_STATUS_FILE_OPEN | FD_STATUS_DIRTY
+;     set32 fd_area+(1*FD_Entry_Size)+F32_fd::StartCluster, test_start_cluster
+;     set32 fd_area+(1*FD_Entry_Size)+F32_fd::CurrentCluster, test_start_cluster
+;     set8 fd_area+(1*FD_Entry_Size)+F32_fd::Attr, DIR_Attr_Mask_Archive
+;     set32 fd_area+(1*FD_Entry_Size)+F32_fd::SeekPos, 0
+;     set8 fd_area+(1*FD_Entry_Size)+F32_fd::flags, O_RDONLY
+;     set32 fd_area+(1*FD_Entry_Size)+F32_fd::FileSize, $1000
 
-    rts
+;     rts
 
 ; data_loader  ; define data loader
 ; data_writer

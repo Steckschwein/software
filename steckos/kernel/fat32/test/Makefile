@@ -2,7 +2,7 @@ OUT_ADDRESS=0x200
 DEFINES=-Dasmunit_char_out=0x200
 KERNEL_ADDRESS=0x1000
 CA65FLAGS=-I ../../../../asmunit -I ../../../asminc -I ../ $(DEFINES)
-LIBS=../../../../asmunit/asmunit.a ../fat32.a
+LIBS=../../../../asmunit/asmunit.a ../../debug/debug.a ../fat32.a
 LDFLAGS=-C ../../../../asmunit/asmunit.cfg $(DEFINES)
 
 
@@ -16,7 +16,8 @@ clean:
 	ca65 $(CA65FLAGS) $(@:.o=.s)
 
 test.%.bin: test.%.o $(LIBS) $(<:test.%=%)
-	ld65 $(LDFLAGS) $< ../$(<:test.%=%) $(LIBS) -o $@
+	#	ld65 $(LDFLAGS) $< ../$(<:test.%=%) $(LIBS) -o $@
+	ld65 $(LDFLAGS) $< $(LIBS) -o $@
 
 %.prg: %.o $(LIBS)
 	ld65 $(LDFLAGS_PRG) $< $(LIBS_PRG) -o $@
