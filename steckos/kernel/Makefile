@@ -35,6 +35,8 @@ clean:
 	(cd fat32 && make clean )
 	(cd blklayer && make clean )	
 	(cd rtc && make clean )
+	(cd debug && make clean )
+	
 
 %.o: %.s $(ASM_INCLUDE)/*.inc version.inc
 	ca65 --target none --cpu 65c02 $(DEFINES) $(DEBUG) $(OPT) -I $(ASM_INCLUDE) $<
@@ -45,6 +47,8 @@ version.inc:
 blklayer.a: 
 	(cd blklayer && make )
 
+debug.a: 
+	(cd debug && make )
 
 fat32.a: 
 	(cd fat32 && make )
@@ -74,7 +78,7 @@ transfer: loader.prg
 rom.bin: kernel.bin
 	cat kernel.bin kernel.bin > rom.bin
 
-test: all
+test: debug.a all
 	(cd test; make all)
 	(cd fat32/test; make all)
 	
