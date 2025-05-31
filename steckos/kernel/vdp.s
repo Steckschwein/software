@@ -6,13 +6,8 @@
 .export vdp_init, vdp_bgcolor, vdp_fill, vdp_text_on, vdp_memcpy
 .export vdp_nopslide_2m, vdp_nopslide_8m, vdp_nopslide_end
 
-; .import primm
-; .import char_out
 .import charset_6x8
-.importzp tmp_ptr
-; .zeropage
-; vdp_ptr:       .res 2
-vdp_ptr = tmp_ptr
+.importzp vdp_ptr
 
 .code
 

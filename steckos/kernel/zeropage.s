@@ -3,7 +3,7 @@
 .exportzp startaddr
 .exportzp console_buffer_ptr, console_cursor_ptr
 .exportzp console_scroll_src_ptr, console_scroll_trg_ptr 
-; .exportzp vdp_ptr
+.exportzp vdp_ptr
 .exportzp spi_sr 
 .exportzp retvec 
 .exportzp paramptr
@@ -82,7 +82,7 @@ console_scroll_trg_ptr:   .res 2
 ; @name: vdp_ptr
 ; @desc: vdp pointer 
 ; @type: pointer
-;vdp_ptr:          .res 2
+vdp_ptr:          .res 2
 
 ; @name: spi_sr
 ; @desc: SPI shift register
