@@ -1476,7 +1476,7 @@ Out
 
 
 
-### <a name="vdp_bgcolor" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L99">vdp_bgcolor</a>
+### <a name="vdp_bgcolor" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L94">vdp_bgcolor</a>
 
 #### Description
 
@@ -1500,7 +1500,7 @@ In
 
 
 
-### <a name="vdp_fill" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L71">vdp_fill</a>
+### <a name="vdp_fill" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L66">vdp_fill</a>
 
 #### Description
 fill vdp VRAM with given value page wise
@@ -1524,7 +1524,7 @@ In
 
 
 
-### <a name="vdp_fills" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L87">vdp_fills</a>
+### <a name="vdp_fills" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L82">vdp_fills</a>
 
 #### Description
 fill vdp VRAM with given value
@@ -1548,7 +1548,7 @@ In
 
 
 
-### <a name="vdp_init" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L21">vdp_init</a>
+### <a name="vdp_init" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L16">vdp_init</a>
 
 #### Description
 init vdp, set text mode 2, blank screen, load charset into vram
@@ -1562,7 +1562,7 @@ init vdp, set text mode 2, blank screen, load charset into vram
 
 
 
-### <a name="vdp_init_reg" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L139">vdp_init_reg</a>
+### <a name="vdp_init_reg" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L134">vdp_init_reg</a>
 
 #### Description
 setup video registers upon given table starting from register #R.X down to #R0
@@ -1586,7 +1586,7 @@ In
 
 
 
-### <a name="vdp_memcpy" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L36">vdp_memcpy</a>
+### <a name="vdp_memcpy" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L31">vdp_memcpy</a>
 
 #### Description
 copy data from host memory denoted by pointer (A/Y) to vdp VRAM (page wise). the VRAM address must be setup beforehand e.g. with macro vdp_vram_w <address>
@@ -1610,7 +1610,7 @@ In
 
 
 
-### <a name="vdp_set_reg" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L104">vdp_set_reg</a>
+### <a name="vdp_set_reg" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L99">vdp_set_reg</a>
 
 #### Description
 set value to vdp register
@@ -1634,7 +1634,7 @@ In
 
 
 
-### <a name="vdp_text_blank" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L57">vdp_text_blank</a>
+### <a name="vdp_text_blank" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L52">vdp_text_blank</a>
 
 #### Description
 text mode blank screen and color vram
@@ -1648,7 +1648,7 @@ text mode blank screen and color vram
 
 
 
-### <a name="vdp_text_on" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L116">vdp_text_on</a>
+### <a name="vdp_text_on" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//vdp.s#L111">vdp_text_on</a>
 
 #### Description
 text mode - 40x24/80x24 character mode, 2 colors
