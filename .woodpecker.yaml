@@ -9,14 +9,14 @@ when:
 steps:
 
   - name: "build"
-    image: steckschwein/buildenv:cc65_2_20-snapshot 
+    image: steckschwein/buildenv:alpine_321
     commands:
       - make 
     when:
       event: [pull_request, push]
 
   - name: "unit tests"
-    image: steckschwein/buildenv:cc65_2_20-snapshot 
+    image: steckschwein/buildenv:alpine_321
     commands:
       - make test
     when:
