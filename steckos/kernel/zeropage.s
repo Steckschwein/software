@@ -1,4 +1,5 @@
 .include "blklayer.inc"
+.include "sdcard.inc"
 .include "rtc.inc"
 
 .exportzp out_vector, in_vector
@@ -243,12 +244,12 @@ keyboard_key:  .res 1
 ; @name: sd_cmd_param
 ; @desc: sd card command parameter buffer
 ; @type: byte
-sd_cmd_param:   .res 4
-
+sd_cmd_param:   .tag sdcard_cmd
+sd_cmd_chksum = sd_cmd_param + 4
 ; @name: sd_cmd_chksum
 ; @desc: sd card command checksum buffer
 ; @type: byte
-sd_cmd_chksum:   .res 1
+; sd_cmd_chksum:   .res 1
 
 
 .export blklayer_store

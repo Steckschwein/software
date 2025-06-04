@@ -16,7 +16,7 @@
 .import spi_rw_byte, spi_r_byte, spi_select_device, spi_deselect
 .import lba_addr
 .importzp sd_blkptr
-.import sd_cmd_param, sd_cmd_chksum
+.import sd_cmd_param
 
 .export sdcard_init
 .export sd_select_card, sd_deselect_card
@@ -63,7 +63,7 @@ init_clk:
 
     ; CMD0 needs CRC7 checksum to be correct
     lda #$95
-    sta sd_cmd_chksum
+    sta sd_cmd_param + sdcard_cmd::chksum
 
     ldy #sd_cmd_response_retries
 @lcmd:
@@ -82,11 +82,11 @@ init_clk:
     bne @lcmd
 
     lda #$01
-    sta sd_cmd_param+2
+    sta sd_cmd_param + sdcard_cmd::param + 2
     lda #$aa
-    sta sd_cmd_param+3
+    sta sd_cmd_param + sdcard_cmd::param + 3
     lda #$87
-    sta sd_cmd_chksum
+    sta sd_cmd_param + sdcard_cmd::chksum
 
 
     lda #cmd8
@@ -118,7 +118,7 @@ init_clk:
 
     ; init card using ACMD41 and parameter $40000000
     lda #$40
-    sta sd_cmd_param
+    sta sd_cmd_param + sdcard_cmd::param
 @l5:
     lda #cmd55
     jsr sd_cmd
@@ -129,7 +129,7 @@ init_clk:
 
     lda #acmd41
     jsr sd_cmd
-    debug32 "ACMD41", sd_cmd_param
+    debug32 "ACMD41", sd_cmd_param + sdcard_cmd::param
 
     cmp #$00
     beq @l7
@@ -137,17 +137,17 @@ init_clk:
     cmp #$01
     beq @l5
 
-    cmp sd_cmd_param
+    cmp sd_cmd_param + sdcard_cmd::param
     beq @exit    ; acmd41 with $40000000 and $00000000 failed, TODO: try CMD1
 
     jsr sd_param_init
     bra @l5
 
 @l7:
-    cmp sd_cmd_param
+    cmp sd_cmd_param + sdcard_cmd::param
     beq @cmd16    ; acmd41 with $40000000 and $00000000 failed, TODO: try CMD1
 
-    stz sd_cmd_param
+    stz sd_cmd_param + sdcard_cmd::param
 
     lda #cmd58
     jsr sd_cmd
@@ -171,9 +171,9 @@ init_clk:
 
     ; Set block size to 512 bytes
     lda #$02
-    sta sd_cmd_param+2
+    sta sd_cmd_param + sdcard_cmd::param + 2
 
-    debug32 "cmd16p", sd_cmd_param
+    debug32 "cmd16p", sd_cmd_param + sdcard_cmd::param
 
     lda #cmd16
     jsr sd_cmd
@@ -206,7 +206,7 @@ sd_cmd:
     ; transfer parameter buffer
     ldx #$00
 @l1:  
-    lda sd_cmd_param,x
+    lda sd_cmd_param + sdcard_cmd::param,x
     phx
     jsr spi_rw_byte
     plx
@@ -383,11 +383,11 @@ sd_busy_wait:
 sd_param_init:
     ldx #$03
 @l:
-    stz sd_cmd_param,x
+    stz sd_cmd_param + sdcard_cmd::param,x
     dex
     bpl @l
     lda #$01
-    sta sd_cmd_chksum
+    sta sd_cmd_param + sdcard_cmd::chksum
     rts
 
 ;---------------------------------------------------------------------
@@ -402,7 +402,7 @@ sd_cmd_lba:
     ldy #$00
 @l:
     lda lba_addr,x
-    sta sd_cmd_param,y
+    sta sd_cmd_param + sdcard_cmd::param,y
     iny
     dex
     bpl @l

@@ -18,6 +18,11 @@ cmd58	= $40 + 58	; READ_OCR
 acmd41	= $40 + 41	; APP_SEND_OP_COND
 acmd23	= $40 + 23	; SET_WR_BLOCK_ERASE_COUNT - Define number of blocks to pre-erase with next multi-block write command.
 
+.struct sdcard_cmd 
+  param   .byte 4 
+  chksum  .byte 1
+.endstruct
+
 sd_data_token = $fe
 ; SD CArd command parameter/result buffer
 ; sd_cmd_param 		= $02a0
