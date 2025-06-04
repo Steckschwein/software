@@ -11,7 +11,7 @@
 
 .include "vdp.inc"
 
-.import init_via
+.import via_init
 .import uart_init, uart_tx, uart_rx, primm, hexout, wozmon, xmodem_upload
 .import vdp_init, vdp_bgcolor, vdp_memcpy
 .import sdcard_init, sd_read_block, sd_write_block
@@ -69,8 +69,7 @@ do_reset:
     lda #2 ; enable RAM at slot2
     sta slot2_ctrl
 
-    jsr init_via
-
+    jsr via_init
     jsr uart_init
 
 
@@ -80,11 +79,11 @@ do_reset:
     jsr set_output
 
     jsr vdp_init
-    vdp_wait_l 
-
-    
+    ; vdp_wait_l 
     jsr console_init
 
+    SetVector sd_blkptr, $1000
+    jsr blklayer_init
 
     cli
 
@@ -96,61 +95,81 @@ do_reset:
     .byte CODE_LF
     .byte 0
 
+    jsr primm
+    .byte "Keyboard init.. ", 0
     jsr keyboard_init
-   
+    tax
+    bcc @kbd_ok
+    jsr show_fail
+    bra @sdcard 
+
+@kbd_ok:
+    jsr primm
+    .byte "OK", 0
+
+
+
+@sdcard:
+    jsr primm
+    .byte CODE_LF, "SD card init .. ", 0
     jsr sdcard_init
     tax
     cmp #0
     bne @sdcard_error
     jsr primm
-    .byte CODE_LF, "SD card init successful", CODE_LF, 0
+    .byte "OK", 0
+
 
     jsr primm
-    .byte CODE_LF, "Mount SD card ", 0
+    .byte CODE_LF, "Mount FAT FS .. ", 0
 
     jsr fat_mount 
     tax
-    bcc @startup_done
-    jsr primm
-    .byte CODE_LF, "failed ", CODE_LF, 0
-    txa
-    jsr hexout
+    bcc @mount_ok
+    jsr show_fail
     
     bra @startup_done
 @sdcard_error:
+    jsr show_fail
+
+    bra @startup_done
+
+@mount_ok:
     jsr primm
-    .byte CODE_LF, "SD card init failed: ",0
-    txa 
-    jsr hexout
+    .byte "OK", CODE_LF, 0
 
-    
 @startup_done:
-    lda #CODE_LF
-    jsr char_out
-    lda #CODE_LF
-    jsr char_out
 
-    SetVector sd_blkptr, $1000
-
-    jsr blklayer_init
+  
 
     jmp shell_init
     ; jmp register_status
 
+show_ok:
+    jsr primm
+    .byte "OK", CODE_LF, 0
+    rts 
+
+show_fail:
+    jsr primm
+    .byte "FAILED: ", 0
+    txa 
+    jmp hexout
+
 upload:
-    lda #OUTPUT_DEVICE_NULL
-    jsr set_output
-    lda #INPUT_DEVICE_NULL
-    jsr set_input
+    ; lda #OUTPUT_DEVICE_NULL
+    ; jsr set_output
+    ; lda #INPUT_DEVICE_NULL
+    ; jsr set_input
 
     jsr xmodem_upload
     bcc @run
 
-    lda #INPUT_DEVICE_UART
-    jsr set_input
+    ; lda #INPUT_DEVICE_UART
+    ; jsr set_input
 
-    lda #OUTPUT_DEVICE_CONSOLE
-    jsr set_output
+    ; lda #OUTPUT_DEVICE_CONSOLE
+    ; jsr set_output
 
     jsr primm 
     .byte "Upload error", CODE_LF, 0
@@ -213,7 +232,7 @@ do_irq:
     pla                     ;
     plx                     ;
     ; jmp   (BRKvector)       ; patch in user BRK routine
-    jmp register_status
+    ; jmp register_status
 
 ; @name: do_nmi
 ; @desc: system nmi handler

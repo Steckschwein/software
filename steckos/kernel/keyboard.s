@@ -67,8 +67,6 @@ exit:
 
 ;  requires nvram init beforehand
 keyboard_init:
-    jsr primm
-    .byte "Keyboard init.", 0
 
     ldy #50
     jsr _delay_10ms
@@ -85,28 +83,26 @@ keyboard_init:
     jsr _keyboard_cmd_status
     bne @fail
 
-    jsr primm 
-    .asciiz "OK"
     clc
     jmp spi_deselect
 @fail:
-    pha
-    jsr primm
-    .byte "FAIL (",0
-    ; lda init_step
+    ; pha
+    ; jsr primm
+    ; .byte "FAIL (",0
+    ; ; lda init_step
+    ; ; jsr hexout
+    ; ; lda #'/'
+    ; jsr char_out
+    ; pla
     ; jsr hexout
-    ; lda #'/'
-    jsr char_out
-    pla
-    jsr hexout
-    jsr primm
-    .byte ")", CODE_LF, 0
+    ; jsr primm
+    ; .byte ")", CODE_LF, 0
     sec
     jmp spi_deselect
 
 _keyboard_cmd_status:
-    lda #'.'
-    jsr char_out
+    ; lda #'.'
+    ; jsr char_out
 
     ldy #100
 :   dey

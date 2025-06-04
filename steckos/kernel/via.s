@@ -1,12 +1,12 @@
 .code
-.export init_via
+.export via_init
 .include "via.inc"
 .include "spi.inc"
 
 ;----------------------------------------------------------------------------------------------
 ; init VIA1
 ;----------------------------------------------------------------------------------------------
-init_via:
+via_init:
 
     ; disable VIA1 interrupts
     lda #%01111111			 ; bit 7 "0", to clear all int sources
