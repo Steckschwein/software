@@ -1,3 +1,6 @@
+.ifndef _CONSOLE_INC_
+  _CONSOLE_INC_ = 1
+
 SCREEN_BUFFER_PAGE = 30
 SCREEN_BUFFER_SIZE = 8 ; buffer size in memory pages
 SCREEN_DIRTY = $80
@@ -24,3 +27,5 @@ KEY_FN4           = $f4
 
 ESCAPE = 27
 CSI	 = '['
+
+.endif ; _CONSOLE_INC_
