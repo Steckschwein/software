@@ -57,9 +57,7 @@ dumpvec = dumpvecs+2
 ;---------------------------------------------------------------------------------------------------------
 
 shell_init:
-        lda #<hello_msg
-        ldx #>hello_msg
-        jsr strout
+
 
 exit_from_prg:
         cld
@@ -1288,13 +1286,7 @@ ls_usage_txt:
 .byte "   -v   show volume ID ",$0a,$0d
 .byte "   -?   show this useful message",$0a,$0d
 .byte 0
-hello_msg:
-; .byte 27,"[2J"
-.byte 27,"[2B" ; move cursor down 5 lines
-.byte "steckOS shell  "
-.byte 27,"[3D" ; move cursor left 25 pos
-.include "version.inc"
-.byte CODE_LF,0
+
 unknown_error_msg:
         .asciiz "unknown error "
 
