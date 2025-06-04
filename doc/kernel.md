@@ -1048,7 +1048,7 @@ Out
 
 
 
-### <a name="sd_busy_wait" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//sdcard.s#L356">sd_busy_wait</a>
+### <a name="sd_busy_wait" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//sdcard.s#L357">sd_busy_wait</a>
 
 #### Description
 wait while sd card is busy
@@ -1075,7 +1075,7 @@ Clobbers
 
 
 
-### <a name="sd_cmd" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//sdcard.s#L190">sd_cmd</a>
+### <a name="sd_cmd" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//sdcard.s#L191">sd_cmd</a>
 
 #### Description
 send command to sd card
@@ -1105,7 +1105,7 @@ Clobbers
 
 
 
-### <a name="sd_deselect_card" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//sdcard.s#L264">sd_deselect_card</a>
+### <a name="sd_deselect_card" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//sdcard.s#L265">sd_deselect_card</a>
 
 #### Description
 Read block from SD Card
@@ -1132,7 +1132,7 @@ Clobbers
 
 
 
-### <a name="sd_read_block" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//sdcard.s#L243">sd_read_block</a>
+### <a name="sd_read_block" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//sdcard.s#L244">sd_read_block</a>
 
 #### Description
 Read block from SD Card
@@ -1162,7 +1162,7 @@ Clobbers
 
 
 
-### <a name="sd_select_card" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//sdcard.s#L345">sd_select_card</a>
+### <a name="sd_select_card" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//sdcard.s#L346">sd_select_card</a>
 
 #### Description
 select sd card, pull CS line to low with busy wait
@@ -1189,7 +1189,7 @@ Clobbers
 
 
 
-### <a name="sd_wait" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//sdcard.s#L319">sd_wait</a>
+### <a name="sd_wait" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//sdcard.s#L320">sd_wait</a>
 
 #### Description
 wait for sd card data token
@@ -1216,7 +1216,7 @@ Clobbers
 
 
 
-### <a name="sd_write_block" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//sdcard.s#L411">sd_write_block</a>
+### <a name="sd_write_block" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//sdcard.s#L412">sd_write_block</a>
 
 #### Description
 Write block to SD Card
@@ -1246,7 +1246,7 @@ Clobbers
 
 
 
-### <a name="sdcard_init" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//sdcard.s#L28">sdcard_init</a>
+### <a name="sdcard_init" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//sdcard.s#L29">sdcard_init</a>
 
 #### Description
 initialize sd card in SPI mode
@@ -2021,13 +2021,13 @@ volatile tmp location 2
 
 
 ## zp_ext
-[blklayer_store](#blklayer_store) | [crs_x](#crs_x) | [crs_x_sav](#crs_x_sav) | [crs_y](#crs_y) | [crs_y_sav](#crs_y_sav) | [current_console](#current_console) | [keyboard_key](#keyboard_key) | [lba_addr](#lba_addr) | [screen_status](#screen_status) | [vdp_addr](#vdp_addr) | [vdp_addr_old](#vdp_addr_old) | 
+[blklayer_store](#blklayer_store) | [crs_x](#crs_x) | [crs_x_sav](#crs_x_sav) | [crs_y](#crs_y) | [crs_y_sav](#crs_y_sav) | [current_console](#current_console) | [keyboard_key](#keyboard_key) | [lba_addr](#lba_addr) | [screen_status](#screen_status) | [sd_cmd_chksum](#sd_cmd_chksum) | [sd_cmd_param](#sd_cmd_param) | [vdp_addr](#vdp_addr) | [vdp_addr_old](#vdp_addr_old) | 
 
 ***
 
 
 
-### <a name="blklayer_store" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L241">blklayer_store</a>
+### <a name="blklayer_store" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L253">blklayer_store</a>
 
 #### Description
 blklayer state store
@@ -2145,6 +2145,34 @@ LBA address for media block operations
 
 #### Description
 state of screen - bit 7 -> dirty
+
+
+
+
+***
+
+
+
+
+
+### <a name="sd_cmd_chksum" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L246">sd_cmd_chksum</a>
+
+#### Description
+sd card command checksum buffer
+
+
+
+
+***
+
+
+
+
+
+### <a name="sd_cmd_param" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L241">sd_cmd_param</a>
+
+#### Description
+sd card command parameter buffer
 
 
 
