@@ -16,6 +16,7 @@
 .import spi_rw_byte, spi_r_byte, spi_select_device, spi_deselect
 .import lba_addr
 .importzp sd_blkptr
+.import sd_cmd_param, sd_cmd_chksum
 
 .export sdcard_init
 .export sd_select_card, sd_deselect_card

@@ -237,6 +237,18 @@ ansi_param2: .res 1
 keyboard_key:  .res 1
 
 
+.export sd_cmd_param, sd_cmd_chksum
+; @name: sd_cmd_param
+; @desc: sd card command parameter buffer
+; @type: byte
+sd_cmd_param:   .res 4
+
+; @name: sd_cmd_chksum
+; @desc: sd card command checksum buffer
+; @type: byte
+sd_cmd_chksum:   .res 1
+
+
 .export blklayer_store
 ; @name: blklayer_store
 ; @desc: blklayer state store
