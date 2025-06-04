@@ -149,7 +149,6 @@ __x_y_modem_upload:
           pha
           clc
           adc #'X'      ; mode (0/1) + 'X'
-          jsr char_out
           jsr primm
           .byte "MODEM upload...", 0
           ; jsr crc16_init
