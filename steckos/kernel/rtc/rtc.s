@@ -37,6 +37,7 @@
 .importzp tmp_ptr
 __volatile_ptr = tmp_ptr
 
+.import rtc_systime_t
 .export rtc_systime_update
 
 .code

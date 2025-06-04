@@ -30,7 +30,7 @@
 .importzp tmp_ptr
 __volatile_ptr = tmp_ptr
 
-.import rtc_systime_update
+.import rtc_systime_update, rtc_systime_t
 .import write_block, write_block_buffered
 .import fat_fopen
 .import lba_addr

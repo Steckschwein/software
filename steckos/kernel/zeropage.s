@@ -1,4 +1,6 @@
 .include "blklayer.inc"
+.include "rtc.inc"
+
 .exportzp out_vector, in_vector
 .exportzp startaddr
 .exportzp console_buffer_ptr, console_cursor_ptr
@@ -257,3 +259,10 @@ blklayer_store:
     .tag _blkl_state  ; fat32 currently uses $400/$600 as fixed block address - so we only need 2 states
     .tag _blkl_state
 
+
+.export rtc_systime_t
+
+; @name: rtc_systime_t
+; @desc: rtc system time
+; @type: byte
+rtc_systime_t:  .res .sizeof(time_t)
