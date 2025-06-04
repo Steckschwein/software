@@ -265,4 +265,4 @@ blklayer_store:
 ; @name: rtc_systime_t
 ; @desc: rtc system time
 ; @type: byte
-rtc_systime_t:  .res .sizeof(time_t)
+rtc_systime_t:  .tag time_t

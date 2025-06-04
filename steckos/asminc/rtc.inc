@@ -1,3 +1,6 @@
+.ifndef _RTC_INC_
+  _RTC_INC_ = 1
+
 ;----------------------------------------------------------------------------
 ; time struct with date set to 1970-01-01
 .struct time_t
@@ -41,4 +44,6 @@ rtc_status_irq0 = 1<<0  ; alarm 0 interrupt request
 		  tv_sec  .dword
 		  tv_nsec .dword
 .endstruct
+.endif
+
 .endif
