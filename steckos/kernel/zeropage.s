@@ -167,13 +167,14 @@ MODE=             volatile_tmp2
 
 
 ; xmodem upload
-retryl=           dumpvecs    ; 16 bit retry
-retryh=           dumpvecs+1
-crc=              dumpvecs+2  ; CRC lo byte  (two byte variable)
-crch=             dumpvecs+3  ; CRC hi byte
-blkno=            volatile_tmp ; block number
-protocol=         volatile_tmp2 ; 2nd counter
-block_rx_cb=      tmp_ptr
+crc:          .res 2  ; CRC lo byte  (two byte variable)
+crch = crc+1  ; CRC hi byte
+blkno:        .res 1 ; block number
+retryl:       .res 1 ; 16 bit retry
+retryh:       .res 1 ;
+protocol:     .res 1 ; 2nd counter
+block_rx_cb:  .res 2 ; callback
+
 
 ; @module zp_ext
 .segment "ZP_EXT"
@@ -245,7 +246,7 @@ keyboard_key:  .res 1
 ; @desc: sd card command parameter buffer
 ; @type: byte
 sd_cmd_param:   .tag sdcard_cmd
-sd_cmd_chksum = sd_cmd_param + 4
+sd_cmd_chksum=   sd_cmd_param + 4
 ; @name: sd_cmd_chksum
 ; @desc: sd card command checksum buffer
 ; @type: byte
