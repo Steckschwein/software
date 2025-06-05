@@ -61,6 +61,10 @@ atmp:               .res 1
 .code
 
 do_reset:
+    ; this SEI should not be necessary as the 65c02 starts up with interrupts disabled.
+    ; however, in case of warm reset by jumping to $C000, we need to make sure interrupts
+    ; are disabled in order not to interfere with VDP init
+    sei
 
     ; init stack pointer
     ldx #$ff
@@ -141,7 +145,7 @@ do_reset:
 @startup_done:
 
   
-
+    ; jmp upload
     jmp shell_init
     ; jmp register_status
 
@@ -157,19 +161,10 @@ show_fail:
     jmp hexout
 
 upload:
-    ; lda #OUTPUT_DEVICE_NULL
-    ; jsr set_output
-    ; lda #INPUT_DEVICE_NULL
-    ; jsr set_input
 
     jsr xmodem_upload
     bcc @run
 
-    ; lda #INPUT_DEVICE_UART
-    ; jsr set_input
-
-    ; lda #OUTPUT_DEVICE_CONSOLE
-    ; jsr set_output
 
     jsr primm 
     .byte "Upload error", CODE_LF, 0
@@ -183,12 +178,7 @@ upload:
     ldx #$ff
     txs 
 
-    lda #INPUT_DEVICE_UART
-    jsr set_input
-    lda #OUTPUT_DEVICE_UART
-    jsr set_output
-
-    jmp (startaddr)
+     jmp (startaddr)
 
 
 
