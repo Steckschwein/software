@@ -7,8 +7,10 @@
 .export ymodem_upload_callback
 .export xmodem_rcvbuffer
 
-.autoimport
-
+; .autoimport
+.import uart_tx, uart_rx_nowait
+.import crc16_table_hi, crc16_table_lo
+.import primm, hexout, char_out
 ; @module: xmodem_upload
 ; XMODEM/CRC Receiver for the 65C02
 ;
@@ -76,6 +78,7 @@
 .importzp crc, crch, blkno, retryl, retryh, protocol, block_rx_cb
 
 .bss
+.align 256
 xmodem_rcvbuffer: .res 132 
 
 ;
