@@ -144,8 +144,7 @@ do_reset:
 
 @startup_done:
 
-  
-    ; jmp upload
+
     jmp shell_init
     ; jmp register_status
 
@@ -161,10 +160,8 @@ show_fail:
     jmp hexout
 
 upload:
-
     jsr xmodem_upload
     bcc @run
-
 
     jsr primm 
     .byte "Upload error", CODE_LF, 0
@@ -178,7 +175,7 @@ upload:
     ldx #$ff
     txs 
 
-     jmp (startaddr)
+    jmp (startaddr)
 
 
 
@@ -210,6 +207,7 @@ do_irq:
     jsr keyboard_fetchkey
     bcc @exit_isr
 
+    ; TODO: is this the right place for this?
     ; jsr console_handle_control_char
 
 @exit_isr:
@@ -219,10 +217,10 @@ do_irq:
     rti
 
 @handle_brk:
-    pla                     ;
-    plx                     ;
-    ; jmp   (BRKvector)       ; patch in user BRK routine
-    ; jmp register_status
+    pla
+    plx
+    ; fall through to do_nmi to enter wozmon
+
 
 ; @name: do_nmi
 ; @desc: system nmi handler
