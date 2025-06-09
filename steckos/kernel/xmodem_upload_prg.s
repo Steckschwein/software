@@ -60,11 +60,11 @@ _block_rx_dflt:
           lda xmodem_rcvbuffer,x  ; get hi address
           sta ptr+1  ; save it
           sta xmodem_startaddress+1
-          jsr hexout
-          lda xmodem_startaddress
-          jsr hexout
-          jsr primm
-          .asciiz "...     "
+          ; jsr hexout
+          ; lda xmodem_startaddress
+          ; jsr hexout
+          ; jsr primm
+          ; .asciiz "...     "
           inx         ; point to first byte of data
           dec bflag   ; set the flag so we won't get another address
 CopyBlk3: lda xmodem_rcvbuffer,x  ; get data byte from buffer
@@ -76,10 +76,10 @@ CopyBlk4: inx           ; point to next data byte
           cpx #XMODEM_DATA_END      ; is it the last byte
           bne CopyBlk3  ; no, get the next one
 
-          jsr primm
-          .byte KEY_BACKSPACE, KEY_BACKSPACE, KEY_BACKSPACE, KEY_BACKSPACE, KEY_BACKSPACE, 0
+          ; jsr primm
+          ; .byte KEY_BACKSPACE, KEY_BACKSPACE, KEY_BACKSPACE, KEY_BACKSPACE, KEY_BACKSPACE, 0
 
-          lda ptr+1
-          jsr hexout
-          lda ptr
-          jmp hexout
+          ; lda ptr+1
+          ; jsr hexout
+          ; lda ptr
+          ; jmp hexout
