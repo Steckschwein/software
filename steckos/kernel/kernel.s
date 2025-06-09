@@ -49,8 +49,7 @@
 
 
 .bss
-sd_block_buffer:    .res 512
-
+sd_block_buffer: .res 1048
 save_stat:          .res .sizeof(save_status)
 atmp:               .res 1
 
@@ -86,7 +85,7 @@ do_reset:
     ; vdp_wait_l 
     jsr console_init
 
-    SetVector sd_blkptr, $1000
+    SetVector sd_blkptr, sd_block_buffer
     jsr blklayer_init
 
     cli
