@@ -4,12 +4,8 @@
 .import char_out
 .export hexout, primm, strout
 
-.importzp tmp_ptr
-DPL = tmp_ptr
-DPH = tmp_ptr+1
-; .zeropage
-; DPL: .res 1
-; DPH: .res 1
+.importzp str_ptr
+
 
 .code
 ; @name: hexout
@@ -47,14 +43,14 @@ _out:
 ;@in:   X, "highbyte of string address"
 ;@desc: "Output string on active output device"
 strout:
-    sta tmp_ptr                ;init for output below
-    stx tmp_ptr+1
+    sta str_ptr                ;init for output below
+    stx str_ptr+1
     pha                                       ;save a, y to stack
     phy
 
     ldy #$00
 @l1:
-    lda (tmp_ptr),y
+    lda (str_ptr),y
     beq @l2
     jsr char_out
     iny
@@ -70,21 +66,21 @@ strout:
 ; @desc: print string inlined after call to primm terminated by null byte - see http://6502.org/source/io/primm.htm
 primm:
     pla               ; get low part of (string address-1)
-    sta   DPL
+    sta   str_ptr
     pla               ; get high part of (string address-1)
-    sta   DPH
+    sta   str_ptr+1
     bra   primm3
 primm2:
     jsr   char_out        ; output a string char
 primm3:
-    inc   DPL         ; advance the string pointer
+    inc   str_ptr         ; advance the string pointer
     bne   primm4
-    inc   DPH
+    inc   str_ptr+1
 primm4:
-    lda   (DPL)       ; get string char
+    lda   (str_ptr)       ; get string char
     bne   primm2      ; output and continue if not NUL
-    lda   DPH
+    lda   str_ptr+1
     pha
-    lda   DPL
+    lda   str_ptr
     pha
     rts               ; proceed at code following the NUL

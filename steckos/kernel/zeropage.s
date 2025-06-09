@@ -18,6 +18,7 @@
 .exportzp filenameptr
 .exportzp sd_blkptr
 .exportzp tmp_ptr
+.exportzp str_ptr
 .exportzp volatile_tmp
 .exportzp volatile_tmp2
 
@@ -148,6 +149,11 @@ filenameptr:      .res 2
 ; @desc: sd card block pointer
 ; @type: pointer
 sd_blkptr:        .res 2
+
+; @name: tmp_ptr
+; @desc: temp volatile pointer for general usage
+; @type: pointer
+str_ptr:          .res 2
 
 ; @name: tmp_ptr
 ; @desc: temp volatile pointer for general usage
