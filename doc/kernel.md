@@ -715,7 +715,7 @@ Out
 
 
 
-### <a name="hexout" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//io.s#L15">hexout</a>
+### <a name="hexout" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//io.s#L11">hexout</a>
 
 #### Description
 print value in A as 2 hex digits\
@@ -740,7 +740,7 @@ In
 
 
 
-### <a name="primm" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//io.s#L69">primm</a>
+### <a name="primm" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//io.s#L65">primm</a>
 
 #### Description
 print string inlined after call to primm terminated by null byte - see http://6502.org/source/io/primm.htm
@@ -894,7 +894,7 @@ start XMODEM upload
 
 
 
-### <a name="do_irq" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L185">do_irq</a>
+### <a name="do_irq" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L181">do_irq</a>
 
 #### Description
 system irq handler
@@ -908,7 +908,7 @@ system irq handler
 
 
 
-### <a name="do_nmi" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L227">do_nmi</a>
+### <a name="do_nmi" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L224">do_nmi</a>
 
 #### Description
 system nmi handler
@@ -922,7 +922,7 @@ system nmi handler
 
 
 
-### <a name="io_null" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L309">io_null</a>
+### <a name="io_null" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L306">io_null</a>
 
 #### Description
 dummy routine to suppress output
@@ -936,7 +936,7 @@ dummy routine to suppress output
 
 
 
-### <a name="set_input" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L326">set_input</a>
+### <a name="set_input" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L323">set_input</a>
 
 #### Description
 set current output device to one of: INPUT_DEVICE_NULL, INPUT_DEVICE_UART, INPUT_DEVICE_CONSOLE
@@ -960,7 +960,7 @@ In
 
 
 
-### <a name="set_output" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L314">set_output</a>
+### <a name="set_output" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//kernel.s#L311">set_output</a>
 
 #### Description
 set current output device to one of: OUTPUT_DEVICE_NULL, OUTPUT_DEVICE_UART, OUTPUT_DEVICE_CONSOLE
@@ -1704,7 +1704,7 @@ In
 
 
 
-### <a name="xmodem_upload_callback" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//xmodem_upload.s#L128">xmodem_upload_callback</a>
+### <a name="xmodem_upload_callback" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//xmodem_upload.s#L131">xmodem_upload_callback</a>
 
 #### Description
 
@@ -1739,7 +1739,7 @@ Out
 
 
 
-### <a name="cmdptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L110">cmdptr</a>
+### <a name="cmdptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L111">cmdptr</a>
 
 #### Description
 shell buffer pointer
@@ -1753,7 +1753,7 @@ shell buffer pointer
 
 
 
-### <a name="console_buffer_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L64">console_buffer_ptr</a>
+### <a name="console_buffer_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L65">console_buffer_ptr</a>
 
 #### Description
 pointer to current screen buffer
@@ -1767,7 +1767,7 @@ pointer to current screen buffer
 
 
 
-### <a name="console_cursor_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L69">console_cursor_ptr</a>
+### <a name="console_cursor_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L70">console_cursor_ptr</a>
 
 #### Description
 pointer to cursor position within screen buffer
@@ -1781,7 +1781,7 @@ pointer to cursor position within screen buffer
 
 
 
-### <a name="console_scroll_src_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L75">console_scroll_src_ptr</a>
+### <a name="console_scroll_src_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L76">console_scroll_src_ptr</a>
 
 #### Description
 scroll source pointer
@@ -1795,7 +1795,7 @@ scroll source pointer
 
 
 
-### <a name="console_scroll_trg_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L80">console_scroll_trg_ptr</a>
+### <a name="console_scroll_trg_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L81">console_scroll_trg_ptr</a>
 
 #### Description
 scroll target pointer
@@ -1809,7 +1809,7 @@ scroll target pointer
 
 
 
-### <a name="dirptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L137">dirptr</a>
+### <a name="dirptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L138">dirptr</a>
 
 #### Description
 directory pointer
@@ -1823,7 +1823,7 @@ directory pointer
 
 
 
-### <a name="dumpvecs" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L132">dumpvecs</a>
+### <a name="dumpvecs" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L133">dumpvecs</a>
 
 #### Description
 shell dump command vectors (2 pointer)
@@ -1837,7 +1837,7 @@ shell dump command vectors (2 pointer)
 
 
 
-### <a name="filenameptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L142">filenameptr</a>
+### <a name="filenameptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L143">filenameptr</a>
 
 #### Description
 filename pointer
@@ -1851,7 +1851,7 @@ filename pointer
 
 
 
-### <a name="in_vector" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L51">in_vector</a>
+### <a name="in_vector" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L52">in_vector</a>
 
 #### Description
 vector pointing to standard input routine
@@ -1865,7 +1865,7 @@ vector pointing to standard input routine
 
 
 
-### <a name="out_vector" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L46">out_vector</a>
+### <a name="out_vector" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L47">out_vector</a>
 
 #### Description
 vector pointing to standard output routine
@@ -1879,7 +1879,7 @@ vector pointing to standard output routine
 
 
 
-### <a name="paramptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L100">paramptr</a>
+### <a name="paramptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L101">paramptr</a>
 
 #### Description
 shell parameter pointer
@@ -1893,7 +1893,7 @@ shell parameter pointer
 
 
 
-### <a name="pathptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L127">pathptr</a>
+### <a name="pathptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L128">pathptr</a>
 
 #### Description
 path pointer
@@ -1907,7 +1907,7 @@ path pointer
 
 
 
-### <a name="retvec" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L95">retvec</a>
+### <a name="retvec" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L96">retvec</a>
 
 #### Description
 shell return vector
@@ -1921,7 +1921,7 @@ shell return vector
 
 
 
-### <a name="sd_blkptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L147">sd_blkptr</a>
+### <a name="sd_blkptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L148">sd_blkptr</a>
 
 #### Description
 sd card block pointer
@@ -1935,7 +1935,7 @@ sd card block pointer
 
 
 
-### <a name="spi_sr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L90">spi_sr</a>
+### <a name="spi_sr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L91">spi_sr</a>
 
 #### Description
 SPI shift register
@@ -1949,7 +1949,7 @@ SPI shift register
 
 
 
-### <a name="startaddr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L57">startaddr</a>
+### <a name="startaddr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L58">startaddr</a>
 
 #### Description
 startaddress for uploaded images
@@ -1963,7 +1963,7 @@ startaddress for uploaded images
 
 
 
-### <a name="tmp_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L152">tmp_ptr</a>
+### <a name="tmp_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L158">tmp_ptr</a>
 
 #### Description
 temp volatile pointer for general usage
@@ -1977,7 +1977,7 @@ temp volatile pointer for general usage
 
 
 
-### <a name="vdp_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L85">vdp_ptr</a>
+### <a name="vdp_ptr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L86">vdp_ptr</a>
 
 #### Description
 vdp pointer
@@ -1991,7 +1991,7 @@ vdp pointer
 
 
 
-### <a name="volatile_tmp" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L116">volatile_tmp</a>
+### <a name="volatile_tmp" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L117">volatile_tmp</a>
 
 #### Description
 volatile tmp location
@@ -2005,7 +2005,7 @@ volatile tmp location
 
 
 
-### <a name="volatile_tmp2" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L121">volatile_tmp2</a>
+### <a name="volatile_tmp2" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L122">volatile_tmp2</a>
 
 #### Description
 volatile tmp location 2
@@ -2027,7 +2027,7 @@ volatile tmp location 2
 
 
 
-### <a name="blklayer_store" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L257">blklayer_store</a>
+### <a name="blklayer_store" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L263">blklayer_store</a>
 
 #### Description
 blklayer state store
@@ -2041,7 +2041,7 @@ blklayer state store
 
 
 
-### <a name="crs_x" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L191">crs_x</a>
+### <a name="crs_x" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L197">crs_x</a>
 
 #### Description
 cursor x position
@@ -2055,7 +2055,7 @@ cursor x position
 
 
 
-### <a name="crs_x_sav" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L200">crs_x_sav</a>
+### <a name="crs_x_sav" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L206">crs_x_sav</a>
 
 #### Description
 cursor x position save location\
@@ -2070,7 +2070,7 @@ cursor x position save location\
 
 
 
-### <a name="crs_y" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L195">crs_y</a>
+### <a name="crs_y" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L201">crs_y</a>
 
 #### Description
 cursor y position
@@ -2084,7 +2084,7 @@ cursor y position
 
 
 
-### <a name="crs_y_sav" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L206">crs_y_sav</a>
+### <a name="crs_y_sav" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L212">crs_y_sav</a>
 
 #### Description
 cursor y position save location\
@@ -2099,7 +2099,7 @@ cursor y position save location\
 
 
 
-### <a name="current_console" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L227">current_console</a>
+### <a name="current_console" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L233">current_console</a>
 
 #### Description
 number of current virtual console
@@ -2113,7 +2113,7 @@ number of current virtual console
 
 
 
-### <a name="keyboard_key" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L238">keyboard_key</a>
+### <a name="keyboard_key" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L244">keyboard_key</a>
 
 #### Description
 value of last pressed key
@@ -2127,7 +2127,7 @@ value of last pressed key
 
 
 
-### <a name="lba_addr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L181">lba_addr</a>
+### <a name="lba_addr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L187">lba_addr</a>
 
 #### Description
 LBA address for media block operations
@@ -2141,7 +2141,7 @@ LBA address for media block operations
 
 
 
-### <a name="rtc_systime_t" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L267">rtc_systime_t</a>
+### <a name="rtc_systime_t" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L273">rtc_systime_t</a>
 
 #### Description
 rtc system time
@@ -2155,7 +2155,7 @@ rtc system time
 
 
 
-### <a name="screen_status" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L222">screen_status</a>
+### <a name="screen_status" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L228">screen_status</a>
 
 #### Description
 state of screen - bit 7 -> dirty
@@ -2169,7 +2169,7 @@ state of screen - bit 7 -> dirty
 
 
 
-### <a name="sd_cmd_chksum" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L250">sd_cmd_chksum</a>
+### <a name="sd_cmd_chksum" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L256">sd_cmd_chksum</a>
 
 #### Description
 sd card command checksum buffer
@@ -2183,7 +2183,7 @@ sd card command checksum buffer
 
 
 
-### <a name="sd_cmd_param" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L245">sd_cmd_param</a>
+### <a name="sd_cmd_param" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L251">sd_cmd_param</a>
 
 #### Description
 sd card command parameter buffer
@@ -2197,7 +2197,7 @@ sd card command parameter buffer
 
 
 
-### <a name="vdp_addr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L212">vdp_addr</a>
+### <a name="vdp_addr" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L218">vdp_addr</a>
 
 #### Description
 cursor position vdp address
@@ -2211,7 +2211,7 @@ cursor position vdp address
 
 
 
-### <a name="vdp_addr_old" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L217">vdp_addr_old</a>
+### <a name="vdp_addr_old" target="_blank" href="https://codeberg.org/Steckschwein/software/src/branch/main/steckos/kernel//zeropage.s#L223">vdp_addr_old</a>
 
 #### Description
 previous cursor position vdp address
