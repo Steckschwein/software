@@ -36,8 +36,10 @@
 .export blklayer_write_block_buffered;
 .export blklayer_flush;
 
-.autoimport
-
+; .autoimport
+.import lba_addr
+.import blklayer_store
+.import dev_read_block, dev_write_block
 .importzp sd_blkptr
 
 
