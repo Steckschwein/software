@@ -120,9 +120,9 @@ console_update_screen:
     and #!(SCREEN_DIRTY)
     sta screen_status
 
-@exit:
     jmp console_put_cursor
-    ; rts 
+@exit:
+    rts 
 
 ;@name: console_clear_screenbuf
 ;@desc: clear screenbuffer area pointed to by console_cursor_ptr
