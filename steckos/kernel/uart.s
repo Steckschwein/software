@@ -23,15 +23,19 @@ uart_init:
 		stz uart1+uart_dlh
 
 		; 8N1
-		lda #%00000011
+		lda #lcr_WLS0 | lcr_WLS1
 		sta uart1+uart_lcr
 
-		; Enable FIFO, reset tx/rx FIFO
-		lda #fcr_FIFO_enable | fcr_reset_receiver_FIFO | fcr_reset_transmit_FIFO
+		; Enable FIFO, reset tx/rx FIFO, set FIFO trigger level to 14 bytes
+		lda #fcr_FIFO_enable | fcr_reset_receiver_FIFO | fcr_reset_transmit_FIFO | 1<<6 | 1<<7
 		sta uart1+uart_fcr
 
+		; disable interrupts
 		stz uart1+uart_ier
-		stz uart1+uart_mcr	; reset DTR, RTS
+
+		; reset DTR, set RTS, enable auto flow control
+		lda #mcr_RTS | mcr_AFE
+		sta uart1+uart_mcr	
 
 		rts
 

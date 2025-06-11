@@ -49,11 +49,13 @@ lcr_BC			 = 1<<6 ; break control
 lcr_DLAB		  = 1<<7 ; divisor latch access
 
 ; modem control register
-mcr_DTR			= 1<<0 ; data terminal ready
-mcr_RTS			= 1<<1 ; request to send
-mcr_OUT1		  = 1<<2 ; OUT1
-mcr_OUT2		  = 1<<3 ; OUT2
-mcr_LOOP		  = 1<<4 ; Loopback mode
+mcr_DTR		= 1<<0 ; data terminal ready
+mcr_RTS		= 1<<1 ; request to send
+mcr_OUT1	= 1<<2 ; OUT1
+mcr_OUT2	= 1<<3 ; OUT2
+mcr_LOOP	= 1<<4 ; Loopback mode
+mcr_AFE		= 1<<5 ; Autoflow control enable (AFE)
+
 
 ; line status register
 lsr_DR			 = 1<<0 ; data ready
