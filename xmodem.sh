@@ -21,5 +21,5 @@ while [ "$1" != "" ] ; do
     shift
 done
 
-stty -F $port $speed ignbrk -brkint -icrnl -imaxbel -opost -onlcr -isig -icanon -iexten -echo -echoe -echok -echoctl -echoke
+stty -F $port $speed ignbrk -brkint -icrnl -imaxbel -opost -onlcr -isig -icanon -iexten -echo -echoe -echok -echoctl -echoke -crtscts
 sx -vv $file > $port < $port
