@@ -140,7 +140,6 @@ inputloop:
 line_end:
         jsr char_out
         jsr terminate
-key_fn4:
 key_fn5:
 key_fn6:
 key_fn7:
@@ -181,6 +180,9 @@ key_fn3:
         lda #<cmd_basic
         ldx #>cmd_basic
         bra inject_cmd
+
+key_fn4:
+        jmp upload
 
 
 inject_cmd:
